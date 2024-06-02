@@ -31,16 +31,44 @@ const Navbar = () => {
           <div>
             <ul className="hidden items-center gap-6 *:text-paragraph font-semibold lg:flex">
               <li>
-                <NavLink to="/">Home</NavLink>
+                <NavLink
+                  className={({ isActive, isPending }) =>
+                    isPending ? "pending" : isActive ? "active" : ""
+                  }
+                  to="/"
+                >
+                  Home
+                </NavLink>
               </li>
               <li>
-                <NavLink to="/donation-requests">donation requests</NavLink>
+                <NavLink
+                  className={({ isActive, isPending }) =>
+                    isPending ? "pending" : isActive ? "active" : ""
+                  }
+                  to="/donation-requests"
+                >
+                  donation requests
+                </NavLink>
               </li>
               <li>
-                <NavLink to="/blog">blog</NavLink>
+                <NavLink
+                  className={({ isActive, isPending }) =>
+                    isPending ? "pending" : isActive ? "active" : ""
+                  }
+                  to="/blog"
+                >
+                  blog
+                </NavLink>
               </li>
               <li>
-                <NavLink to="/fundings">fundings</NavLink>
+                <NavLink
+                  className={({ isActive, isPending }) =>
+                    isPending ? "pending" : isActive ? "active" : ""
+                  }
+                  to="/fundings"
+                >
+                  fundings
+                </NavLink>
               </li>
             </ul>
 
@@ -88,22 +116,28 @@ const Navbar = () => {
         </div>
         <ul className="items-center gap-4 font-inter text-white p-4">
           <li className="py-4 text-center mt-2 hover:bg-white rounded-lg hover:text-black duration-500">
-            <NavLink  onClick={handleSideBar} to="/">Home</NavLink>
+            <NavLink onClick={handleSideBar} to="/">
+              Home
+            </NavLink>
           </li>
 
           <li className="py-4 text-center mt-2 hover:bg-white rounded-lg hover:text-black duration-500">
-            <NavLink  onClick={handleSideBar} to="/donation-requests">donation requests</NavLink>
+            <NavLink onClick={handleSideBar} to="/donation-requests">
+              donation requests
+            </NavLink>
           </li>
 
           <li className="py-4 text-center mt-2 hover:bg-white rounded-lg hover:text-black duration-500">
-            <NavLink  onClick={handleSideBar} to="/blog">Blog</NavLink>
+            <NavLink onClick={handleSideBar} to="/blog">
+              Blog
+            </NavLink>
           </li>
           <li className="py-4 text-center mt-2 hover:bg-white rounded-lg hover:text-black duration-500">
-            <NavLink  onClick={handleSideBar} to="/fundings">Funding</NavLink>
+            <NavLink onClick={handleSideBar} to="/fundings">
+              Funding
+            </NavLink>
           </li>
         </ul>
-
-      
       </div>
     </>
   );
