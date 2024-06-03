@@ -4,7 +4,13 @@ const DonationRequest = () => {
   return (
     <section className="mt-32">
       <div>
-        <SectionHeader></SectionHeader>
+        <SectionHeader
+          info={{
+            heading: "Donation Request",
+            descrip:
+              " Lorem ipsum dolor sit amet consectetur adipisicing elit.",
+          }}
+        ></SectionHeader>
       </div>
       <div className="overflow-auto mt-20 font-open-sans">
         <table className="table w-[800px] md:w-full">
