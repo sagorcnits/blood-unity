@@ -9,8 +9,8 @@ const Banner = () => {
     >
       <div className="hero-overlay bg-opacity-60"></div>
       <div className="hero-content text-center text-white font-open-sans">
-        <div className="w-1/2">
-          <h1 className="mb-5 text-5xl font-bold">Donate Blood & Save a Life</h1>
+        <div className="md:w-1/2">
+          <h1 className="mb-5 text-3xl md:text-5xl font-bold">Donate Blood & Save a Life</h1>
           <p className="mb-5">
             Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
             excepturi exercitationem quasi. In deleniti eaque aut repudiandae et

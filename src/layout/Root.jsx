@@ -1,4 +1,5 @@
 import { Outlet } from "react-router-dom";
+import Footer from "../components/shared/Footer";
 import Navbar from "../components/shared/Navbar";
 
 const Root = () => {
@@ -10,6 +11,9 @@ const Root = () => {
       <main className="mt-20 max-w-7xl mx-auto px-2 md:px-0">
         <Outlet></Outlet>
       </main>
+      <div className="mt-32">
+        <Footer></Footer>
+      </div>
     </>
   );
 };

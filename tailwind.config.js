@@ -10,6 +10,7 @@ export default {
       colors: {
         paragraph: "#535353",
         darkRed: "#df1e26",
+        darkGray: "#0B1221",
       },
     },
   },
