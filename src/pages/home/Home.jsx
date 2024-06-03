@@ -2,8 +2,7 @@ import Banner from "./Banner";
 
 const Home = () => {
   return (
-    <div>
-      <Banner></Banner>
+    <div className="mt-32">
       <Banner></Banner>
     </div>
   );
