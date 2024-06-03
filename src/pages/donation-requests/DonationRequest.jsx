@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import SectionHeader from "../../components/SectionHeader";
 
 const DonationRequest = () => {
@@ -32,7 +33,7 @@ const DonationRequest = () => {
               <td>20-03-2024</td>
               <td>10am</td>
               <td>
-                <button className="button">View Details</button>
+              <Link to="/details"><button className="button">View Details</button></Link>
               </td>
             </tr>
           </tbody>
