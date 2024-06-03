@@ -5,7 +5,7 @@
 
 @layer components {
   .active {
-    color: #333333;
+    color: #df1e26;
     text-decoration: underline;
     font-size: 20px;
     transition: all 0.1s;
@@ -14,7 +14,7 @@
   .button {
     padding: 10px 30px;
     border-radius: 5px;
-    background-color: #16a085;
+    background-color: #df1e26;
     color: white;
     transition: all 0.5s;
   }

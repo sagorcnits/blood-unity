@@ -23,7 +23,7 @@ const Navbar = () => {
             <FaBars onClick={handleSideBar}></FaBars>
           </div>
           <a className="text-2xl md:text-3xl  font-bold ">
-            Blood<span className="text-[#16a085]">Unity</span>
+            Blood<span className="text-[#DF1E26]">Unity</span>
           </a>
         </div>
 
