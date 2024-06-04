@@ -33,6 +33,7 @@ const AuthProvider = ({children}) => {
     const changeAuthState = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
       setDataLoad(false);
+      console.log(currentUser)
     });
     return () => {
       changeAuthState();

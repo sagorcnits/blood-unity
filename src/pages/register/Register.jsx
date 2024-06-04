@@ -1,21 +1,22 @@
+import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import useSelect from "../../hooks/useSelect";
-// /^(?=.*[a-z])(?=.*[A-Z])/
 const Register = () => {
   const [district, upzella] = useSelect();
   const { createUser } = useAuth();
+  const [pass, setPass] = useState(false);
 
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
-
+    reset,
     formState: { errors },
   } = useForm();
 
   const submit = (data) => {
-    console.log(data);
     const email = data.email;
     const name = data.name;
     const blood = data.blood;
@@ -24,11 +25,35 @@ const Register = () => {
     const image = data.image;
     const password = data.password;
     const confirmPassword = data.confirmPassword;
-const userInfo = {email,name,blood,district,upazila,image,password,confirmPassword}
-console.log(userInfo)
-    // createUser();
+  
+    const userInfo = {
+      email,
+      name,
+      blood,
+      district,
+      upazila,
+      image,
+      password,
+      confirmPassword,
+    };
+
+    if (password == confirmPassword) {
+        setPass(false)
+      createUser(email, password)
+        .then((res) => {
+          const user = res.user;
+          reset();
+          navigate("/");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }else {
+        setPass(true)
+    }
   };
 
+  
   return (
     <div
       className="hero h-screen  overflow-auto"
@@ -53,7 +78,9 @@ console.log(userInfo)
                   placeholder="email"
                   className="px-2 py-3 focus:outline-darkRed rounded-md w-full mt-2"
                 />
-                {errors.email && <p className="text-darkRed">Invalid Your Email</p>}
+                {errors.email && (
+                  <p className="text-darkRed">Invalid Your Email</p>
+                )}
               </div>
               <div className="flex-1">
                 <label className="font-bold">Name: </label>
@@ -123,7 +150,9 @@ console.log(userInfo)
                 type="file"
                 name="image"
               />
-              {errors.image && <p className="text-darkRed">Please Provide Your Image</p>}
+              {errors.image && (
+                <p className="text-darkRed">Please Provide Your Image</p>
+              )}
             </div>
             <div className="flex gap-4">
               <div className="flex-1">
@@ -133,24 +162,29 @@ console.log(userInfo)
                     pattern: {
                       value: /^(?=.*[a-z])(?=.*[A-Z])/,
                     },
+                    minLength: 6,
                   })}
                   name="password"
                   type="password"
                   placeholder="password"
                   className="px-2 py-3 focus:outline-darkRed rounded-md w-full"
                 />
-                {errors.password && <p className="text-darkRed">Password Invalid</p>}
+                {errors.password && (
+                  <p className="text-darkRed">Password Invalid</p>
+                )}
               </div>
               <div className="flex-1">
-                <label className="font-bold">Confirm: </label>
+                <label className="font-bold">Confirm Password: </label>
                 <input
-                  {...register("confirmPassword", {required: true, })}
+                  {...register("confirmPassword", { required: true })}
                   name="confirmPassword"
                   type="password"
                   placeholder="confirm password"
                   className="px-2 py-3 focus:outline-darkRed rounded-md w-full"
+                 
                 />
-                {errors.confirmPassword && <p className="text-darkRed">Password Not Match</p>}
+               
+                <p className="text-darkRed">{pass && "Password Not Match"}</p>
               </div>
             </div>
             <div className="space-y-2 ">

@@ -1,9 +1,11 @@
 import { useRef, useState } from "react";
 import { FaBars } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
 
 const Navbar = () => {
+  const { user, LogOutUser } = useAuth();
   const [isActive, setActive] = useState(true);
   const navRef = useRef();
   const handleSideBar = () => {
@@ -70,44 +72,51 @@ const Navbar = () => {
                   fundings
                 </NavLink>
               </li>
-             {isActive && <li>
-                <NavLink
-                  className={({ isActive, isPending }) =>
-                    isPending ? "pending" : isActive ? "active" : ""
-                  }
-                  to="/login"
-                >
-                  Login
-                </NavLink>
-              </li>}
             </ul>
 
-           {!isActive && <div className="dropdown dropdown-end">
-              <div
-                tabIndex={0}
-                role="button"
-                className="btn btn-ghost btn-circle avatar"
-              >
-                <div className="w-16 rounded-full">
-                  <img
-                    alt="Tailwind CSS Navbar component"
-                    src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
-                  />
+            {user ? (
+              <div className="dropdown dropdown-end">
+                <div
+                  tabIndex={0}
+                  role="button"
+                  className="btn btn-ghost btn-circle avatar"
+                >
+                  <div className="w-16 rounded-full">
+                    <img
+                      alt="Tailwind CSS Navbar component"
+                      src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
+                    />
+                  </div>
                 </div>
-              </div>
-              <ul
-                tabIndex={0}
-                className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
-              >
-                <li>
-                  <a>Dashboard</a>
-                </li>
+                <ul
+                  tabIndex={0}
+                  className="menu menu-sm dropdown-content mt-3 z-[1] p-4 shadow bg-base-100 rounded-box w-52 font-open-sans *:bgHover *:py-1 *:text-paragraph *:text-[23px]"
+                >
+                  <li>
+                    <Link>Dashboard</Link>
+                  </li>
 
-                <li>
-                  <a>Logout</a>
-                </li>
-              </ul>
-            </div>}
+                  <li>
+                    <Link>Setting</Link>
+                  </li>
+
+                  <li onClick={LogOutUser}>
+                    <Link>Logout</Link>
+                  </li>
+                </ul>
+              </div>
+            ) : (
+              <NavLink
+                className={({ isActive, isPending }) =>
+                  isPending ? "pending" : isActive ? "active" : ""
+                }
+                to="/login"
+              >
+                <button className="font-open-sans   duration-500 button">
+                  Login
+                </button>
+              </NavLink>
+            )}
           </div>
         </div>
       </div>

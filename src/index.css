@@ -23,4 +23,11 @@
     background-color: #1f2937;
     border: none;
   }
+
+  .bgHover:hover {
+    background-color: #df1e26;
+    transition: all 0.5s;
+    color: white;
+    border-radius: 5px;
+  }
 }
