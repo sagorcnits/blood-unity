@@ -86,7 +86,7 @@ const Login = () => {
                 </button>
               </div>
 
-              <p className="text-xs text-center sm:px-6 text-paragraph text-[17px] py-4">
+              <p className="text-[18px] text-center sm:px-6 text-paragraph  py-4">
                 Don't have an account?{" "}
                 <Link to="/register" className="underline text-darkRed">
                   Sign up

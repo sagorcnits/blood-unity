@@ -1,21 +1,21 @@
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 import useAuth from "../../hooks/useAuth";
+import useAxiosPublice from "../../hooks/useAxiosPublice";
 import useSelect from "../../hooks/useSelect";
 const Register = () => {
   const [district, upzella] = useSelect();
   const { createUser } = useAuth();
-  const [pass, setPass] = useState(false);
-
+  // const [pass, setPass] = useState(false);
+  const axiosPublic = useAxiosPublice();
   const navigate = useNavigate();
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors },
   } = useForm();
-
+// console.log(errors)
   const submit = (data) => {
     const email = data.email;
     const name = data.name;
@@ -25,7 +25,6 @@ const Register = () => {
     const image = data.image;
     const password = data.password;
     const confirmPassword = data.confirmPassword;
-  
     const userInfo = {
       email,
       name,
@@ -37,23 +36,33 @@ const Register = () => {
       confirmPassword,
     };
 
-    if (password == confirmPassword) {
-        setPass(false)
-      createUser(email, password)
-        .then((res) => {
-          const user = res.user;
-          reset();
-          navigate("/");
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }else {
-        setPass(true)
-    }
+    createUser(email, password)
+      .then((res) => {
+        const user = res.user;
+        axiosPublic
+          .post("/users", userInfo)
+          .then((res) => {
+            if(res.data.insertedId) {
+              Swal.fire({
+                icon: "success",
+                title: "Your work has been saved",
+                showConfirmButton: false,
+                timer: 1500
+              });
+            }
+            console.log(res.data);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+        reset();
+        navigate("/");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
-  
   return (
     <div
       className="hero h-screen  overflow-auto"
@@ -77,6 +86,7 @@ const Register = () => {
                   type="email"
                   placeholder="email"
                   className="px-2 py-3 focus:outline-darkRed rounded-md w-full mt-2"
+                  name="email"
                 />
                 {errors.email && (
                   <p className="text-darkRed">Invalid Your Email</p>
@@ -89,6 +99,7 @@ const Register = () => {
                   type="text"
                   placeholder="name"
                   className="px-2 py-3 focus:outline-darkRed rounded-md w-full mt-2"
+                  name="name"
                 />
                 {errors.name && <p className="text-darkRed">Invalid Name</p>}
               </div>
@@ -98,7 +109,7 @@ const Register = () => {
                 <label className="font-bold">Blood Group: </label>
                 <select
                   {...register("blood", { required: true })}
-                  name="blood"
+                 
                   className="w-full focus:outline-none p-3 rounded-lg cursor-pointer font-open-sans mt-2"
                 >
                   <option value="A+">A+</option>
@@ -115,7 +126,6 @@ const Register = () => {
                 <label className="font-bold">District: </label>
                 <select
                   {...register("district", { required: true })}
-                  name="district"
                   className="w-full focus:outline-none p-3 rounded-lg mt-2"
                 >
                   {district.map((item, id) => {
@@ -181,15 +191,15 @@ const Register = () => {
                   type="password"
                   placeholder="confirm password"
                   className="px-2 py-3 focus:outline-darkRed rounded-md w-full"
-                 
                 />
-               
-                <p className="text-darkRed">{pass && "Password Not Match"}</p>
+                {errors.confirmPassword && (
+                  <p className="text-darkRed">Password Invalid</p>
+                )}
               </div>
             </div>
             <div className="space-y-2 ">
               <div>
-                <button className="w-full px-8 py-3 font-semibold rounded-md button">
+                <button type="submit" className="w-full px-8 py-3 font-semibold rounded-md button">
                   Create An Acount
                 </button>
               </div>

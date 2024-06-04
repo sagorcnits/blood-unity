@@ -1,7 +1,8 @@
 /**
- * hover effect - pending contact page 
- * all section header - pending 
- * all banner image change - pending 
- * Blog Page card effect 
+ *contact page  hover effect -------- pending 
+ * all section header -------- pending 
+ * all banner image change ------ pending 
+ * Blog Page card effect ------- pending 
+ * register page confirm password --------- pending 
 
 */
