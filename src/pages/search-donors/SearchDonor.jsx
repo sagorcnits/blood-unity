@@ -1,31 +1,17 @@
-import { useEffect, useState } from "react";
+import useSelect from "../../hooks/useSelect";
 
 const SearchDonor = () => {
-  const [district, setDistrict] = useState([]);
-  const [upzella, setUpzella] = useState([]);
+  const [district, upzella] = useSelect();
 
-  useEffect(() => {
-    fetch("../../../public/distric.json")
-      .then((res) => res.json())
-      .then((data) => setDistrict(data));
-  }, []);
-
-  useEffect(() => {
-    fetch("../../../public/upzella.json")
-      .then((res) => res.json())
-      .then((data) => setUpzella(data));
-  }, []);
-
-
-  const handleSearch = (data)=> {
-    data.preventDefault()
+  const handleSearch = (data) => {
+    data.preventDefault();
     const form = data.target;
     const blood = form.blood.value;
     const district = form.district.value;
     const upzella = form.upzella.value;
 
     const searchInfo = { blood, district, upzella };
-  }
+  };
 
   return (
     <>
@@ -38,20 +24,25 @@ const SearchDonor = () => {
       >
         <div className="hero-overlay bg-opacity-60"></div>
         <div className="hero-content text-center  font-open-sans py-4">
-          <div >
+          <div>
             <h1 className="mb-5 text-3xl md:text-5xl font-bold text-white">
               Find Your Donor
             </h1>
             <p className="mb-5 text-white">
-              Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda <br />
-              excepturi exercitationem quasi. In deleniti eaque aut repudiandae <br />
+              Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda{" "}
+              <br />
+              excepturi exercitationem quasi. In deleniti eaque aut repudiandae{" "}
+              <br />
               et a id nisi.
             </p>
             <div className="flex justify-center gap-4 mx-auto mt-10 font-open-sans">
               <form onSubmit={handleSearch}>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4 font-open-sans">
                   <div>
-                    <select name="blood" className="w-[150px] focus:outline-none p-3 rounded-lg cursor-pointer font-open-sans">
+                    <select
+                      name="blood"
+                      className="w-[150px] focus:outline-none p-3 rounded-lg cursor-pointer font-open-sans"
+                    >
                       <option value="A+">A+</option>
                       <option value="A-">A-</option>
                       <option value="B+">B+</option>
@@ -63,7 +54,10 @@ const SearchDonor = () => {
                     </select>
                   </div>
                   <div>
-                    <select name="district" className="w-[150px] focus:outline-none p-3 rounded-lg">
+                    <select
+                      name="district"
+                      className="w-[150px] focus:outline-none p-3 rounded-lg"
+                    >
                       {district.map((item, id) => {
                         return (
                           <option key={id} value={item.name}>
@@ -74,10 +68,11 @@ const SearchDonor = () => {
                     </select>
                   </div>
                   <div>
-                    <select name="upzella"
+                    <select
+                      name="upzella"
                       className="w-[150px] focus:outline-none p-3 rounded-lg"
                     >
-                     {upzella.map((item, id) => {
+                      {upzella.map((item, id) => {
                         return (
                           <option key={id} value={item.name}>
                             {item.name}

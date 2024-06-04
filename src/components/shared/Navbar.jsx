@@ -70,9 +70,19 @@ const Navbar = () => {
                   fundings
                 </NavLink>
               </li>
+             {isActive && <li>
+                <NavLink
+                  className={({ isActive, isPending }) =>
+                    isPending ? "pending" : isActive ? "active" : ""
+                  }
+                  to="/login"
+                >
+                  Login
+                </NavLink>
+              </li>}
             </ul>
 
-            <div className="dropdown dropdown-end">
+           {!isActive && <div className="dropdown dropdown-end">
               <div
                 tabIndex={0}
                 role="button"
@@ -97,7 +107,7 @@ const Navbar = () => {
                   <a>Logout</a>
                 </li>
               </ul>
-            </div>
+            </div>}
           </div>
         </div>
       </div>
