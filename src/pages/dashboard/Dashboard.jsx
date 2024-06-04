@@ -1,36 +1,54 @@
+import { BiSolidDonateBlood, BiSolidDonateHeart } from "react-icons/bi";
+import { FaHome } from "react-icons/fa";
 import { NavLink, Outlet } from "react-router-dom";
 
 const Dashboard = () => {
-
-const admin = true;
+  const admin = true;
 
   return (
-    <div className="flex gap-2 ">
-      <div className="h-screen  bg-[rgb(209,160,84)] w-[20%] p-4">
-        <div className="cinzel-font mx-auto w-10/12 py-2">
-          <h1 className="font-bold md:text-[30px] ">BISTRO BOSS</h1>
-          <h3 className="md:text-[24px] tracking-[5.12px] font-semibold">
-            Restaurant
-          </h3>
+    <div className="flex gap-2 bg-[#eaecec] font-open-sans">
+      <div className="h-screen  bg-white w-[18%] p-4">
+        <div className="font-open-sans mx-auto w-10/12 py-2 border-b border-dashed">
+          <a className="text-2xl md:text-3xl  font-bold ">
+            Blood<span className="text-[#DF1E26]">Unity</span>
+          </a>
         </div>
-        <ul className="*:py-2 *:px-6">
+        <ul className="*:py-3 *:px-6 *:mt-4 *:bgHover">
           {admin ? (
             <>
               {" "}
-              <li>
-                <NavLink to="/dashboard/adminHome">Admin Home</NavLink>
+              <li className="dashbord-active flex items-center gap-4">
+                <FaHome className="text-[30px]"></FaHome>
+                <NavLink
+                  className={({ isActive, isPending }) =>
+                    isPending ? "pending" : isActive ? "dashbord-active" : ""
+                  }
+                  to="/dashboard"
+                >
+                  Home
+                </NavLink>
               </li>
-              <li>
-                <NavLink to="/dashboard/addItems">add items</NavLink>
+              <li className="dashbord-active flex items-center gap-4">
+                <BiSolidDonateBlood className="text-[30px]"></BiSolidDonateBlood>
+                <NavLink
+                  className={({ isActive, isPending }) =>
+                    isPending ? "pending" : isActive ? "dashbord-active" : ""
+                  }
+                  to="/dashboard/my-donation-requests"
+                >
+                  My Donation
+                </NavLink>
               </li>
-              <li>
-                <NavLink to="/dashboard/manageItems">manage items</NavLink>
-              </li>
-              <li>
-                <NavLink to="/dashboard/manageBookins">Manage bookings</NavLink>
-              </li>
-              <li>
-                <NavLink to="/dashboard/allUsers">all users</NavLink>
+              <li className="dashbord-active flex items-center gap-4">
+                <BiSolidDonateHeart className="text-[30px]"></BiSolidDonateHeart>
+                <NavLink
+                  className={({ isActive, isPending }) =>
+                    isPending ? "pending" : isActive ? "dashbord-active" : ""
+                  }
+                  to="/dashboard/create-donation-request"
+                >
+                  Create Donation
+                </NavLink>
               </li>
             </>
           ) : (

@@ -28,12 +28,15 @@ const AuthProvider = ({children}) => {
       });
   };
 
+
+
+
   // curren user information
   useEffect(() => {
     const changeAuthState = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
       setDataLoad(false);
-      // console.log(currentUser)
+      console.log(currentUser)
     });
     return () => {
       changeAuthState();

@@ -1,6 +1,8 @@
+import { updateProfile } from "firebase/auth";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import { auth } from "../../../firebase_config";
 import useAuth from "../../hooks/useAuth";
 import useAxiosPublice from "../../hooks/useAxiosPublice";
 import useSelect from "../../hooks/useSelect";
@@ -12,37 +14,35 @@ const imageBbApi = `https://api.imgbb.com/1/upload?key=f192ef5d844484b8dafe780a5
 const Register = () => {
   const [district, upzella] = useSelect();
   const { createUser } = useAuth();
-  // const [pass, setPass] = useState(false);
   const axiosPublic = useAxiosPublice();
   const navigate = useNavigate();
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm({
-    defaultValues:{
-      upazila:"Debidwar",
-      district:"Comilla"
-    }
+    defaultValues: {
+      upazila: "Debidwar",
+      district: "Comilla",
+    },
   });
-  console.log(errors)
+
   const submit = async (data) => {
-    console.log("ok")
-    const imageData = { image: data.image[0]};
+    // console.log("ok");
+    const imageData = { image: data.image[0] };
     const res = await axiosPublic.post(imageBbApi, imageData, {
       headers: {
         "content-type": "multipart/form-data",
       },
     });
 
-    console.log(res);
-
     const email = data.email;
     const name = data.name;
     const blood = data.blood;
     const district = data.district;
     const upazila = data.upazila;
-    const image = data.image;
+    const image = res.data.data.display_url;
     const password = data.password;
     const confirmPassword = data.confirmPassword;
     const userInfo = {
@@ -55,10 +55,21 @@ const Register = () => {
       password,
       confirmPassword,
     };
-
+    // create user
     createUser(email, password)
       .then((res) => {
         const user = res.user;
+        updateProfile(auth.currentUser, {
+          displayName: name,
+          photoURL: image,
+        })
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+
         axiosPublic
           .post("/users", userInfo)
           .then((res) => {
@@ -69,14 +80,16 @@ const Register = () => {
                 showConfirmButton: false,
                 timer: 1500,
               });
+              reset()
+              setTimeout(() => {
+                navigate("/");
+              }, 2000);
             }
-            console.log(res.data);
           })
           .catch((error) => {
             console.log(error);
           });
-        reset();
-        navigate("/");
+      
       })
       .catch((error) => {
         console.log(error);
