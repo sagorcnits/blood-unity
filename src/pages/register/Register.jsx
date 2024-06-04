@@ -4,6 +4,11 @@ import Swal from "sweetalert2";
 import useAuth from "../../hooks/useAuth";
 import useAxiosPublice from "../../hooks/useAxiosPublice";
 import useSelect from "../../hooks/useSelect";
+
+// ImageBB key and api
+const imageBbKey = import.meta.env.VITE_IMAGE_BB_KEY;
+const imageBbApi = `https://api.imgbb.com/1/upload?key=f192ef5d844484b8dafe780a5acb5cbc`;
+
 const Register = () => {
   const [district, upzella] = useSelect();
   const { createUser } = useAuth();
@@ -14,9 +19,24 @@ const Register = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
-// console.log(errors)
-  const submit = (data) => {
+  } = useForm({
+    defaultValues:{
+      upazila:"Debidwar",
+      district:"Comilla"
+    }
+  });
+  console.log(errors)
+  const submit = async (data) => {
+    console.log("ok")
+    const imageData = { image: data.image[0]};
+    const res = await axiosPublic.post(imageBbApi, imageData, {
+      headers: {
+        "content-type": "multipart/form-data",
+      },
+    });
+
+    console.log(res);
+
     const email = data.email;
     const name = data.name;
     const blood = data.blood;
@@ -42,12 +62,12 @@ const Register = () => {
         axiosPublic
           .post("/users", userInfo)
           .then((res) => {
-            if(res.data.insertedId) {
+            if (res.data.insertedId) {
               Swal.fire({
                 icon: "success",
                 title: "Your work has been saved",
                 showConfirmButton: false,
-                timer: 1500
+                timer: 1500,
               });
             }
             console.log(res.data);
@@ -109,7 +129,6 @@ const Register = () => {
                 <label className="font-bold">Blood Group: </label>
                 <select
                   {...register("blood", { required: true })}
-                 
                   className="w-full focus:outline-none p-3 rounded-lg cursor-pointer font-open-sans mt-2"
                 >
                   <option value="A+">A+</option>
@@ -197,9 +216,12 @@ const Register = () => {
                 )}
               </div>
             </div>
-            <div className="space-y-2 ">
+            <div className="space-y-2 mt-6">
               <div>
-                <button type="submit" className="w-full px-8 py-3 font-semibold rounded-md button">
+                <button
+                  type="submit"
+                  className="w-full px-8 py-3 font-semibold rounded-md button"
+                >
                   Create An Acount
                 </button>
               </div>

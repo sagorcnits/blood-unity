@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import Root from "../layout/Root";
 import Blog from "../pages/blog/Blog";
+import Dashboard from "../pages/dashboard/Dashboard";
 import Details from "../pages/details/Details";
 import DonationRequest from "../pages/donation-requests/DonationRequest";
 import Funding from "../pages/funding/Funding";
@@ -55,6 +56,11 @@ const router = createBrowserRouter([
     path: "/login",
     element: <Login></Login>,
   },
+
+  {
+    path:"dashboard",
+    element:<Dashboard></Dashboard>
+  }
 
 ]);
 

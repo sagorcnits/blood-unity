@@ -5,13 +5,13 @@ const useSelect = () => {
   const [upzella, setUpzella] = useState([]);
 
   useEffect(() => {
-    fetch("../../../public/distric.json")
+    fetch("/distric.json")
       .then((res) => res.json())
       .then((data) => setDistrict(data));
   }, []);
 
   useEffect(() => {
-    fetch("../../../public/upzella.json")
+    fetch("/upzella.json")
       .then((res) => res.json())
       .then((data) => setUpzella(data));
   }, []);
