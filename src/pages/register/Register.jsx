@@ -80,7 +80,7 @@ const Register = () => {
                 showConfirmButton: false,
                 timer: 1500,
               });
-              reset()
+              reset();
               setTimeout(() => {
                 navigate("/");
               }, 2000);
@@ -89,7 +89,6 @@ const Register = () => {
           .catch((error) => {
             console.log(error);
           });
-      
       })
       .catch((error) => {
         console.log(error);
@@ -187,11 +186,14 @@ const Register = () => {
               </select>
             </div>
             <div className="text-start">
+              <label className="font-bold">Image:</label>
               <input
                 {...register("image", { required: true })}
                 type="file"
                 name="image"
+                className="w-full rounded-md py-[9px] px-4 focus:outline-none bg-white mt-2 cursor-pointer"
               />
+
               {errors.image && (
                 <p className="text-darkRed">Please Provide Your Image</p>
               )}
