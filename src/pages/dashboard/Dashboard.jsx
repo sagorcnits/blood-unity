@@ -13,41 +13,53 @@ const Dashboard = () => {
             Blood<span className="text-[#DF1E26]">Unity</span>
           </a>
         </div>
-        <ul className="*:py-3 *:px-6 *:mt-4 *:bgHover">
+        <ul className="*:mt-4 ">
           {admin ? (
             <>
               {" "}
-              <li className="dashbord-active flex items-center gap-4">
-                <FaHome className="text-[30px]"></FaHome>
+              <li>
                 <NavLink
                   className={({ isActive, isPending }) =>
-                    isPending ? "pending" : isActive ? "dashbord-active" : ""
+                    isPending
+                      ? "pending"
+                      : isActive
+                      ? "dashbord-active sideBar-nav"
+                      : "sideBar-nav"
                   }
-                  to="/dashboard"
+                  to="/dashboard/home"
                 >
-                  Home
+                  <FaHome className="text-[30px]"></FaHome>
+                  <span>Home</span>
                 </NavLink>
               </li>
-              <li className="dashbord-active flex items-center gap-4">
-                <BiSolidDonateBlood className="text-[30px]"></BiSolidDonateBlood>
+              <li>
                 <NavLink
                   className={({ isActive, isPending }) =>
-                    isPending ? "pending" : isActive ? "dashbord-active" : ""
+                    isPending
+                      ? "pending"
+                      : isActive
+                      ? "dashbord-active  sideBar-nav"
+                      : "sideBar-nav"
                   }
                   to="/dashboard/my-donation-requests"
                 >
-                  My Donation
+                  <BiSolidDonateBlood className="text-[30px]"></BiSolidDonateBlood>
+                  <span>My Donation</span>
                 </NavLink>
               </li>
-              <li className="dashbord-active flex items-center gap-4">
-                <BiSolidDonateHeart className="text-[30px]"></BiSolidDonateHeart>
+              <li>
                 <NavLink
                   className={({ isActive, isPending }) =>
-                    isPending ? "pending" : isActive ? "dashbord-active" : ""
+                    isPending
+                      ? "pending flex"
+                      : isActive
+                      ? "dashbord-active sideBar-nav"
+                      : "sideBar-nav"
                   }
                   to="/dashboard/create-donation-request"
                 >
-                  Create Donation
+                  <BiSolidDonateHeart className="text-[30px]"></BiSolidDonateHeart>
+                  <span> Create Donation</span>
                 </NavLink>
               </li>
             </>

@@ -64,7 +64,7 @@ const router = createBrowserRouter([
     element:<Dashboard></Dashboard>,
     children:[
       {
-        path:"",
+        path:"/dashboard/home",
         element:<HomeDonor></HomeDonor>
       }, 
 

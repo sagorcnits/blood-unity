@@ -14,8 +14,23 @@
   .dashbord-active {
     background-color: #df1e26;
     color: white;
-    width: 100%;
     border-radius: 5px;
+  }
+
+  .sideBar-nav {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 10px 30px;
+  }
+
+  .sideBar-nav:hover {
+    padding: 10px 30px;
+    border-radius: 5px;
+    background-color: #df1e26;
+    color: white;
+    transition: all 0.5s;
   }
 
   .button {
