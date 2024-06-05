@@ -45,6 +45,7 @@ const CreateDonation = () => {
       time,
       address,
       whyNeed,
+      status:"Pending"
     };
 
     axiosPublic.post("/donations", createRequest)
@@ -212,16 +213,4 @@ const CreateDonation = () => {
 
 export default CreateDonation;
 
-/*
-Requester Name (read-only)
-Requester Email (read-only)
-Recipient Name
-Recipient District (select option)
-Recipient Upazila (select option)
-Hospital Name
-Full Address Line
-Donation Date
-Donation Time
-Request Message
-Request Button
-*/
+
