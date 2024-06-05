@@ -37,7 +37,7 @@ const Navbar = () => {
             {user ? (
               <div className="dropdown dropdown-end">
                 <div className="flex gap-4 items-center font-open-sans text-paragraph">
-                  <div>{user?.displayName}</div>
+                  <div className="hidden md:block">{user?.displayName}</div>
                   <div
                     tabIndex={0}
                     role="button"

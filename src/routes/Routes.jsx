@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import Root from "../layout/Root";
 import Blog from "../pages/blog/Blog";
 import Dashboard from "../pages/dashboard/Dashboard";
+import CreateDonation from "../pages/dashboard/donorPages/create-donation/CreateDonation";
 import HomeDonor from "../pages/dashboard/donorPages/home/HomeDonor";
 import MyDonation from "../pages/dashboard/donorPages/my-donation/MyDonation";
 import Profile from "../pages/dashboard/shared/Profile";
@@ -81,7 +82,7 @@ const router = createBrowserRouter([
 
       {
         path:"/dashboard/create-donation-request",
-        element:<MyDonation></MyDonation>
+        element:<CreateDonation></CreateDonation>
       },
 
      
