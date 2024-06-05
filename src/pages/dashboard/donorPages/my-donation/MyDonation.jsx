@@ -10,8 +10,8 @@ const MyDonation = () => {
       </h1>
       {donations.length > 0 ? (
         <div className="lg:container p-2 mx-auto font-open-sans mt-10">
-          <div className="overflow-x-auto rounded-lg">
-            <table className="lg:w-full w-[1300px] md:w-[1200px]">
+          <div className="overflow-x-auto rounded-lg md:w-[1224px]">
+            <table className="w-[1300px] md:w-[1400px]">
               <thead>
                 <tr className="text-left text-[20px]">
                   <th className="p-3">recipient name</th>
@@ -34,7 +34,7 @@ const MyDonation = () => {
                       className="border-b border-opacity-20 dark:border-gray-300 dark:bg-gray-50 h-[80px] *:text-left text-[17px]"
                     >
                       <td className="p-3">
-                        <p>{name}</p>
+                        <p>{recipientName}</p>
                       </td>
                       <td className="p-3">
                         <p>{address}</p>
