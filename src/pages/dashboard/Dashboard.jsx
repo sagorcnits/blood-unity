@@ -146,7 +146,7 @@ const Dashboard = () => {
           </p>
         </div>
       </div>
-      <div className="w-full bg-[#eaecec] lg:ml-[250px] h-full lg:h-screen">
+      <div className="w-full bg-[#eaecec] lg:ml-[250px] h-full">
         <Navbar></Navbar>
         <Outlet></Outlet>
       </div>

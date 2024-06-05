@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 const useSelect = () => {
   const [district, setDistrict] = useState([]);
-  const [upzella, setUpzella] = useState([]);
+  const [upazella, setUpazella] = useState([]);
 
   useEffect(() => {
     fetch("/distric.json")
@@ -13,10 +13,10 @@ const useSelect = () => {
   useEffect(() => {
     fetch("/upzella.json")
       .then((res) => res.json())
-      .then((data) => setUpzella(data));
+      .then((data) => setUpazella(data));
   }, []);
 
-  return [district, upzella];
+  return [district, upazella];
 };
 
 export default useSelect;
