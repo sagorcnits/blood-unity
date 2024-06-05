@@ -10,7 +10,7 @@ const Dashboard = () => {
 
   return (
     <div className="flex gap-2  font-open-sans">
-      <div className="h-screen  bg-white w-[250px] fixed ">
+      <div className="h-screen  bg-white w-[250px] fixed hidden lg:block">
         <div className="font-open-sans mx-auto w-10/12 py-4 border-b border-dashed">
           <a className="text-2xl md:text-3xl  font-bold ">
             Blood<span className="text-[#DF1E26]">Unity</span>
@@ -146,7 +146,7 @@ const Dashboard = () => {
           </p>
         </div>
       </div>
-      <div className="w-full bg-[#eaecec] ml-[250px] h-screen">
+      <div className="w-full bg-[#eaecec] lg:ml-[250px] h-full">
         <Navbar></Navbar>
         <Outlet></Outlet>
       </div>

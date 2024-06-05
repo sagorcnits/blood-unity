@@ -1,6 +1,9 @@
 import { useRef, useState } from "react";
-import { FaBars } from "react-icons/fa";
+import { BiSolidDonateBlood } from "react-icons/bi";
+import { CgProfile } from "react-icons/cg";
+import { FaBars, FaHome } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
+import { MdCreate, MdEmail } from "react-icons/md";
 import { Link, NavLink } from "react-router-dom";
 import WelcomeMessage from "../../../components/WelcomeMessage";
 import useAuth from "../../../hooks/useAuth";
@@ -18,15 +21,10 @@ const Navbar = () => {
     }
   };
 
-
-
-
-
-
-
+  const admin = true;
   return (
     <>
-      <div className="navbar  max-w-7xl mx-auto font-open-sans   px-8 py-3 ">
+      <div className="navbar  font-open-sans px-4 lg:px-8 py-3">
         <div className="flex-1 gap-2">
           <div className="text-[20px] lg:hidden">
             <FaBars onClick={handleSideBar}></FaBars>
@@ -95,30 +93,137 @@ const Navbar = () => {
             className="text-[34px]  cursor-pointer text-white"
           ></IoClose>
         </div>
-        <ul className="items-center gap-4 font-inter text-white p-4">
-          <li className="py-4 text-center mt-2 hover:bg-white rounded-lg hover:text-black duration-500">
-            <NavLink onClick={handleSideBar} to="/">
-              Home
-            </NavLink>
-          </li>
-
-          <li className="py-4 text-center mt-2 hover:bg-white rounded-lg hover:text-black duration-500">
-            <NavLink onClick={handleSideBar} to="/donation-requests">
-              donation requests
-            </NavLink>
-          </li>
-
-          <li className="py-4 text-center mt-2 hover:bg-white rounded-lg hover:text-black duration-500">
-            <NavLink onClick={handleSideBar} to="/blog">
-              Blog
-            </NavLink>
-          </li>
-          <li className="py-4 text-center mt-2 hover:bg-white rounded-lg hover:text-black duration-500">
-            <NavLink onClick={handleSideBar} to="/fundings">
-              Funding
-            </NavLink>
-          </li>
-        </ul>
+        <div className="h-screen  bg-white w-full">
+          <ul className="*:mt-4 border-b pb-6 border-dashed p-3">
+            {admin ? (
+              <>
+                {" "}
+                <li   onClick={handleSideBar}>
+                  <NavLink
+                    className={({ isActive, isPending }) =>
+                      isPending
+                        ? "pending"
+                        : isActive
+                        ? "dashbord-active sideBar-nav"
+                        : "sideBar-nav"
+                    }
+                    to="/dashboard/home"
+                  >
+                    <FaHome className="text-[30px]"></FaHome>
+                    <span>Donor Home</span>
+                  </NavLink>
+                </li>
+                <li   onClick={handleSideBar}>
+                  <NavLink
+                    className={({ isActive, isPending }) =>
+                      isPending
+                        ? "pending"
+                        : isActive
+                        ? "dashbord-active  sideBar-nav"
+                        : "sideBar-nav"
+                    }
+                    to="/dashboard/my-donation-requests"
+                  >
+                    <BiSolidDonateBlood className="text-[30px]"></BiSolidDonateBlood>
+                    <span>My Donation</span>
+                  </NavLink>
+                </li>
+                <li   onClick={handleSideBar}>
+                  <NavLink
+                    className={({ isActive, isPending }) =>
+                      isPending
+                        ? "pending flex"
+                        : isActive
+                        ? "dashbord-active sideBar-nav"
+                        : "sideBar-nav"
+                    }
+                    to="/dashboard/create-donation-request"
+                  >
+                    <MdCreate className="text-[30px]"></MdCreate>
+                    <span> Create donation</span>
+                  </NavLink>
+                </li>
+                <li   onClick={handleSideBar}>
+                  <NavLink
+                    className={({ isActive, isPending }) =>
+                      isPending
+                        ? "pending flex"
+                        : isActive
+                        ? "dashbord-active sideBar-nav"
+                        : "sideBar-nav"
+                    }
+                    to="/dashboard/profile"
+                  >
+                    <CgProfile className="text-[30px]"></CgProfile>
+                    <span>Profile</span>
+                  </NavLink>
+                </li>
+              </>
+            ) : (
+              <>
+                {" "}
+                <li>
+                  <NavLink to="/dashboard/home">User Home</NavLink>
+                </li>
+                <li>
+                  <NavLink to="/dashboard/reservation">reservation</NavLink>
+                </li>
+                <li>
+                  <NavLink to="/dashboard/payment">payment history</NavLink>
+                </li>
+                <li>
+                  <NavLink to="/dashboard/myCart">my cart</NavLink>
+                </li>
+                <li>
+                  <NavLink to="/dashboard/addReview">add review</NavLink>
+                </li>
+                <li>
+                  <NavLink to="/dashboard/myBooking">my booking</NavLink>
+                </li>
+              </>
+            )}
+          </ul>
+          <ul className="p-4 *:mt-4">
+            <li>
+              <NavLink
+                to="/"
+                className={({ isActive, isPending }) =>
+                  isPending
+                    ? "pending"
+                    : isActive
+                    ? "dashbord-active sideBar-nav"
+                    : "sideBar-nav"
+                }
+              >
+                <FaHome className="text-[30px]"></FaHome>
+                <span>Home</span>
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                className={({ isActive, isPending }) =>
+                  isPending
+                    ? "pending"
+                    : isActive
+                    ? "dashbord-active sideBar-nav"
+                    : "sideBar-nav"
+                }
+                to="/contact"
+              >
+                <MdEmail className="text-[30px]"></MdEmail>
+                <span>Contact</span>
+              </NavLink>
+            </li>
+          </ul>
+          <div className="absolute bottom-0 text-center right-0 left-0 p-4">
+            <p>
+              ©2024{" "}
+              <a className="font-bold">
+                Blood<span className="text-[#DF1E26]">Unity</span>
+              </a>{" "}
+            </p>
+          </div>
+        </div>
       </div>
     </>
   );
