@@ -4,6 +4,7 @@ import Blog from "../pages/blog/Blog";
 import Dashboard from "../pages/dashboard/Dashboard";
 import HomeDonor from "../pages/dashboard/donorPages/home/HomeDonor";
 import MyDonation from "../pages/dashboard/donorPages/my-donation/MyDonation";
+import Profile from "../pages/dashboard/shared/Profile";
 import Details from "../pages/details/Details";
 import DonationRequest from "../pages/donation-requests/DonationRequest";
 import Funding from "../pages/funding/Funding";
@@ -69,6 +70,11 @@ const router = createBrowserRouter([
       }, 
 
       {
+        path:"/dashboard/profile",
+        element:<Profile></Profile>
+      },
+
+      {
         path:"/dashboard/my-donation-requests",
         element:<MyDonation></MyDonation>
       },
@@ -76,7 +82,9 @@ const router = createBrowserRouter([
       {
         path:"/dashboard/create-donation-request",
         element:<MyDonation></MyDonation>
-      }
+      },
+
+     
     ]
   }
 
