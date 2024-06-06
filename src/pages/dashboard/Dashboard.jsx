@@ -1,25 +1,31 @@
 import { BiSolidDonateBlood } from "react-icons/bi";
 import { CgProfile } from "react-icons/cg";
-import { FaHome } from "react-icons/fa";
-import { MdCreate, MdEmail } from "react-icons/md";
+import { FaHome, FaUser } from "react-icons/fa";
+import {
+  MdBloodtype,
+  MdContentPasteGo,
+  MdCreate,
+  MdPermContactCalendar,
+} from "react-icons/md";
 import { NavLink, Outlet } from "react-router-dom";
 import Navbar from "./shared/Navbar";
 
 const Dashboard = () => {
   const admin = true;
+  const donor = true;
+  const volunteer = true;
 
   return (
-    <div className="flex gap-2  font-open-sans">
+    <div className="flex gap-2  font-open-sans ">
       <div className="h-screen  bg-white w-[250px] fixed hidden lg:block">
         <div className="font-open-sans mx-auto w-10/12 py-4 border-b border-dashed">
           <a className="text-2xl md:text-3xl  font-bold ">
             Blood<span className="text-[#DF1E26]">Unity</span>
           </a>
         </div>
-        <ul className="*:mt-4 border-b pb-6 border-dashed p-3">
-          {admin ? (
-            <>
-              {" "}
+        {admin ? (
+          <>
+            <ul className="*:mt-4 border-b pb-6 border-dashed p-3">
               <li>
                 <NavLink
                   className={({ isActive, isPending }) =>
@@ -29,10 +35,10 @@ const Dashboard = () => {
                       ? "dashbord-active sideBar-nav"
                       : "sideBar-nav"
                   }
-                  to="/dashboard/home"
+                  to="/dashboard/adminHome"
                 >
                   <FaHome className="text-[30px]"></FaHome>
-                  <span>Donor Home</span>
+                  <span>Admin Home</span>
                 </NavLink>
               </li>
               <li>
@@ -41,28 +47,43 @@ const Dashboard = () => {
                     isPending
                       ? "pending"
                       : isActive
-                      ? "dashbord-active  sideBar-nav"
+                      ? "dashbord-active sideBar-nav"
                       : "sideBar-nav"
                   }
-                  to="/dashboard/my-donation-requests"
+                  to="/dashboard/all-users"
                 >
-                  <BiSolidDonateBlood className="text-[30px]"></BiSolidDonateBlood>
-                  <span>My Donation</span>
+                  <FaUser className="text-[30px]"></FaUser>
+                  <span>Users</span>
                 </NavLink>
               </li>
               <li>
                 <NavLink
                   className={({ isActive, isPending }) =>
                     isPending
-                      ? "pending flex"
+                      ? "pending"
                       : isActive
                       ? "dashbord-active sideBar-nav"
                       : "sideBar-nav"
                   }
-                  to="/dashboard/create-donation-request"
+                  to="/dashboard/all-blood-donation-request"
                 >
-                  <MdCreate className="text-[30px]"></MdCreate>
-                  <span> Create donation</span>
+                  <MdBloodtype className="text-[30px] "></MdBloodtype>
+                  <span>Donations</span>
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  className={({ isActive, isPending }) =>
+                    isPending
+                      ? "pending"
+                      : isActive
+                      ? "dashbord-active sideBar-nav"
+                      : "sideBar-nav"
+                  }
+                  to="/dashboard/content-management"
+                >
+                  <MdContentPasteGo className="text-[30px] "></MdContentPasteGo>
+                  <span>Content</span>
                 </NavLink>
               </li>
               <li>
@@ -80,35 +101,104 @@ const Dashboard = () => {
                   <span>Profile</span>
                 </NavLink>
               </li>
-            </>
-          ) : (
-            <>
-              {" "}
-              <li>
-                <NavLink to="/dashboard/home">User Home</NavLink>
-              </li>
-              <li>
-                <NavLink to="/dashboard/reservation">reservation</NavLink>
-              </li>
-              <li>
-                <NavLink to="/dashboard/payment">payment history</NavLink>
-              </li>
-              <li>
-                <NavLink to="/dashboard/myCart">my cart</NavLink>
-              </li>
-              <li>
-                <NavLink to="/dashboard/addReview">add review</NavLink>
-              </li>
-              <li>
-                <NavLink to="/dashboard/myBooking">my booking</NavLink>
-              </li>
-            </>
-          )}
-        </ul>
-        <ul className="p-4 *:mt-4">
+            </ul>
+          </>
+        ) : (
+          <>
+            <ul className="*:mt-4 border-b pb-6 border-dashed p-3">
+              {donor ? (
+                <>
+                  {" "}
+                  <li>
+                    <NavLink
+                      className={({ isActive, isPending }) =>
+                        isPending
+                          ? "pending"
+                          : isActive
+                          ? "dashbord-active sideBar-nav"
+                          : "sideBar-nav"
+                      }
+                      to="/dashboard/home"
+                    >
+                      <FaHome className="text-[30px]"></FaHome>
+                      <span>Donor Home</span>
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      className={({ isActive, isPending }) =>
+                        isPending
+                          ? "pending"
+                          : isActive
+                          ? "dashbord-active  sideBar-nav"
+                          : "sideBar-nav"
+                      }
+                      to="/dashboard/my-donation-requests"
+                    >
+                      <BiSolidDonateBlood className="text-[30px]"></BiSolidDonateBlood>
+                      <span>My Donation</span>
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      className={({ isActive, isPending }) =>
+                        isPending
+                          ? "pending flex"
+                          : isActive
+                          ? "dashbord-active sideBar-nav"
+                          : "sideBar-nav"
+                      }
+                      to="/dashboard/create-donation-request"
+                    >
+                      <MdCreate className="text-[30px]"></MdCreate>
+                      <span> Create donation</span>
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      className={({ isActive, isPending }) =>
+                        isPending
+                          ? "pending flex"
+                          : isActive
+                          ? "dashbord-active sideBar-nav"
+                          : "sideBar-nav"
+                      }
+                      to="/dashboard/profile"
+                    >
+                      <CgProfile className="text-[30px]"></CgProfile>
+                      <span>Profile</span>
+                    </NavLink>
+                  </li>
+                </>
+              ) : (
+                <>
+                  {" "}
+                  <li>
+                    <NavLink to="/dashboard/home">User Home</NavLink>
+                  </li>
+                  <li>
+                    <NavLink to="/dashboard/reservation">reservation</NavLink>
+                  </li>
+                  <li>
+                    <NavLink to="/dashboard/payment">payment history</NavLink>
+                  </li>
+                  <li>
+                    <NavLink to="/dashboard/myCart">my cart</NavLink>
+                  </li>
+                  <li>
+                    <NavLink to="/dashboard/addReview">add review</NavLink>
+                  </li>
+                  <li>
+                    <NavLink to="/dashboard/myBooking">my booking</NavLink>
+                  </li>
+                </>
+              )}
+            </ul>
+          </>
+        )}
+        <ul className="*:mt-4 pb-6 p-3">
           <li>
             <NavLink
-              to="/"
               className={({ isActive, isPending }) =>
                 isPending
                   ? "pending"
@@ -116,8 +206,9 @@ const Dashboard = () => {
                   ? "dashbord-active sideBar-nav"
                   : "sideBar-nav"
               }
+              to="/"
             >
-              <FaHome className="text-[30px]"></FaHome>
+              <FaHome className="text-[30px] "></FaHome>
               <span>Home</span>
             </NavLink>
           </li>
@@ -130,9 +221,9 @@ const Dashboard = () => {
                   ? "dashbord-active sideBar-nav"
                   : "sideBar-nav"
               }
-              to="/contact"
+              to="/dashboard/contact"
             >
-              <MdEmail className="text-[30px]"></MdEmail>
+              <MdPermContactCalendar className="text-[30px] "></MdPermContactCalendar>
               <span>Contact</span>
             </NavLink>
           </li>
@@ -146,10 +237,10 @@ const Dashboard = () => {
           </p>
         </div>
       </div>
-      <div className="w-full bg-[#eaecec] lg:ml-[250px] h-screen">
+      <main className="w-full bg-[#eaecec] lg:ml-[250px] h-screen ">
         <Navbar></Navbar>
         <Outlet></Outlet>
-      </div>
+      </main>
     </div>
   );
 };
