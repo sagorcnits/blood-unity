@@ -6,7 +6,7 @@ const useUser = () => {
 const axiosPublic = useAxiosPublice()
 const {user} = useAuth()
     const { data:users=[], refetch} = useQuery({
-        queryKey: ['users',user?.email],
+        queryKey: ['user',user?.email],
         queryFn: async () => {
             const res = await axiosPublic.get(`/users?email=${user?.email}`)
             return res.data;

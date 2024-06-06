@@ -84,6 +84,7 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/all-users",
         element: <Users></Users>,
+        loader:()=>fetch("")
       },
 
       {

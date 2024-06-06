@@ -9,32 +9,43 @@ const MyDonation = () => {
         My Donation Request page
       </h1>
       {donations.length > 0 ? (
-        <div className="lg:container p-2 mx-auto font-open-sans mt-10">
-          <div className="overflow-x-auto rounded-lg md:w-[1224px]">
-            <table className="w-[1300px] md:w-[1400px]">
+        <div className="p-2 mx-auto font-open-sans mt-10">
+          <div className="overflow-auto rounded-lg w-full">
+            <table className="w-full">
               <thead>
-                <tr className="text-left text-[20px]">
-                  <th className="p-3">recipient name</th>
+                <tr className="text-left text-[16px] bg-[#d1d0d0]">
+                  <th className="p-3">Recipient</th>
                   <th className="p-3">Location</th>
                   <th className="p-3">Date</th>
                   <th className="p-3">Time</th>
                   <th className="p-3">Donor Information</th>
                   <th className="p-3">Edit</th>
                   <th className="p-3">Delete</th>
-                  <th className="p-3">View Details</th>
+                  <th className="p-3">Details</th>
                   <th className="p-3">Status</th>
                 </tr>
               </thead>
               <tbody>
                 {donations?.map((userItem, id) => {
-                  const {name,email,recipientName,hospitalName,district,date,time,address,whyNeed,status} = userItem;
+                  const {
+                    name,
+                    email,
+                    recipientName,
+                    hospitalName,
+                    district,
+                    date,
+                    time,
+                    address,
+                    whyNeed,
+                    status,
+                  } = userItem;
                   return (
                     <tr
                       key={id}
-                      className="border-b border-opacity-20 dark:border-gray-300 dark:bg-gray-50 h-[80px] *:text-left text-[17px]"
+                      className="border-b border-opacity-20 dark:border-gray-300 dark:bg-gray-50 h-[80px] *:text-left "
                     >
                       <td className="p-3">
-                        <p>{recipientName}</p>
+                        <p className="font-bold">{recipientName}</p>
                       </td>
                       <td className="p-3">
                         <p>{address}</p>
@@ -56,7 +67,7 @@ const MyDonation = () => {
                         <MdDeleteForever className="text-[30px] cursor-pointer text-darkRed"></MdDeleteForever>
                       </td>
                       <td className="p-3">
-                        <button className="table-btn">View Detials</button>
+                        <button className="table-btn">Detials</button>
                       </td>
                       <td className="p-3 ">
                         <div className="flex items-center gap-2">

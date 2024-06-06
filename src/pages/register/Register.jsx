@@ -54,6 +54,8 @@ const Register = () => {
       image,
       password,
       confirmPassword,
+      status:"active",
+      role:"donor"
     };
     // create user
     createUser(email, password)

@@ -44,7 +44,7 @@ const Profile = () => {
       <h1 className="text-center font-open-sans font-bold text-[40px]">
         Profile Your
       </h1>
-      <div className="mt-10 px-2 md:px-20 font-open-sans text-paragraph h-screen">
+      <div className="mt-4 px-2 md:px-20 font-open-sans text-paragraph">
         <div className="text-end font-semibold">
           <button className="button">Edit</button>
         </div>

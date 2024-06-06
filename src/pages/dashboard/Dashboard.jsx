@@ -25,7 +25,7 @@ const Dashboard = () => {
         </div>
         {admin ? (
           <>
-            <ul className="*:mt-4 border-b pb-6 border-dashed p-3">
+            <ul className="*:mt-2 border-b pb-6 border-dashed p-3">
               <li>
                 <NavLink
                   className={({ isActive, isPending }) =>
@@ -37,7 +37,7 @@ const Dashboard = () => {
                   }
                   to="/dashboard/adminHome"
                 >
-                  <FaHome className="text-[30px]"></FaHome>
+                  <FaHome className="text-[24px]"></FaHome>
                   <span>Admin Home</span>
                 </NavLink>
               </li>
@@ -52,7 +52,7 @@ const Dashboard = () => {
                   }
                   to="/dashboard/all-users"
                 >
-                  <FaUser className="text-[30px]"></FaUser>
+                  <FaUser className="text-[24px]"></FaUser>
                   <span>Users</span>
                 </NavLink>
               </li>
@@ -67,7 +67,7 @@ const Dashboard = () => {
                   }
                   to="/dashboard/all-blood-donation-request"
                 >
-                  <MdBloodtype className="text-[30px] "></MdBloodtype>
+                  <MdBloodtype className="text-[24px] "></MdBloodtype>
                   <span>Donations</span>
                 </NavLink>
               </li>
@@ -82,7 +82,7 @@ const Dashboard = () => {
                   }
                   to="/dashboard/content-management"
                 >
-                  <MdContentPasteGo className="text-[30px] "></MdContentPasteGo>
+                  <MdContentPasteGo className="text-[24px] "></MdContentPasteGo>
                   <span>Content</span>
                 </NavLink>
               </li>
@@ -97,7 +97,7 @@ const Dashboard = () => {
                   }
                   to="/dashboard/profile"
                 >
-                  <CgProfile className="text-[30px]"></CgProfile>
+                  <CgProfile className="text-[24px]"></CgProfile>
                   <span>Profile</span>
                 </NavLink>
               </li>
@@ -105,7 +105,7 @@ const Dashboard = () => {
           </>
         ) : (
           <>
-            <ul className="*:mt-4 border-b pb-6 border-dashed p-3">
+            <ul className="*:mt-2 border-b pb-6 border-dashed p-3">
               {donor ? (
                 <>
                   {" "}
@@ -120,7 +120,7 @@ const Dashboard = () => {
                       }
                       to="/dashboard/home"
                     >
-                      <FaHome className="text-[30px]"></FaHome>
+                      <FaHome className="text-[24px]"></FaHome>
                       <span>Donor Home</span>
                     </NavLink>
                   </li>
@@ -135,7 +135,7 @@ const Dashboard = () => {
                       }
                       to="/dashboard/my-donation-requests"
                     >
-                      <BiSolidDonateBlood className="text-[30px]"></BiSolidDonateBlood>
+                      <BiSolidDonateBlood className="text-[24px]"></BiSolidDonateBlood>
                       <span>My Donation</span>
                     </NavLink>
                   </li>
@@ -150,7 +150,7 @@ const Dashboard = () => {
                       }
                       to="/dashboard/create-donation-request"
                     >
-                      <MdCreate className="text-[30px]"></MdCreate>
+                      <MdCreate className="text-[24px]"></MdCreate>
                       <span> Create donation</span>
                     </NavLink>
                   </li>
@@ -165,7 +165,7 @@ const Dashboard = () => {
                       }
                       to="/dashboard/profile"
                     >
-                      <CgProfile className="text-[30px]"></CgProfile>
+                      <CgProfile className="text-[24px]"></CgProfile>
                       <span>Profile</span>
                     </NavLink>
                   </li>
@@ -196,7 +196,7 @@ const Dashboard = () => {
             </ul>
           </>
         )}
-        <ul className="*:mt-4 pb-6 p-3">
+        <ul className="*:mt-2 pb-6 p-3">
           <li>
             <NavLink
               className={({ isActive, isPending }) =>
@@ -208,7 +208,7 @@ const Dashboard = () => {
               }
               to="/"
             >
-              <FaHome className="text-[30px] "></FaHome>
+              <FaHome className="text-[24px] "></FaHome>
               <span>Home</span>
             </NavLink>
           </li>
@@ -223,7 +223,7 @@ const Dashboard = () => {
               }
               to="/dashboard/contact"
             >
-              <MdPermContactCalendar className="text-[30px] "></MdPermContactCalendar>
+              <MdPermContactCalendar className="text-[24px] "></MdPermContactCalendar>
               <span>Contact</span>
             </NavLink>
           </li>
@@ -237,7 +237,7 @@ const Dashboard = () => {
           </p>
         </div>
       </div>
-      <main className="w-full bg-[#eaecec] lg:ml-[250px] h-screen ">
+      <main className="w-full  lg:ml-[250px] bg-[#eaecec] h-screen">
         <Navbar></Navbar>
         <Outlet></Outlet>
       </main>
