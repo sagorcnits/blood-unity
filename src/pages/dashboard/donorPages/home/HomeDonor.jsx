@@ -73,7 +73,9 @@ const HomeDonor = () => {
                     )}
 
                     <td className="p-3">
-                      <MdEdit className="text-[30px] cursor-pointer"></MdEdit>
+                      <Link to={`/dashboard/donation-edit/${_id}`}>
+                        <MdEdit className="text-[30px] cursor-pointer"></MdEdit>
+                      </Link>
                     </td>
                     <td className="p-3">
                       <MdDeleteForever

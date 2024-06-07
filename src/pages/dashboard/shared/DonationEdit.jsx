@@ -1,30 +1,21 @@
-import "react-datepicker/dist/react-datepicker.css";
 import { useForm } from "react-hook-form";
+import { useLoaderData, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
-import useAuth from "../../../../hooks/useAuth";
-import useAxiosPublice from "../../../../hooks/useAxiosPublice";
-import useSelect from "../../../../hooks/useSelect";
+import useAxiosPublice from "../../../hooks/useAxiosPublice";
 
-const CreateDonation = () => {
-  
-  const { user } = useAuth();
-  const [districtSelect, upazilaSelect] = useSelect();
-  const axiosPublic = useAxiosPublice()
+const DonationEdit = () => {
+  const { id } = useParams();
+  const axiosPublic = useAxiosPublice();
+  //   const [donationEdit,refetch] = useDonationDetails(id);
+  const donationEdit = useLoaderData();
+//   console.log(donationEdit);
+
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors },
-  } = useForm({
-    defaultValues: {
-      upazila: "Debidwar",
-      district: "Comilla",
-    },
-  });
-
+  } = useForm();
   const submit = (data) => {
-    const name = user?.displayName;
-    const email = user?.email;
     const recipientName = data.recipientName;
     const hospitalName = data.hospital;
     const district = data.district;
@@ -34,9 +25,7 @@ const CreateDonation = () => {
     const address = data.address;
     const whyNeed = data.whyNeed;
 
-    const createRequest = {
-      name,
-      email,
+    const updateDonations = {
       recipientName,
       hospitalName,
       district,
@@ -45,28 +34,24 @@ const CreateDonation = () => {
       time,
       address,
       whyNeed,
-      status:"Pending"
     };
 
-    axiosPublic.post("/donations", createRequest)
-    .then(res => {
-      const data = res.data;
-      // console.log(data)
-      if(data.insertedId){
+    // console.log(updateDonations);
+    axiosPublic
+      .put(`/donations/${id}`, updateDonations)
+      .then((res) => {
+        console.log(res.data);
         Swal.fire({
-          icon: "success",
-          title: "Your work has been saved",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        reset()
-      }
-    }).catch(error => {
-      console.log(error)
-    })
-
-
-    // console.log(createRequest);
+            position: "center",
+            icon: "success",
+            title: "Your work has been saved",
+            showConfirmButton: false,
+            timer: 1500
+          });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
@@ -78,7 +63,7 @@ const CreateDonation = () => {
               type="text"
               placeholder="First name"
               className="w-full rounded-md py-3 px-4 focus:outline-none bg-white"
-              value={user?.displayName}
+              value={donationEdit?.name}
               disabled
               name="name"
             />
@@ -88,7 +73,7 @@ const CreateDonation = () => {
               type="email"
               placeholder="email"
               className="w-full rounded-md py-3 px-4 focus:outline-none bg-white"
-              value={user?.email}
+              value={donationEdit?.email}
               disabled
               name="email"
             />
@@ -104,6 +89,7 @@ const CreateDonation = () => {
               placeholder="Recipient Name"
               className="w-full rounded-md py-3 px-4 focus:outline-[#548568] mt-2"
               name="recipientName"
+              defaultValue={donationEdit.recipientName}
             />
             {errors.recipientName && (
               <p className="text-darkRed">Invalid recipientName</p>
@@ -117,45 +103,42 @@ const CreateDonation = () => {
               placeholder="Hospital Name"
               className="w-full rounded-md py-3 px-4 focus:outline-[#548568] mt-2"
               name="hospital"
+              defaultValue={donationEdit.hospitalName}
             />
             {errors.hospital && (
               <p className="text-darkRed">Invalid hospital Name</p>
             )}
           </div>
         </div>
-        {/* district and upazella */}
+        {/* distrit and upazila*/}
         <div className="flex gap-4 items-center mt-6">
           <div className="flex-1">
-            <label className="font-bold">District Name:</label>
-            <select
+            <label className="font-bold">district:</label>
+            <input
               {...register("district", { required: true })}
+              type="text"
+              placeholder="Recipient Name"
+              className="w-full rounded-md py-3 px-4 focus:outline-[#548568] mt-2"
               name="district"
-              className="w-full focus:outline-none py-3 px-4 rounded-lg mt-2"
-            >
-              {districtSelect.map((item, id) => {
-                return (
-                  <option key={id} value={item.name}>
-                    {item.name}
-                  </option>
-                );
-              })}
-            </select>
+              defaultValue={donationEdit.district}
+            />
+            {errors.district && (
+              <p className="text-darkRed">Invalid district name</p>
+            )}
           </div>
           <div className="flex-1">
-            <label className="font-bold">Upazila Name:</label>
-            <select
+            <label className="font-bold">upazila:</label>
+            <input
               {...register("upazila", { required: true })}
+              type="text"
+              placeholder="Hospital Name"
+              className="w-full rounded-md py-3 px-4 focus:outline-[#548568] mt-2"
               name="upazila"
-              className="w-full focus:outline-none py-3 px-4 rounded-lg mt-2"
-            >
-              {upazilaSelect.map((item, id) => {
-                return (
-                  <option key={id} value={item.name}>
-                    {item.name}
-                  </option>
-                );
-              })}
-            </select>
+              defaultValue={donationEdit.upazila}
+            />
+            {errors.upazila && (
+              <p className="text-darkRed">Invalid upazila Name</p>
+            )}
           </div>
         </div>
         {/* date nad time  */}
@@ -168,8 +151,9 @@ const CreateDonation = () => {
               placeholder="time"
               className="w-full rounded-md py-3 px-4 focus:outline-[#548568] mt-2"
               name="date"
+              defaultValue={donationEdit.date}
             />
-            {errors.time && <p className="text-darkRed">Invalid time</p>}
+            {errors.date && <p className="text-darkRed">Invalid date</p>}
           </div>
           <div className="flex-1">
             <label className="font-bold">Time:</label>
@@ -179,6 +163,7 @@ const CreateDonation = () => {
               placeholder="time"
               className="w-full rounded-md py-3 px-4 focus:outline-[#548568] mt-2"
               name="time"
+              defaultValue={donationEdit.time}
             />
             {errors.time && <p className="text-darkRed">Invalid time</p>}
           </div>
@@ -191,6 +176,7 @@ const CreateDonation = () => {
               placeholder="full address"
               className="resize-none h-[160px] w-full rounded-md py-3 px-4 focus:outline-[#548568] mt-2"
               name="address"
+              defaultValue={donationEdit.address}
             ></textarea>
             {errors.address && <p className="text-darkRed">Invalid Adress</p>}
           </div>
@@ -199,18 +185,18 @@ const CreateDonation = () => {
               {...register("whyNeed", { required: true })}
               placeholder="why he need blood"
               className="resize-none h-[160px] w-full rounded-md py-3 px-4 focus:outline-[#548568] mt-2"
+              defaultValue={donationEdit.whyNeed}
+              name="whyNeed"
             ></textarea>
             {errors.whyNeed && <p className="text-darkRed">Invalid whyNeed</p>}
           </div>
         </div>
         <div className="text-center mt-8 pb-8">
-          <button className="button">Request Donation</button>
+          <button className="button">Update Donation</button>
         </div>
       </form>
     </div>
   );
 };
 
-export default CreateDonation;
-
-
+export default DonationEdit;

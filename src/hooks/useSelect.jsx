@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 
 const useSelect = () => {
-  const [district, setDistrict] = useState([]);
-  const [upazella, setUpazella] = useState([]);
+  const [districtSelect, setDistrict] = useState([]);
+  const [upazilaSelect, setUpazila] = useState([]);
 
   useEffect(() => {
     fetch("/distric.json")
@@ -13,10 +13,10 @@ const useSelect = () => {
   useEffect(() => {
     fetch("/upzella.json")
       .then((res) => res.json())
-      .then((data) => setUpazella(data));
+      .then((data) => setUpazila(data));
   }, []);
 
-  return [district, upazella];
+  return [districtSelect, upazilaSelect];
 };
 
 export default useSelect;

@@ -6,7 +6,6 @@ const useDonorStatus = () => {
     const axiosPublic = useAxiosPublice();
 
     const handleStatusDonation = (status, id) => {
-        // console.log(status, id);
         axiosPublic
           .put(`/donations?status=${status}&id=${id}`)
           .then((res) => {

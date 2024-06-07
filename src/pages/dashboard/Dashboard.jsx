@@ -11,7 +11,7 @@ import { NavLink, Outlet } from "react-router-dom";
 import Navbar from "./shared/Navbar";
 
 const Dashboard = () => {
-  const admin = false;
+  const admin = true;
   const donor = true;
   const volunteer = true;
 
@@ -237,7 +237,7 @@ const Dashboard = () => {
           </p>
         </div>
       </div>
-      <main className="w-full  lg:ml-[250px] bg-[#eaecec] h-screen">
+      <main className="w-full  lg:ml-[250px] bg-[#eaecec]">
         <Navbar></Navbar>
         <Outlet></Outlet>
       </main>

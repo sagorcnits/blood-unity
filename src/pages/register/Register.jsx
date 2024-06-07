@@ -12,7 +12,7 @@ const imageBbKey = import.meta.env.VITE_IMAGE_BB_KEY;
 const imageBbApi = `https://api.imgbb.com/1/upload?key=f192ef5d844484b8dafe780a5acb5cbc`;
 
 const Register = () => {
-  const [district, upazella] = useSelect();
+  const [districtSelect, upazilaSelect] = useSelect();
   const { createUser } = useAuth();
   const axiosPublic = useAxiosPublice();
   const navigate = useNavigate();
@@ -161,7 +161,7 @@ const Register = () => {
                   {...register("district", { required: true })}
                   className="w-full focus:outline-none p-3 rounded-lg mt-2"
                 >
-                  {district.map((item, id) => {
+                  {districtSelect.map((item, id) => {
                     return (
                       <option key={id} value={item.name}>
                         {item.name}
@@ -178,7 +178,7 @@ const Register = () => {
                 name="upazila"
                 className="w-full focus:outline-none p-3 rounded-lg mt-2"
               >
-                {upazella.map((item, id) => {
+                {upazilaSelect.map((item, id) => {
                   return (
                     <option key={id} value={item.name}>
                       {item.name}

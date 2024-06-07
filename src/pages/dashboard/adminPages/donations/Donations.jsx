@@ -72,16 +72,51 @@ const Donations = () => {
                           <button className="table-btn">Detials</button>
                         </td>
                         <td className="p-3 ">
-                          <div className="flex items-center gap-2">
-                            <button className="table-btn">{status}</button>
-                            <button className="text-darkRed text-[20px]">
+                      <div className="flex items-center gap-2">
+                        <p
+                          className={`${
+                            status == "pending"
+                              ? "text-[#BA4A00] font-bold"
+                              : status == "inprogress"
+                              ? "text-[#17a2b8] font-bold"
+                              : status == "done"
+                              ? "text-green-500 font-bold"
+                              : "text-darkRed font-bold"
+                          }`}
+                        >
+                          {status}
+                        </p>
+                        {status == "inprogress" ? (
+                          <>
+                            <button
+                              onClick={() =>
+                                handleStatusDonation("canceled", _id)
+                              }
+                              className="text-darkRed text-[20px]"
+                            >
                               <MdClose></MdClose>
                             </button>
-                            <button className="text-green-500 text-[20px]">
+                            <button
+                              onClick={() => handleStatusDonation("done", _id)}
+                              className="text-green-500 text-[20px]"
+                            >
                               ✔
                             </button>
-                          </div>
-                        </td>
+                          </>
+                        ) : status == "pending" ? (
+                          <button
+                            onClick={() =>
+                              handleStatusDonation("inprogress", _id)
+                            }
+                            className="text-green-500 text-[20px]"
+                          >
+                            ✔
+                          </button>
+                        ) : (
+                          ""
+                        )}
+                      </div>
+                    </td>
                       </tr>
                     );
                   })}

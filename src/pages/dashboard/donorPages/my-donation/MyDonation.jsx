@@ -1,4 +1,5 @@
 import { MdClose, MdDeleteForever, MdEdit } from "react-icons/md";
+import { Link } from "react-router-dom";
 import useDonations from "../../../../hooks/useDonations";
 import useDonorDelete from "../../../../hooks/useDonorDelete";
 import useDonorStatus from "../../../../hooks/useDonorStatus";
@@ -67,10 +68,14 @@ const MyDonation = () => {
                           <p>{name}</p>
                           <p>{email}</p>
                         </td>
-                      ) : <td></td>}
+                      ) : (
+                        <td></td>
+                      )}
 
                       <td className="p-3">
-                        <MdEdit className="text-[30px] cursor-pointer"></MdEdit>
+                        <Link to={`/dashboard/donation-edit/${_id}`}>
+                          <MdEdit className="text-[30px] cursor-pointer"></MdEdit>
+                        </Link>
                       </td>
                       <td className="p-3">
                         <MdDeleteForever

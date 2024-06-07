@@ -10,6 +10,7 @@ import CreateDonation from "../pages/dashboard/donorPages/create-donation/Create
 import HomeDonor from "../pages/dashboard/donorPages/home/HomeDonor";
 import MyDonation from "../pages/dashboard/donorPages/my-donation/MyDonation";
 import Contact from "../pages/dashboard/shared/Contact";
+import DonationEdit from "../pages/dashboard/shared/DonationEdit";
 import Profile from "../pages/dashboard/shared/Profile";
 import Details from "../pages/details/Details";
 import DonationRequest from "../pages/donation-requests/DonationRequest";
@@ -84,7 +85,6 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/all-users",
         element: <Users></Users>,
-        loader:()=>fetch("")
       },
 
       {
@@ -110,11 +110,6 @@ const router = createBrowserRouter([
       },
 
       {
-        path: "/dashboard/profile",
-        element: <Profile></Profile>,
-      },
-
-      {
         path: "/dashboard/my-donation-requests",
         element: <MyDonation></MyDonation>,
       },
@@ -124,9 +119,21 @@ const router = createBrowserRouter([
         element: <CreateDonation></CreateDonation>,
       },
 
+      // everyone routes
+      {
+        path: "/dashboard/profile",
+        element: <Profile></Profile>,
+      },
+
       {
         path: "/dashboard/contact",
         element: <Contact></Contact>,
+      },
+
+      {
+        path: "/dashboard/donation-edit/:id",
+        element: <DonationEdit></DonationEdit>,
+        loader: ({params} ) => fetch(`http://localhost:5000/donations/${params.id}`)
       },
     ],
   },
