@@ -84,7 +84,7 @@ const MyDonation = () => {
                         ></MdDeleteForever>
                       </td>
                       <td className="p-3">
-                        <button className="table-btn">Detials</button>
+                       <Link to={`/dashboard/details-admin/${_id}`}><button className="table-btn">Detials</button></Link>
                       </td>
                       <td className="p-3 ">
                         <div className="flex items-center gap-2">
