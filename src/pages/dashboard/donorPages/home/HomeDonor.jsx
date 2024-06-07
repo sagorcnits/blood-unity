@@ -1,9 +1,12 @@
 import { MdClose, MdDeleteForever, MdEdit } from "react-icons/md";
 import { Link } from "react-router-dom";
 import useDonations from "../../../../hooks/useDonations";
+import useDonorDelete from "../../../../hooks/useDonorDelete";
+import useDonorStatus from "../../../../hooks/useDonorStatus";
 const HomeDonor = () => {
-  const table = [1, 2, 3];
   const [donations] = useDonations();
+  const handleStatusDonation = useDonorStatus();
+  const handleDonorDelete = useDonorDelete();
   return (
     <div className="px-3">
       <h1 className="text-center text-[25px] md:text-[40px] font-open-sans font-bold mt-10">
@@ -28,17 +31,20 @@ const HomeDonor = () => {
             <tbody>
               {donations?.slice(0, 3).map((userItem, id) => {
                 const {
+                  _id,
                   name,
                   email,
                   recipientName,
                   hospitalName,
                   district,
+                  upazila,
                   date,
                   time,
                   address,
                   whyNeed,
                   status,
                 } = userItem;
+
                 return (
                   <tr
                     key={id}
@@ -48,7 +54,8 @@ const HomeDonor = () => {
                       <p className="font-bold">{recipientName}</p>
                     </td>
                     <td className="p-3">
-                      <p>{address}</p>
+                      <p>{district}</p>
+                      <p>{upazila}</p>
                     </td>
                     <td className="p-3">
                       <p>{date}</p>
@@ -56,28 +63,71 @@ const HomeDonor = () => {
                     <td className="p-3">
                       <p>{time}</p>
                     </td>
-                    <td className="p-3">
-                      <p>{email}</p>
-                    </td>
+                    {status == "inprogress" ? (
+                      <td className="p-3">
+                        <p>{name}</p>
+                        <p>{email}</p>
+                      </td>
+                    ) : (
+                      <td></td>
+                    )}
 
                     <td className="p-3">
                       <MdEdit className="text-[30px] cursor-pointer"></MdEdit>
                     </td>
                     <td className="p-3">
-                      <MdDeleteForever className="text-[30px] cursor-pointer text-darkRed"></MdDeleteForever>
+                      <MdDeleteForever
+                        onClick={() => handleDonorDelete(_id)}
+                        className="text-[30px] cursor-pointer text-darkRed"
+                      ></MdDeleteForever>
                     </td>
                     <td className="p-3">
                       <button className="table-btn">Detials</button>
                     </td>
                     <td className="p-3 ">
                       <div className="flex items-center gap-2">
-                        <button className="table-btn">inprogress</button>
-                        <button className="text-darkRed text-[20px]">
-                          <MdClose></MdClose>
-                        </button>
-                        <button className="text-green-500 text-[20px]">
-                          ✔
-                        </button>
+                        <p
+                          className={`${
+                            status == "pending"
+                              ? "text-[#BA4A00] font-bold"
+                              : status == "inprogress"
+                              ? "text-[#17a2b8] font-bold"
+                              : status == "done"
+                              ? "text-green-500 font-bold"
+                              : "text-darkRed font-bold"
+                          }`}
+                        >
+                          {status}
+                        </p>
+                        {status == "inprogress" ? (
+                          <>
+                            <button
+                              onClick={() =>
+                                handleStatusDonation("canceled", _id)
+                              }
+                              className="text-darkRed text-[20px]"
+                            >
+                              <MdClose></MdClose>
+                            </button>
+                            <button
+                              onClick={() => handleStatusDonation("done", _id)}
+                              className="text-green-500 text-[20px]"
+                            >
+                              ✔
+                            </button>
+                          </>
+                        ) : status == "pending" ? (
+                          <button
+                            onClick={() =>
+                              handleStatusDonation("inprogress", _id)
+                            }
+                            className="text-green-500 text-[20px]"
+                          >
+                            ✔
+                          </button>
+                        ) : (
+                          ""
+                        )}
                       </div>
                     </td>
                   </tr>

@@ -8,6 +8,7 @@ const Users = () => {
   const axiosPublic = useAxiosPublice();
   const [isFilter, setFilter] = useState(false);
   const [users, setUsers] = useState([]);
+
   const { data: userData = [], refetch } = useQuery({
     queryKey: ["userData"],
     queryFn: async () => {
@@ -17,12 +18,13 @@ const Users = () => {
     },
   });
 
+
   const handleUser = (data, _id) => {
-    console.log(data, _id);
+    // console.log(data, _id);
     axiosPublic
       .put(`/users?role=${data}&id=${_id}`)
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         refetch();
       })
       .catch((error) => {
@@ -32,7 +34,7 @@ const Users = () => {
 
   //   handleFilter
   const handleFilter = (value) => {
-    console.log(value);
+    // console.log(value);
     if (value == "all") {
       return setUsers(userData);
     }

@@ -1,15 +1,18 @@
 import { MdClose, MdDeleteForever, MdEdit } from "react-icons/md";
 import useDonations from "../../../../hooks/useDonations";
+import useDonorDelete from "../../../../hooks/useDonorDelete";
+import useDonorStatus from "../../../../hooks/useDonorStatus";
 const MyDonation = () => {
   const [donations] = useDonations();
-
+  const handleStatusDonation = useDonorStatus();
+  const handleDonorDelete = useDonorDelete();
   return (
     <div className="px-3">
-      <h1 className="text-center text-[25px] md:text-[40px] font-open-sans font-bold mt-10">
+      <h1 className="text-center text-[25px] md:text-[40px] font-open-sans font-bold mt-4">
         My Donation Request page
       </h1>
       {donations.length > 0 ? (
-        <div className="p-2 mx-auto font-open-sans mt-10">
+        <div className="p-2 mx-auto font-open-sans mt-4">
           <div className="overflow-auto rounded-lg w-full">
             <table className="w-full">
               <thead>
@@ -26,13 +29,15 @@ const MyDonation = () => {
                 </tr>
               </thead>
               <tbody>
-                {donations?.map((userItem, id) => {
+                {donations?.slice(0, 4).map((userItem, id) => {
                   const {
+                    _id,
                     name,
                     email,
                     recipientName,
                     hospitalName,
                     district,
+                    upazila,
                     date,
                     time,
                     address,
@@ -48,7 +53,8 @@ const MyDonation = () => {
                         <p className="font-bold">{recipientName}</p>
                       </td>
                       <td className="p-3">
-                        <p>{address}</p>
+                        <p>{district}</p>
+                        <p>{upazila}</p>
                       </td>
                       <td className="p-3">
                         <p>{date}</p>
@@ -56,28 +62,71 @@ const MyDonation = () => {
                       <td className="p-3">
                         <p>{time}</p>
                       </td>
-                      <td className="p-3">
-                        <p>{email}</p>
-                      </td>
+                      {status == "inprogress" ? (
+                        <td className="p-3">
+                          <p>{name}</p>
+                          <p>{email}</p>
+                        </td>
+                      ) : <td></td>}
 
                       <td className="p-3">
                         <MdEdit className="text-[30px] cursor-pointer"></MdEdit>
                       </td>
                       <td className="p-3">
-                        <MdDeleteForever className="text-[30px] cursor-pointer text-darkRed"></MdDeleteForever>
+                        <MdDeleteForever
+                          onClick={() => handleDonorDelete(_id)}
+                          className="text-[30px] cursor-pointer text-darkRed"
+                        ></MdDeleteForever>
                       </td>
                       <td className="p-3">
                         <button className="table-btn">Detials</button>
                       </td>
                       <td className="p-3 ">
                         <div className="flex items-center gap-2">
-                          <button className="table-btn">{status}</button>
-                          <button className="text-darkRed text-[20px]">
-                            <MdClose></MdClose>
-                          </button>
-                          <button className="text-green-500 text-[20px]">
-                            ✔
-                          </button>
+                          <p
+                            className={`${
+                              status == "pending"
+                                ? "text-[#BA4A00] font-bold"
+                                : status == "inprogress"
+                                ? "text-[#17a2b8] font-bold"
+                                : status == "done"
+                                ? "text-green-500 font-bold"
+                                : "text-darkRed font-bold"
+                            }`}
+                          >
+                            {status}
+                          </p>
+                          {status == "inprogress" ? (
+                            <>
+                              <button
+                                onClick={() =>
+                                  handleStatusDonation("canceled", _id)
+                                }
+                                className="text-darkRed text-[20px]"
+                              >
+                                <MdClose></MdClose>
+                              </button>
+                              <button
+                                onClick={() =>
+                                  handleStatusDonation("done", _id)
+                                }
+                                className="text-green-500 text-[20px]"
+                              >
+                                ✔
+                              </button>
+                            </>
+                          ) : status == "pending" ? (
+                            <button
+                              onClick={() =>
+                                handleStatusDonation("inprogress", _id)
+                              }
+                              className="text-green-500 text-[20px]"
+                            >
+                              ✔
+                            </button>
+                          ) : (
+                            ""
+                          )}
                         </div>
                       </td>
                     </tr>
@@ -85,6 +134,70 @@ const MyDonation = () => {
                 })}
               </tbody>
             </table>
+          </div>
+          <div className="flex  space-x-1 dark:text-gray-800 mt-3 pb-10">
+            <button
+              title="previous"
+              type="button"
+              className="inline-flex items-center justify-center w-8 h-8 py-0 border rounded-md shadow-md dark:bg-gray-50 dark:border-gray-100"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth="2"
+                fill="none"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="w-4"
+              >
+                <polyline points="15 18 9 12 15 6"></polyline>
+              </svg>
+            </button>
+            <button
+              type="button"
+              title="Page 1"
+              className="inline-flex items-center justify-center w-8 h-8 text-sm font-semibold border rounded shadow-md dark:bg-gray-50 dark:text-violet-600 dark:border-violet-600"
+            >
+              1
+            </button>
+            <button
+              type="button"
+              className="inline-flex items-center justify-center w-8 h-8 text-sm border rounded shadow-md dark:bg-gray-50 dark:border-gray-100"
+              title="Page 2"
+            >
+              2
+            </button>
+            <button
+              type="button"
+              className="inline-flex items-center justify-center w-8 h-8 text-sm border rounded shadow-md dark:bg-gray-50 dark:border-gray-100"
+              title="Page 3"
+            >
+              3
+            </button>
+            <button
+              type="button"
+              className="inline-flex items-center justify-center w-8 h-8 text-sm border rounded shadow-md dark:bg-gray-50 dark:border-gray-100"
+              title="Page 4"
+            >
+              4
+            </button>
+            <button
+              title="next"
+              type="button"
+              className="inline-flex items-center justify-center w-8 h-8 py-0 border rounded-md shadow-md dark:bg-gray-50 dark:border-gray-100"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth="2"
+                fill="none"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="w-4"
+              >
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </button>
           </div>
         </div>
       ) : (

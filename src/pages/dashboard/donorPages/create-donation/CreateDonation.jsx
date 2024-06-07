@@ -28,7 +28,7 @@ const CreateDonation = () => {
     const recipientName = data.recipientName;
     const hospitalName = data.hospital;
     const district = data.district;
-    const upazella = data.upazella;
+    const upazila = data.upazila;
     const date = data.date;
     const time = data.time;
     const address = data.address;
@@ -40,7 +40,7 @@ const CreateDonation = () => {
       recipientName,
       hospitalName,
       district,
-      upazella,
+      upazila,
       date,
       time,
       address,

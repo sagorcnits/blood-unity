@@ -11,7 +11,7 @@ import { NavLink, Outlet } from "react-router-dom";
 import Navbar from "./shared/Navbar";
 
 const Dashboard = () => {
-  const admin = true;
+  const admin = false;
   const donor = true;
   const volunteer = true;
 
