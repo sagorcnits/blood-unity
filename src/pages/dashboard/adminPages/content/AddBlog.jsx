@@ -32,7 +32,7 @@ const AddBlog = () => {
     const title = data.title;
     const thumbnail = res.data.data.display_url;
     const blogContent = content;
-    const blog = { title, thumbnail, blogContent,status:"draft" };
+    const blog = { title, thumbnail, blogContent, status: "draft" };
 
     axiosPublic
       .post("/blogs", blog)
@@ -46,7 +46,7 @@ const AddBlog = () => {
             showConfirmButton: false,
             timer: 1500,
           });
-          setContent(" ")
+          setContent(" ");
           reset();
         }
       })
@@ -58,8 +58,11 @@ const AddBlog = () => {
   return (
     <div className="h-screen">
       <div className="w-[80%] mx-auto mt-10">
-        <p className="text-green-500">
-        <Link to="/dashboard/content-management"><FaArrowLeft></FaArrowLeft></Link>
+        <p className="text-green-500 ">
+          <Link to="/dashboard/content-management" className="flex gap-2 items-center">
+            <FaArrowLeft></FaArrowLeft>
+         <span className="text-black "> back</span>
+          </Link>
         </p>
 
         <form

@@ -25,7 +25,6 @@ const Content = () => {
     setBlogs(filter);
   };
 
-  const cards = [1, 2, 3, 4];
 
   return (
     <div className="pb-10">
@@ -60,7 +59,7 @@ const Content = () => {
       {/* all blogs section  */}
       <div className="grid md:grid-cols-2 lg:grid-cols-3 mt-10 px-10 gap-6">
         {blogs?.map((blog, id) => (
-          <Card blog={blog} key={id}></Card>
+          <Card refetch={refetch} blog={blog} key={id}></Card>
         ))}
       </div>
     </div>
