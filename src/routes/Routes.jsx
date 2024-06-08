@@ -3,6 +3,7 @@ import Root from "../layout/Root";
 import Blog from "../pages/blog/Blog";
 import Dashboard from "../pages/dashboard/Dashboard";
 import AdminHome from "../pages/dashboard/adminPages/adminHome/AdminHome";
+import AddBlog from "../pages/dashboard/adminPages/content/AddBlog";
 import Content from "../pages/dashboard/adminPages/content/Content";
 import Donations from "../pages/dashboard/adminPages/donations/Donations";
 import Users from "../pages/dashboard/adminPages/users/Users";
@@ -98,6 +99,11 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/content-management",
         element: <Content></Content>,
+      },
+
+      {
+        path: "/dashboard/content-management/add-blog",
+        element: <AddBlog></AddBlog>,
       },
 
       // donor dashboard
