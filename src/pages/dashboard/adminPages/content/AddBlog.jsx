@@ -1,25 +1,12 @@
 import JoditEditor from "jodit-react";
 import React, { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
+import { FaArrowLeft } from "react-icons/fa";
+import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 import useAxiosPublice from "../../../../hooks/useAxiosPublice";
 const imageBbApi = `https://api.imgbb.com/1/upload?key=f192ef5d844484b8dafe780a5acb5cbc`;
 const AddBlog = () => {
-  const editor = useRef(null);
-  const [content, setContent] = useState("");
-
-const config = {
-    readonly: false,
-}
-
-
-  // const config = useMemo(
-  // 	{
-  // 		readonly: false, // all options from https://xdsoft.net/jodit/docs/,
-  // 		placeholder:  'Start typings...'
-  // 	},
-  // 	[]
-  // );
-
   const axiosPublic = useAxiosPublice();
   const {
     register,
@@ -27,65 +14,107 @@ const config = {
     reset,
     formState: { errors },
   } = useForm();
+  const editor = useRef(null);
+  const [content, setContent] = useState("");
+
+  const config = {
+    readonly: false,
+  };
 
   const submit = async (data) => {
-    // const imageData = { image: data.image[0] };
-    // const res = await axiosPublic.post(imageBbApi, imageData, {
-    //   headers: {
-    //     "content-type": "multipart/form-data",
-    //   },
-    // });
+    const imageData = { image: data.image[0] };
+    const res = await axiosPublic.post(imageBbApi, imageData, {
+      headers: {
+        "content-type": "multipart/form-data",
+      },
+    });
 
-    console.log(editor.current.value);
+    const title = data.title;
+    const thumbnail = res.data.data.display_url;
+    const blogContent = content;
+    const blog = { title, thumbnail, blogContent,status:"draft" };
+
+    axiosPublic
+      .post("/blogs", blog)
+      .then((res) => {
+        const blog = res.data;
+        console.log(blog);
+        if (blog.insertedId) {
+          Swal.fire({
+            icon: "success",
+            title: "Your Blog Added",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          setContent(" ")
+          reset();
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
     <div className="h-screen">
-      <form
-        className="space-y-4 w-[80%] mx-auto mt-20"
-        onSubmit={handleSubmit(submit)}
-      >
-        <div className="flex gap-4">
-          <div className="flex-1">
-            <label className="font-bold">title: </label>
-            <input
-              {...register("title")}
-              type="text"
-              placeholder="title"
-              className="px-2 py-3 focus:outline-darkRed rounded-md w-full mt-2"
-              name="title"
-            />
-          </div>
-          <div className="flex-1 ">
-            <label className="font-bold">thumbnail: </label>
-            <div className="bg-white mt-2 focus:outline-darkRed rounded-md">
+      <div className="w-[80%] mx-auto mt-10">
+        <p className="text-green-500">
+        <Link to="/dashboard/content-management"><FaArrowLeft></FaArrowLeft></Link>
+        </p>
+
+        <form
+          className="space-y-4  mt-10 font-open-sans"
+          onSubmit={handleSubmit(submit)}
+        >
+          <div className="flex gap-4">
+            <div className="flex-1">
+              <label className="font-bold">Title: </label>
               <input
-                {...register("thumbnail")}
-                type="file"
-                placeholder="thumbnail"
-                className="px-2 py-[9px]  w-full "
-                name="thumbnail"
+                {...register("title")}
+                type="text"
+                placeholder="title"
+                className="px-2 py-3 focus:outline-darkRed rounded-md w-full mt-2"
+                name="title"
               />
             </div>
+            <div className="flex-1 ">
+              <label className="font-bold">Thumbnail: </label>
+              <div className="bg-white mt-2 focus:outline-darkRed rounded-md">
+                <input
+                  {...register("image")}
+                  type="file"
+                  placeholder="image"
+                  className="px-2 py-[9px]  w-full "
+                  name="image"
+                />
+              </div>
+            </div>
           </div>
-        </div>
-        <div>
-          <label className="font-bold">content: </label>
-          <JoditEditor
-            ref={editor}
-            value={content}
-            tabIndex={1} 
-            config={config}
-            onBlur={(newContent) => setContent(newContent)} // preferred to use only this option to update the 
-            onChange={(newContent) => {}}
-          />
-        </div>
+          <div>
+            <label className="font-bold">Content: </label>
+            <JoditEditor
+              ref={editor}
+              value={content}
+              tabIndex={1}
+              config={config}
+              onBlur={(newContent) => setContent(newContent)} // preferred to use only this option to update the
+              onChange={(newContent) => {}}
+            />
 
-        <div className="text-center">
-          <button className="button">Create Blog</button>
-        </div>
-        
-      </form>
+            {/* <textarea
+            {...register("content")}
+            type="text"
+            placeholder="content"
+            className="px-2 py-3 focus:outline-darkRed rounded-md w-full mt-2 h-[224px] resize-none overflow-auto"
+            name="content"
+          /> */}
+          </div>
+
+          <div className="text-center">
+            <button className="button">Create Blog</button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };

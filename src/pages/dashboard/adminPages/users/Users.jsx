@@ -34,10 +34,6 @@ const Users = () => {
 
   //   handleFilter
   const handleFilter = (value) => {
-    // console.log(value);
-    if (value == "all") {
-      return setUsers(userData);
-    }
     const filter = userData.filter((item) => item.status == value);
     setUsers(filter);
   };
@@ -53,13 +49,12 @@ const Users = () => {
           onClick={() => setFilter(!isFilter)}
           className="mr-3 bg-[#858686] w-[100px] px-3 py-2 text-white font-open-sans rounded-md relative cursor-pointer flex justify-between items-center"
         >
-          <p>all</p>
+          <p>filter</p>
           <IoMdArrowDropdown
             className={`${isFilter && "rotate-180"} duration-500`}
           ></IoMdArrowDropdown>
           {isFilter && (
-            <ul className="cursor-pointer py-1 bg-white card-shadow  font-open-sans px-2 rounded-md absolute -bottom-[110px] left-0 right-0 *:py-1 z-50 *:text-center *:bgHover *:text-black">
-              <li onClick={() => handleFilter("all")}>all</li>
+            <ul className="cursor-pointer py-1 bg-white card-shadow  font-open-sans px-2 rounded-md absolute -bottom-[80px] left-0 right-0 *:py-1 z-50 *:text-center *:bgHover *:text-black">
               <li onClick={() => handleFilter("active")}>active</li>
               <li onClick={() => handleFilter("blocked")}>blocked</li>
             </ul>

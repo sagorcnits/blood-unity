@@ -66,9 +66,6 @@ const Donations = () => {
   };
 
   const handleFilter = (value) => {
-    if (value == "all") {
-      return setDonationsData(userDonations);
-    }
     const filter = userDonations.filter((item) => item.status == value);
     setDonationsData(filter);
   };
@@ -88,8 +85,7 @@ const Donations = () => {
             className={`${isFilter && "rotate-180"} duration-500`}
           ></IoMdArrowDropdown>
           {isFilter && (
-            <ul className="cursor-pointer py-1 bg-white card-shadow  font-open-sans px-2 rounded-md absolute -bottom-[170px] left-0 right-0 *:py-1 z-50 *:text-center *:bgHover *:text-black ">
-              <li onClick={() => handleFilter("all")}>all</li>
+            <ul className="cursor-pointer py-1 bg-white card-shadow  font-open-sans px-2 rounded-md absolute -bottom-[145px] left-0 right-0 *:py-1 z-50 *:text-center *:bgHover *:text-black ">
               <li onClick={() => handleFilter("pending")}>pending</li>
               <li onClick={() => handleFilter("inprogress")}>inprogress</li>
               <li onClick={() => handleFilter("canceled")}>canceled</li>
