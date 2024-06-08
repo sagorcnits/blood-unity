@@ -4,9 +4,10 @@ import Swal from "sweetalert2";
 import useAuth from "../../../../hooks/useAuth";
 import useAxiosPublice from "../../../../hooks/useAxiosPublice";
 import useSelect from "../../../../hooks/useSelect";
+import useUser from "../../../../hooks/useUser";
 
 const CreateDonation = () => {
-  
+  const [users] = useUser()
   const { user } = useAuth();
   const [districtSelect, upazilaSelect] = useSelect();
   const axiosPublic = useAxiosPublice()
@@ -21,6 +22,8 @@ const CreateDonation = () => {
       district: "Comilla",
     },
   });
+
+
 
   const submit = (data) => {
     const name = user?.displayName;
@@ -68,10 +71,9 @@ const CreateDonation = () => {
 
     // console.log(createRequest);
   };
-
   return (
     <div className="mt-10 px-2 md:px-20 font-open-sans text-paragraph">
-      <form onSubmit={handleSubmit(submit)}>
+      {users[0]?.status == "active" ? <form onSubmit={handleSubmit(submit)}>
         <div className="flex gap-4 items-center mt-6">
           <div className="flex-1">
             <input
@@ -206,7 +208,7 @@ const CreateDonation = () => {
         <div className="text-center mt-8 pb-8">
           <button className="button">Request Donation</button>
         </div>
-      </form>
+      </form> : <h1 className="text-center text-[30px]">Sorry You are blocked</h1>}
     </div>
   );
 };

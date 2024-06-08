@@ -18,6 +18,7 @@ import DonationRequest from "../pages/donation-requests/DonationRequest";
 import Funding from "../pages/funding/Funding";
 import Home from "../pages/home/Home";
 import Login from "../pages/login/Login";
+import NotFound from "../pages/notFound/NotFound";
 import Register from "../pages/register/Register";
 import SearchDonor from "../pages/search-donors/SearchDonor";
 
@@ -25,6 +26,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Root></Root>,
+    errorElement:<NotFound></NotFound>,
     children: [
       {
         path: "/",

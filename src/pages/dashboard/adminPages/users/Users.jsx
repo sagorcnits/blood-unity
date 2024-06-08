@@ -147,7 +147,7 @@ const Users = () => {
           </table>
         </div>
       </div>
-      <div className="flex  space-x-1 dark:text-gray-800 mt-3 pb-10">
+     {users.length > 4 && <div className="flex  space-x-1 dark:text-gray-800 mt-3 pb-10">
         <button
           title="previous"
           type="button"
@@ -210,7 +210,7 @@ const Users = () => {
             <polyline points="9 18 15 12 9 6"></polyline>
           </svg>
         </button>
-      </div>
+      </div>}
     </div>
   );
 };

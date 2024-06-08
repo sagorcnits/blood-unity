@@ -11,9 +11,8 @@ import { NavLink, Outlet } from "react-router-dom";
 import Navbar from "./shared/Navbar";
 
 const Dashboard = () => {
-  const admin = false;
-  const donor = true;
-  const volunteer = true;
+  const admin = true;
+  const donor = false;
 
   return (
     <div className="flex gap-2  font-open-sans ">
@@ -173,24 +172,68 @@ const Dashboard = () => {
               ) : (
                 <>
                   {" "}
-                  <li>
-                    <NavLink to="/dashboard/home">User Home</NavLink>
-                  </li>
-                  <li>
-                    <NavLink to="/dashboard/reservation">reservation</NavLink>
-                  </li>
-                  <li>
-                    <NavLink to="/dashboard/payment">payment history</NavLink>
-                  </li>
-                  <li>
-                    <NavLink to="/dashboard/myCart">my cart</NavLink>
-                  </li>
-                  <li>
-                    <NavLink to="/dashboard/addReview">add review</NavLink>
-                  </li>
-                  <li>
-                    <NavLink to="/dashboard/myBooking">my booking</NavLink>
-                  </li>
+                  <ul className="*:mt-2 border-b pb-6 border-dashed p-3">
+                    <li>
+                      <NavLink
+                        className={({ isActive, isPending }) =>
+                          isPending
+                            ? "pending"
+                            : isActive
+                            ? "dashbord-active sideBar-nav"
+                            : "sideBar-nav"
+                        }
+                        to="/dashboard/adminHome"
+                      >
+                        <FaHome className="text-[24px]"></FaHome>
+                        <span>Volunteer</span>
+                      </NavLink>
+                    </li>
+                    <li>
+                      <NavLink
+                        className={({ isActive, isPending }) =>
+                          isPending
+                            ? "pending"
+                            : isActive
+                            ? "dashbord-active sideBar-nav"
+                            : "sideBar-nav"
+                        }
+                        to="/dashboard/all-blood-donation-request"
+                      >
+                        <MdBloodtype className="text-[24px] "></MdBloodtype>
+                        <span>Donations</span>
+                      </NavLink>
+                    </li>
+                    <li>
+                      <NavLink
+                        className={({ isActive, isPending }) =>
+                          isPending
+                            ? "pending"
+                            : isActive
+                            ? "dashbord-active sideBar-nav"
+                            : "sideBar-nav"
+                        }
+                        to="/dashboard/content-management"
+                      >
+                        <MdContentPasteGo className="text-[24px] "></MdContentPasteGo>
+                        <span>Content</span>
+                      </NavLink>
+                    </li>
+                    <li>
+                      <NavLink
+                        className={({ isActive, isPending }) =>
+                          isPending
+                            ? "pending flex"
+                            : isActive
+                            ? "dashbord-active sideBar-nav"
+                            : "sideBar-nav"
+                        }
+                        to="/dashboard/profile"
+                      >
+                        <CgProfile className="text-[24px]"></CgProfile>
+                        <span>Profile</span>
+                      </NavLink>
+                    </li>
+                  </ul>
                 </>
               )}
             </ul>

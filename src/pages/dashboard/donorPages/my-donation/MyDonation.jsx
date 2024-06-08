@@ -1,17 +1,101 @@
+import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
+import { IoMdArrowDropdown } from "react-icons/io";
 import { MdClose, MdDeleteForever, MdEdit } from "react-icons/md";
 import { Link } from "react-router-dom";
-import useDonations from "../../../../hooks/useDonations";
-import useDonorDelete from "../../../../hooks/useDonorDelete";
-import useDonorStatus from "../../../../hooks/useDonorStatus";
+import Swal from "sweetalert2";
+import useAuth from "../../../../hooks/useAuth";
+import useAxiosPublice from "../../../../hooks/useAxiosPublice";
 const MyDonation = () => {
-  const [donations] = useDonations();
-  const handleStatusDonation = useDonorStatus();
-  const handleDonorDelete = useDonorDelete();
+  const [donations, setDonations] = useState([]);
+  const axiosPublic = useAxiosPublice();
+  const { user } = useAuth();
+  const [isFilter, setFilter] = useState(false);
+
+  const { data: donationsData = [], refetch } = useQuery({
+    queryKey: ["donationsData", user?.email],
+    queryFn: async () => {
+      const res = await axiosPublic.get(`/donations?email=${user?.email}`);
+      setDonations(res.data);
+      return res.data;
+    },
+  });
+
+
+  const handleFilter = (value) => {
+    if (value == "all") {
+      return setDonations(donationsData);
+    }
+    const filter = donationsData.filter((item) => item.status == value);
+    setDonations(filter);
+  };
+
+  const handleStatusDonation = (status, id) => {
+    axiosPublic
+      .put(`/donations?status=${status}&id=${id}`)
+      .then((res) => {
+        console.log(res);
+        refetch();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const handleDonorDelete = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axiosPublic
+          .delete(`/donations/${id}`)
+          .then((res) => {
+            Swal.fire({
+              title: "Deleted!",
+              text: "Your file has been deleted.",
+              icon: "success",
+            });
+            refetch();
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+    });
+    // console.log(status, id);
+  };
+
   return (
-    <div className="px-3">
-      <h1 className="text-center text-[25px] md:text-[40px] font-open-sans font-bold mt-4">
-        My Donation Request page
-      </h1>
+    <div className="px-3 h-screen">
+      <div className="flex justify-between items-center mt-4">
+        <div className="text-[30px] mt-3 ml-2">
+          <h1 className="font-bold">My Donation Request page</h1>
+        </div>
+        <div
+          onClick={() => setFilter(!isFilter)}
+          className="mr-3 bg-[#858686] w-[100px] px-3 py-2 text-white font-open-sans rounded-md relative cursor-pointer flex justify-between items-center"
+        >
+          <p>all</p>
+          <IoMdArrowDropdown
+            className={`${isFilter && "rotate-180"} duration-500`}
+          ></IoMdArrowDropdown>
+          {isFilter && (
+            <ul className="cursor-pointer py-1 bg-white card-shadow  font-open-sans px-2 rounded-md absolute -bottom-[170px] left-0 right-0 *:py-1 z-50 *:text-center *:bgHover *:text-black">
+              <li onClick={() => handleFilter("all")}>all</li>
+              <li onClick={() => handleFilter("pending")}>pending</li>
+              <li onClick={() => handleFilter("inprogress")}>inprogress</li>
+              <li onClick={() => handleFilter("canceled")}>canceled</li>
+              <li onClick={() => handleFilter("done")}>done</li>
+            </ul>
+          )}
+        </div>
+      </div>
       {donations.length > 0 ? (
         <div className="p-2 mx-auto font-open-sans mt-4">
           <div className="overflow-auto rounded-lg w-full">
@@ -84,7 +168,9 @@ const MyDonation = () => {
                         ></MdDeleteForever>
                       </td>
                       <td className="p-3">
-                       <Link to={`/dashboard/details-admin/${_id}`}><button className="table-btn">Detials</button></Link>
+                        <Link to={`/dashboard/details-admin/${_id}`}>
+                          <button className="table-btn">Detials</button>
+                        </Link>
                       </td>
                       <td className="p-3 ">
                         <div className="flex items-center gap-2">
@@ -101,7 +187,7 @@ const MyDonation = () => {
                           >
                             {status}
                           </p>
-                          {status == "inprogress" ? (
+                          {status == "inprogress" && (
                             <>
                               <button
                                 onClick={() =>
@@ -120,17 +206,6 @@ const MyDonation = () => {
                                 ✔
                               </button>
                             </>
-                          ) : status == "pending" ? (
-                            <button
-                              onClick={() =>
-                                handleStatusDonation("inprogress", _id)
-                              }
-                              className="text-green-500 text-[20px]"
-                            >
-                              ✔
-                            </button>
-                          ) : (
-                            ""
                           )}
                         </div>
                       </td>
@@ -140,7 +215,7 @@ const MyDonation = () => {
               </tbody>
             </table>
           </div>
-          <div className="flex  space-x-1 dark:text-gray-800 mt-3 pb-10">
+        { donationsData.length > 4 && <div className="flex  space-x-1 dark:text-gray-800 mt-3 pb-10">
             <button
               title="previous"
               type="button"
@@ -203,7 +278,7 @@ const MyDonation = () => {
                 <polyline points="9 18 15 12 9 6"></polyline>
               </svg>
             </button>
-          </div>
+          </div>}
         </div>
       ) : (
         <h1 className="text-center text-[25px] md:text-[40px] font-open-sans font-bold mt-10">

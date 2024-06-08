@@ -1,54 +1,84 @@
-import { useForm } from "react-hook-form";
+import { useState } from "react";
+import Swal from "sweetalert2";
 import useAuth from "../../../hooks/useAuth";
-import useSelect from "../../../hooks/useSelect";
-
+import useAxiosPublice from "../../../hooks/useAxiosPublice";
+import useUser from "../../../hooks/useUser";
+const imageBbApi = `https://api.imgbb.com/1/upload?key=f192ef5d844484b8dafe780a5acb5cbc`;
 const Profile = () => {
+
+  const [users, refetch] = useUser();
+  const axiosPublic = useAxiosPublice();
   const { user } = useAuth();
-  const [district, upazella] = useSelect();
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm({
-    defaultValues: {
-      upazila: "Debidwar",
-      district: "Comilla",
-    },
-  });
+  const [isEdit, setIsEdit] = useState(true);
 
-  const submit = (data) => {
-    const recipientName = data.recipientName;
-    const hospitalName = data.hospital;
-    const district = data.district;
-    const upazella = data.upazella;
-    const date = data.date;
-    const time = data.time;
-    const address = data.address;
-    const whyNeed = data.whyNeed;
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-    const createRequest = {
-      recipientName,
-      hospitalName,
-      district,
-      upazella,
-      date,
-      time,
-      address,
-      whyNeed,
-    };
+    // const imageFile = e.target.image.value;
+
+    const fileImg = e.target.image.files[0];
+
+    let imageData;
+
+    if (fileImg) {
+      const formData = new FormData();
+      formData.append("image", fileImg);
+
+      const res = await axiosPublic.post(imageBbApi, formData, {
+        headers: {
+          "content-type": "multipart/form-data",
+        },
+      });
+      imageData = res;
+    }
+
+    
+
+
+    const form = e.target;
+    const name = form.name.value;
+    const email = user?.email;
+    const blood = form.blood.value;
+    const image = imageData?.data?.data?.display_url || users[0]?.image;
+    const district = form.district.value;
+    const upazila = form.upazila.value;
+    const updateProfile = { name, email, blood, image, district, upazila };
+
+    axiosPublic
+      .put(`/users/${user?.email}`, updateProfile)
+      .then((res) => {
+        Swal.fire({
+          icon: "success",
+          title: "Your Profile Updated",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        refetch();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    setIsEdit(true);
   };
 
   return (
-    <div>
-      <h1 className="text-center font-open-sans font-bold text-[40px]">
-        Profile Your
-      </h1>
-      <div className="mt-4 px-2 md:px-20 font-open-sans text-paragraph">
-        <div className="text-end font-semibold">
-          <button className="button">Edit</button>
+    <div className="h-screen">
+      <div className="rounded-full">
+        <div className="w-24 mx-auto  rounded-full overflow-hidden mt-10">
+          <img src={users[0]?.image} />
         </div>
-        <form onSubmit={handleSubmit(submit)}>
+      </div>
+      <p className="text-center font-bold">{user?.displayName}</p>
+      <div className=" px-2 md:px-20 font-open-sans text-paragraph">
+        <div className="text-end font-semibold">
+          {isEdit && (
+            <button onClick={() => setIsEdit(false)} className="button">
+              Edit
+            </button>
+          )}
+        </div>
+        <form onSubmit={handleSubmit}>
           <div className="flex gap-4 items-center mt-6">
             <div className="flex-1">
               <label className="font-bold">Name: </label>
@@ -56,8 +86,8 @@ const Profile = () => {
                 type="text"
                 placeholder="First name"
                 className="w-full rounded-md py-3 px-4 focus:outline-none bg-white mt-2"
-                value={user?.displayName}
-                disabled
+                defaultValue={user?.displayName}
+                disabled={isEdit}
                 name="name"
               />
             </div>
@@ -67,7 +97,7 @@ const Profile = () => {
                 type="email"
                 placeholder="email"
                 className="w-full rounded-md py-3 px-4 focus:outline-none bg-white mt-2"
-                value={user?.email}
+                defaultValue={user?.email}
                 disabled
                 name="email"
               />
@@ -77,69 +107,64 @@ const Profile = () => {
           <div className="flex gap-4 items-center mt-6">
             <div className="flex-1">
               <label className="font-bold">Blood Group: </label>
-              <select
-                {...register("blood", { required: true })}
-                className="w-full focus:outline-none p-3 rounded-lg cursor-pointer font-open-sans mt-2"
-              >
-                <option value="A+">A+</option>
-                <option value="A-">A-</option>
-                <option value="B+">B+</option>
-                <option value="B-">B-</option>
-                <option value="AB+">AB+</option>
-                <option value="AB-">AB-</option>
-                <option value="O+">O+</option>
-                <option value="O-">O-</option>
-              </select>
+              <input
+                type="text"
+                placeholder="Blood"
+                className="w-full rounded-md py-3 px-4 focus:outline-none bg-white mt-2"
+                defaultValue={users[0]?.blood}
+                disabled={isEdit}
+                name="blood"
+              />
             </div>
             <div className="flex-1">
               <label className="font-bold">Image:</label>
-              <input
-                {...register("image", { required: true })}
-                type="file"
-                name="image"
-                className="w-full rounded-md py-[9px] px-4 focus:outline-none bg-white mt-2 cursor-pointer"
-              />
-              {errors.image && <p className="text-darkRed">Invalid Image</p>}
+              {isEdit ? (
+                <input
+                  type="text"
+                  name="image"
+                  defaultValue={users[0]?.image}
+                  className="w-full rounded-md py-[9px] px-4 focus:outline-none bg-white mt-2 "
+                  disabled={isEdit}
+                />
+              ) : (
+                <input
+                  type="file"
+                  name="image"
+                  className="w-full rounded-md py-[9px] px-4 focus:outline-none bg-white mt-2 "
+                />
+              )}
             </div>
           </div>
           {/* district and upazella */}
           <div className="flex gap-4 items-center mt-6">
             <div className="flex-1">
-              <label className="font-bold">District Name:</label>
-              <select
-                {...register("district", { required: true })}
+              <label className="font-bold">District Name: </label>
+              <input
+                type="text"
+                placeholder="district"
+                className="w-full rounded-md py-3 px-4 focus:outline-none bg-white mt-2"
+                value={users[0]?.district}
+                disabled={isEdit}
                 name="district"
-                className="w-full focus:outline-none py-3 px-4 rounded-lg mt-2"
-              >
-                {district.map((item, id) => {
-                  return (
-                    <option key={id} value={item.name}>
-                      {item.name}
-                    </option>
-                  );
-                })}
-              </select>
+              />
             </div>
             <div className="flex-1">
-              <label className="font-bold">Upazila Name:</label>
-              <select
-                {...register("upazila", { required: true })}
+              <label className="font-bold">Upazila Name: </label>
+              <input
+                type="text"
+                placeholder="upazila"
+                className="w-full rounded-md py-3 px-4 focus:outline-none bg-white mt-2"
+                value={users[0]?.upazila}
+                disabled={isEdit}
                 name="upazila"
-                className="w-full focus:outline-none py-3 px-4 rounded-lg mt-2"
-              >
-                {upazella.map((item, id) => {
-                  return (
-                    <option key={id} value={item.name}>
-                      {item.name}
-                    </option>
-                  );
-                })}
-              </select>
+              />
             </div>
           </div>
-          <div className="text-center mt-10">
-            <button className="button">Save changes</button>
-          </div>
+          {!isEdit && (
+            <div className="text-center mt-10">
+              <button className="button">Save changes</button>
+            </div>
+          )}
         </form>
       </div>
     </div>

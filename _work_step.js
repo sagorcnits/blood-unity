@@ -5,5 +5,6 @@
  * Blog Page card effect ------- pending 
  * register page confirm password --------- pending 
  * my-donation-page pagination method ----- pending
+ * 
 
 */

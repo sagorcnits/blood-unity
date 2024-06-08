@@ -7,8 +7,7 @@ import useAuth from "../../hooks/useAuth";
 import useAxiosPublice from "../../hooks/useAxiosPublice";
 import useSelect from "../../hooks/useSelect";
 
-// ImageBB key and api
-const imageBbKey = import.meta.env.VITE_IMAGE_BB_KEY;
+
 const imageBbApi = `https://api.imgbb.com/1/upload?key=f192ef5d844484b8dafe780a5acb5cbc`;
 
 const Register = () => {
@@ -29,7 +28,6 @@ const Register = () => {
   });
 
   const submit = async (data) => {
-    // console.log("ok");
     const imageData = { image: data.image[0] };
     const res = await axiosPublic.post(imageBbApi, imageData, {
       headers: {
