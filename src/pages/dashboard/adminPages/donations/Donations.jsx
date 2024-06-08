@@ -6,23 +6,28 @@ import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import useAxiosPublice from "../../../../hooks/useAxiosPublice";
 import useUser from "../../../../hooks/useUser";
+import useUserDonations from "../../../../hooks/useUserDonations";
 
 const Donations = () => {
+  const [userDonations] = useUserDonations()
   const [users] = useUser();
-  // const [userDonations, refetch] = useUserDonations();
-  const [donationsData,setDonationsData] = useState([]);
+  const [donationsData, setDonationsData] = useState([]);
   const axiosPublic = useAxiosPublice();
   const [isFilter, setFilter] = useState(false);
+  // pagination 
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemPerPage, setItemPerPage] = useState(5);
+  const numberPages = Math.ceil(userDonations.length / itemPerPage);
+  const totalbtn = [...Array(numberPages).keys()];
 
-  const { data: userDonations = [], refetch } = useQuery({
-    queryKey: ["userDonations"],
+  const { data: userDonationsData = [], refetch } = useQuery({
+    queryKey: ["userDonationsData",itemPerPage,currentPage],
     queryFn: async () => {
-      const res = await axiosPublic.get("/donations");
-      setDonationsData(res.data)
+      const res = await axiosPublic.get(`/donations?page=${currentPage-1}&size=${itemPerPage}`);
+      setDonationsData(res.data);
       return res.data;
     },
   });
-
 
   const handleDonorDelete = (id) => {
     Swal.fire({
@@ -66,12 +71,20 @@ const Donations = () => {
   };
 
   const handleFilter = (value) => {
-    const filter = userDonations.filter((item) => item.status == value);
+    const filter = userDonationsData.filter((item) => item.status == value);
     setDonationsData(filter);
   };
 
+  const handleChangeItemPage = (e) => {
+    refetch()
+    const val = parseInt(e.target.value);
+    setItemPerPage(val);
+  };
+
+  
+
   return (
-    <div className="px-3 h-screen">
+    <div className="px-3">
       <div className="flex justify-between items-center mt-4">
         <div className="text-[30px] mt-3 ml-2">
           <h1 className="font-bold">Donation Request page</h1>
@@ -80,7 +93,7 @@ const Donations = () => {
           onClick={() => setFilter(!isFilter)}
           className="mr-3 bg-[#858686] w-[100px] px-3 py-2 text-white font-open-sans rounded-md relative cursor-pointer flex justify-between items-center"
         >
-          <p>all</p>
+          <p>filter</p>
           <IoMdArrowDropdown
             className={`${isFilter && "rotate-180"} duration-500`}
           ></IoMdArrowDropdown>
@@ -117,7 +130,7 @@ const Donations = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {donationsData?.slice(0, 4).map((userItem, id) => {
+                  {donationsData?.map((userItem, id) => {
                     const {
                       _id,
                       name,
@@ -221,70 +234,35 @@ const Donations = () => {
               </table>
             </div>
           </div>
-         {donationsData.length > 4 && <div className="flex  space-x-1 dark:text-gray-800 mt-3 pb-10">
-            <button
-              title="previous"
-              type="button"
-              className="inline-flex items-center justify-center w-8 h-8 py-0 border rounded-md shadow-md dark:bg-gray-50 dark:border-gray-100"
-            >
-              <svg
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth="2"
-                fill="none"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="w-4"
+          {donationsData.length > 0 && (
+            <div className="flex gap-2 space-x-1 dark:text-gray-800 mt-3 pb-10 ml-2">
+              {totalbtn.map((item, id) => {
+                return (
+                  <button
+                    onClick={() => setCurrentPage(item + 1)}
+                    key={id}
+                    type="button"
+                    title="Page 1"
+                    className={`inline-flex items-center justify-center w-8 h-8 text-sm font-semibold border rounded shadow-md ${
+                      currentPage == item + 1 ? "selected" : ""
+                    }`}
+                  >
+                    {item + 1}
+                  </button>
+                );
+              })}
+
+              <select
+                onChange={handleChangeItemPage}
+                className="cursor-pointer text-sm font-semibold border rounded"
               >
-                <polyline points="15 18 9 12 15 6"></polyline>
-              </svg>
-            </button>
-            <button
-              type="button"
-              title="Page 1"
-              className="inline-flex items-center justify-center w-8 h-8 text-sm font-semibold border rounded shadow-md dark:bg-gray-50 dark:text-violet-600 dark:border-violet-600"
-            >
-              1
-            </button>
-            <button
-              type="button"
-              className="inline-flex items-center justify-center w-8 h-8 text-sm border rounded shadow-md dark:bg-gray-50 dark:border-gray-100"
-              title="Page 2"
-            >
-              2
-            </button>
-            <button
-              type="button"
-              className="inline-flex items-center justify-center w-8 h-8 text-sm border rounded shadow-md dark:bg-gray-50 dark:border-gray-100"
-              title="Page 3"
-            >
-              3
-            </button>
-            <button
-              type="button"
-              className="inline-flex items-center justify-center w-8 h-8 text-sm border rounded shadow-md dark:bg-gray-50 dark:border-gray-100"
-              title="Page 4"
-            >
-              4
-            </button>
-            <button
-              title="next"
-              type="button"
-              className="inline-flex items-center justify-center w-8 h-8 py-0 border rounded-md shadow-md dark:bg-gray-50 dark:border-gray-100"
-            >
-              <svg
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth="2"
-                fill="none"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="w-4"
-              >
-                <polyline points="9 18 15 12 9 6"></polyline>
-              </svg>
-            </button>
-          </div>}
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="15">15</option>
+                <option value="20">20</option>
+              </select>
+            </div>
+          )}
         </>
       ) : (
         <h1 className="text-center text-[25px] md:text-[40px] font-open-sans font-bold mt-10">

@@ -7,7 +7,8 @@ import useUsersData from "../../../../hooks/useUsersData";
 const AdminHome = () => {
 const [usersData] = useUsersData();
 // const [userDonations] = useUsersDonations()
-const [userDonations] = useUserDonations()
+const [userDonations] = useUserDonations();
+const filterDonors = usersData.filter(donor => donor.role == "donor")
 
 
   return (
@@ -16,7 +17,7 @@ const [userDonations] = useUserDonations()
         <div className="bg-white card-shadow rounded-md p-4  border-b-[8px] border-[#27AE60]">
           <h1 className="text-[17px] font-semibold text-paragraph">Total Users</h1>
           <div className="flex justify-between items-center">
-            <h1 className="text-[40px] font-bold text-[#27AE60]">{usersData?.length}</h1>
+            <h1 className="text-[40px] font-bold text-[#27AE60]">{filterDonors?.length}</h1>
             <FaUsers className="text-[40px] text-[#58D68D]"></FaUsers>
           </div>
         </div>

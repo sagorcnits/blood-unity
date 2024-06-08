@@ -1,8 +1,10 @@
 import { MdDeleteForever } from "react-icons/md";
 import Swal from "sweetalert2";
 import useAxiosPublice from "../../../../hooks/useAxiosPublice";
+import useUser from "../../../../hooks/useUser";
 
 const Card = ({ refetch, blog }) => {
+  const [users] = useUser();
   const { _id, title, thumbnail, status } = blog;
   const axiosPublic = useAxiosPublice();
 
@@ -14,7 +16,11 @@ const Card = ({ refetch, blog }) => {
         if (data.modifiedCount > 0) {
           Swal.fire({
             icon: "success",
-            title: `${status=="draft" ? "Publish your blog" : "Canceled your publish blog"}`,
+            title: `${
+              status == "draft"
+                ? "Publish your blog"
+                : "Canceled your publish blog"
+            }`,
             showConfirmButton: false,
             timer: 1500,
           });
@@ -62,9 +68,14 @@ const Card = ({ refetch, blog }) => {
       </div>
       <div className="flex justify-between items-center py-4">
         <h1 className="py-3">{title}</h1>
-        <button onClick={handleDeleteBlog} className="button px-3 text-[20px]">
-          <MdDeleteForever></MdDeleteForever>
-        </button>
+        {users[0].role == "admin" && (
+          <button
+            onClick={handleDeleteBlog}
+            className="button px-3 text-[20px]"
+          >
+            <MdDeleteForever></MdDeleteForever>
+          </button>
+        )}
       </div>
       <div className="flex justify-between items-center ">
         <span
@@ -76,12 +87,14 @@ const Card = ({ refetch, blog }) => {
         >
           {status}
         </span>
-        <button
-          onClick={handleBlogStatus}
-          className="bg-[#2e794d] px-4 py-2 rounded-md text-white button"
-        >
-          {status == "draft" ? "published" : "unpublished"}
-        </button>
+        {users[0].role == "admin" && (
+          <button
+            onClick={handleBlogStatus}
+            className="bg-[#2e794d] px-4 py-2 rounded-md text-white button"
+          >
+            {status == "draft" ? "published" : "unpublished"}
+          </button>
+        )}
       </div>
     </div>
   );

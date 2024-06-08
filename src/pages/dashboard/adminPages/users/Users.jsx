@@ -3,21 +3,27 @@ import { useState } from "react";
 import { FaUsers } from "react-icons/fa";
 import { IoMdArrowDropdown } from "react-icons/io";
 import useAxiosPublice from "../../../../hooks/useAxiosPublice";
+import useUsersData from "../../../../hooks/useUsersData";
 
 const Users = () => {
   const axiosPublic = useAxiosPublice();
   const [isFilter, setFilter] = useState(false);
   const [users, setUsers] = useState([]);
+  const [usersData] = useUsersData();
+  // pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemPerPage, setItemPerPage] = useState(5);
+  const numberPages = Math.ceil(usersData.length / itemPerPage);
+  const totalbtn = [...Array(numberPages).keys()];
 
   const { data: userData = [], refetch } = useQuery({
-    queryKey: ["userData"],
+    queryKey: ["userData",currentPage,itemPerPage],
     queryFn: async () => {
-      const res = await axiosPublic.get("/users");
-      setUsers(res.data)
+      const res = await axiosPublic.get(`/users?page=${currentPage-1}&size=${itemPerPage}`);
+      setUsers(res.data);
       return res.data;
     },
   });
-
 
   const handleUser = (data, _id) => {
     // console.log(data, _id);
@@ -36,6 +42,12 @@ const Users = () => {
   const handleFilter = (value) => {
     const filter = userData.filter((item) => item.status == value);
     setUsers(filter);
+  };
+  // pagination
+  const handleChangeItemPage = (e) => {
+    refetch();
+    const val = parseInt(e.target.value);
+    setItemPerPage(val);
   };
 
   return (
@@ -76,7 +88,7 @@ const Users = () => {
               </tr>
             </thead>
             <tbody>
-              {users?.slice(0, 4).map((user, id) => {
+              {users?.map((user, id) => {
                 const {
                   _id,
                   email,
@@ -90,7 +102,10 @@ const Users = () => {
                 } = user;
                 const statusBtn = status == "active" ? "block" : "unblock";
                 return (
-                  <tr className="border-b dark:bg-gray-50 dark:border-gray-300 *:px-3 *:py-2 *:h-20">
+                  <tr
+                    key={id}
+                    className="border-b dark:bg-gray-50 dark:border-gray-300 *:px-3 *:py-2 *:h-20"
+                  >
                     <td>{id + 1}</td>
                     <td>{name}</td>
                     <td>
@@ -142,70 +157,35 @@ const Users = () => {
           </table>
         </div>
       </div>
-     {users.length > 4 && <div className="flex  space-x-1 dark:text-gray-800 mt-3 pb-10">
-        <button
-          title="previous"
-          type="button"
-          className="inline-flex items-center justify-center w-8 h-8 py-0 border rounded-md shadow-md dark:bg-gray-50 dark:border-gray-100"
-        >
-          <svg
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth="2"
-            fill="none"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="w-4"
+      {users.length > 0 && (
+        <div className="flex gap-2 space-x-1 dark:text-gray-800 mt-3 pb-10 ml-2">
+          {totalbtn.map((item, id) => {
+            return (
+              <button
+                onClick={() => setCurrentPage(item + 1)}
+                key={id}
+                type="button"
+                title="Page 1"
+                className={`inline-flex items-center justify-center w-8 h-8 text-sm font-semibold border rounded shadow-md ${
+                  currentPage == item + 1 ? "selected" : ""
+                }`}
+              >
+                {item + 1}
+              </button>
+            );
+          })}
+
+          <select
+            onChange={handleChangeItemPage}
+            className="cursor-pointer text-sm font-semibold border rounded"
           >
-            <polyline points="15 18 9 12 15 6"></polyline>
-          </svg>
-        </button>
-        <button
-          type="button"
-          title="Page 1"
-          className="inline-flex items-center justify-center w-8 h-8 text-sm font-semibold border rounded shadow-md dark:bg-gray-50 dark:text-violet-600 dark:border-violet-600"
-        >
-          1
-        </button>
-        <button
-          type="button"
-          className="inline-flex items-center justify-center w-8 h-8 text-sm border rounded shadow-md dark:bg-gray-50 dark:border-gray-100"
-          title="Page 2"
-        >
-          2
-        </button>
-        <button
-          type="button"
-          className="inline-flex items-center justify-center w-8 h-8 text-sm border rounded shadow-md dark:bg-gray-50 dark:border-gray-100"
-          title="Page 3"
-        >
-          3
-        </button>
-        <button
-          type="button"
-          className="inline-flex items-center justify-center w-8 h-8 text-sm border rounded shadow-md dark:bg-gray-50 dark:border-gray-100"
-          title="Page 4"
-        >
-          4
-        </button>
-        <button
-          title="next"
-          type="button"
-          className="inline-flex items-center justify-center w-8 h-8 py-0 border rounded-md shadow-md dark:bg-gray-50 dark:border-gray-100"
-        >
-          <svg
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth="2"
-            fill="none"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="w-4"
-          >
-            <polyline points="9 18 15 12 9 6"></polyline>
-          </svg>
-        </button>
-      </div>}
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="15">15</option>
+            <option value="20">20</option>
+          </select>
+        </div>
+      )}
     </div>
   );
 };

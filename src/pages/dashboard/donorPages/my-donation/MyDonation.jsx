@@ -6,28 +6,40 @@ import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import useAuth from "../../../../hooks/useAuth";
 import useAxiosPublice from "../../../../hooks/useAxiosPublice";
+import useDonations from "../../../../hooks/useDonations";
 const MyDonation = () => {
-  const [donations, setDonations] = useState([]);
+  const [donations] = useDonations();
+  const [donationsDonor, setDonationsDonor] = useState([]);
   const axiosPublic = useAxiosPublice();
   const { user } = useAuth();
   const [isFilter, setFilter] = useState(false);
-
+  // paginatyion
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemPerPage, setItemPerPage] = useState(5);
+  const numberPages = Math.ceil(donations.length / itemPerPage);
+  const totalbtn = [...Array(numberPages).keys()];
   const { data: donationsData = [], refetch } = useQuery({
-    queryKey: ["donationsData", user?.email],
+    queryKey: ["donationsData", user?.email, currentPage, itemPerPage,],
     queryFn: async () => {
-      const res = await axiosPublic.get(`/donations?email=${user?.email}`);
-      setDonations(res.data);
+      const res = await axiosPublic.get(
+        `/donations?email=${user?.email}&page=${
+          currentPage - 1
+        }&size=${itemPerPage}`
+      );
+      setDonationsDonor(res.data);
       return res.data;
     },
   });
 
-
   const handleFilter = (value) => {
-    if (value == "all") {
-      return setDonations(donationsData);
-    }
     const filter = donationsData.filter((item) => item.status == value);
-    setDonations(filter);
+    setDonationsDonor(filter);
+  };
+
+  const handleChangeItemPage = (e) => {
+    refetch();
+    const val = parseInt(e.target.value);
+    setItemPerPage(val);
   };
 
   const handleStatusDonation = (status, id) => {
@@ -72,7 +84,7 @@ const MyDonation = () => {
   };
 
   return (
-    <div className="px-3 h-screen">
+    <div className="px-3">
       <div className="flex justify-between items-center mt-4">
         <div className="text-[30px] mt-3 ml-2">
           <h1 className="font-bold">My Donation Request page</h1>
@@ -81,13 +93,12 @@ const MyDonation = () => {
           onClick={() => setFilter(!isFilter)}
           className="mr-3 bg-[#858686] w-[100px] px-3 py-2 text-white font-open-sans rounded-md relative cursor-pointer flex justify-between items-center"
         >
-          <p>all</p>
+          <p>filter</p>
           <IoMdArrowDropdown
             className={`${isFilter && "rotate-180"} duration-500`}
           ></IoMdArrowDropdown>
           {isFilter && (
-            <ul className="cursor-pointer py-1 bg-white card-shadow  font-open-sans px-2 rounded-md absolute -bottom-[170px] left-0 right-0 *:py-1 z-50 *:text-center *:bgHover *:text-black">
-              <li onClick={() => handleFilter("all")}>all</li>
+            <ul className="cursor-pointer py-1 bg-white card-shadow  font-open-sans px-2 rounded-md absolute -bottom-[150px] left-0 right-0 *:py-1 z-50 *:text-center *:bgHover *:text-black">
               <li onClick={() => handleFilter("pending")}>pending</li>
               <li onClick={() => handleFilter("inprogress")}>inprogress</li>
               <li onClick={() => handleFilter("canceled")}>canceled</li>
@@ -96,7 +107,7 @@ const MyDonation = () => {
           )}
         </div>
       </div>
-      {donations.length > 0 ? (
+      {donationsDonor.length > 0 ? (
         <div className="p-2 mx-auto font-open-sans mt-4">
           <div className="overflow-auto rounded-lg w-full">
             <table className="w-full">
@@ -114,7 +125,7 @@ const MyDonation = () => {
                 </tr>
               </thead>
               <tbody>
-                {donations?.slice(0, 4).map((userItem, id) => {
+                {donationsDonor?.map((userItem, id) => {
                   const {
                     _id,
                     name,
@@ -215,70 +226,35 @@ const MyDonation = () => {
               </tbody>
             </table>
           </div>
-        { donationsData.length > 4 && <div className="flex  space-x-1 dark:text-gray-800 mt-3 pb-10">
-            <button
-              title="previous"
-              type="button"
-              className="inline-flex items-center justify-center w-8 h-8 py-0 border rounded-md shadow-md dark:bg-gray-50 dark:border-gray-100"
-            >
-              <svg
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth="2"
-                fill="none"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="w-4"
+          {donationsData.length > 0 && (
+            <div className="flex gap-2 space-x-1 dark:text-gray-800 mt-3 pb-10 ml-2">
+              {totalbtn.map((item, id) => {
+                return (
+                  <button
+                    onClick={() => setCurrentPage(item + 1)}
+                    key={id}
+                    type="button"
+                    title="Page 1"
+                    className={`inline-flex items-center justify-center w-8 h-8 text-sm font-semibold border rounded shadow-md ${
+                      currentPage == item + 1 ? "selected" : ""
+                    }`}
+                  >
+                    {item + 1}
+                  </button>
+                );
+              })}
+
+              <select
+                onChange={handleChangeItemPage}
+                className="cursor-pointer text-sm font-semibold border rounded"
               >
-                <polyline points="15 18 9 12 15 6"></polyline>
-              </svg>
-            </button>
-            <button
-              type="button"
-              title="Page 1"
-              className="inline-flex items-center justify-center w-8 h-8 text-sm font-semibold border rounded shadow-md dark:bg-gray-50 dark:text-violet-600 dark:border-violet-600"
-            >
-              1
-            </button>
-            <button
-              type="button"
-              className="inline-flex items-center justify-center w-8 h-8 text-sm border rounded shadow-md dark:bg-gray-50 dark:border-gray-100"
-              title="Page 2"
-            >
-              2
-            </button>
-            <button
-              type="button"
-              className="inline-flex items-center justify-center w-8 h-8 text-sm border rounded shadow-md dark:bg-gray-50 dark:border-gray-100"
-              title="Page 3"
-            >
-              3
-            </button>
-            <button
-              type="button"
-              className="inline-flex items-center justify-center w-8 h-8 text-sm border rounded shadow-md dark:bg-gray-50 dark:border-gray-100"
-              title="Page 4"
-            >
-              4
-            </button>
-            <button
-              title="next"
-              type="button"
-              className="inline-flex items-center justify-center w-8 h-8 py-0 border rounded-md shadow-md dark:bg-gray-50 dark:border-gray-100"
-            >
-              <svg
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth="2"
-                fill="none"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="w-4"
-              >
-                <polyline points="9 18 15 12 9 6"></polyline>
-              </svg>
-            </button>
-          </div>}
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="15">15</option>
+                <option value="20">20</option>
+              </select>
+            </div>
+          )}
         </div>
       ) : (
         <h1 className="text-center text-[25px] md:text-[40px] font-open-sans font-bold mt-10">

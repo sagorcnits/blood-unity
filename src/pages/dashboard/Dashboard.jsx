@@ -11,8 +11,8 @@ import { NavLink, Outlet } from "react-router-dom";
 import Navbar from "./shared/Navbar";
 
 const Dashboard = () => {
-  const admin = true;
-  const donor = false;
+  const admin = false;
+  const donor = true;
 
   return (
     <div className="flex gap-2  font-open-sans ">
