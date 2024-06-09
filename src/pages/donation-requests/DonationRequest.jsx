@@ -1,7 +1,14 @@
-import { Link } from "react-router-dom";
 import SectionHeader from "../../components/SectionHeader";
+import useUserDonations from "../../hooks/useUserDonations";
+import DonationCard from "./DonationCard";
 
 const DonationRequest = () => {
+  const [userDonations] = useUserDonations();
+
+  const donationsFilterData = userDonations.filter(
+    (item) => item.status == "pending"
+  );
+
   return (
     <section className="mt-32">
       <div>
@@ -13,31 +20,10 @@ const DonationRequest = () => {
           }}
         ></SectionHeader>
       </div>
-      <div className="overflow-auto mt-20 font-open-sans">
-        <table className="table w-[800px] md:w-full">
-          <thead>
-            <tr className=" *:text-[19px] font-Inter">
-              <th></th>
-              <th>recipient name</th>
-              <th>location</th>
-              <th>Date</th>
-              <th>Time</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr className="*:text-[17px] font-Inter ">
-              <td>1</td>
-              <td>Sagor</td>
-              <td>KomorPur</td>
-              <td>20-03-2024</td>
-              <td>10am</td>
-              <td>
-              <Link to="/details"><button className="button">View Details</button></Link>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8  font-open-sans mt-20">
+        {donationsFilterData?.map((item, id) => (
+          <DonationCard item={item} key={id}></DonationCard>
+        ))}
       </div>
     </section>
   );

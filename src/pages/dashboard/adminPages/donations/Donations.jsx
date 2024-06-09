@@ -9,21 +9,23 @@ import useUser from "../../../../hooks/useUser";
 import useUserDonations from "../../../../hooks/useUserDonations";
 
 const Donations = () => {
-  const [userDonations] = useUserDonations()
+  const [userDonations] = useUserDonations();
   const [users] = useUser();
   const [donationsData, setDonationsData] = useState([]);
   const axiosPublic = useAxiosPublice();
   const [isFilter, setFilter] = useState(false);
-  // pagination 
+  // pagination
   const [currentPage, setCurrentPage] = useState(1);
   const [itemPerPage, setItemPerPage] = useState(5);
   const numberPages = Math.ceil(userDonations.length / itemPerPage);
   const totalbtn = [...Array(numberPages).keys()];
 
   const { data: userDonationsData = [], refetch } = useQuery({
-    queryKey: ["userDonationsData",itemPerPage,currentPage],
+    queryKey: ["userDonationsData", itemPerPage, currentPage],
     queryFn: async () => {
-      const res = await axiosPublic.get(`/donations?page=${currentPage-1}&size=${itemPerPage}`);
+      const res = await axiosPublic.get(
+        `/donations?page=${currentPage - 1}&size=${itemPerPage}`
+      );
       setDonationsData(res.data);
       return res.data;
     },
@@ -76,12 +78,10 @@ const Donations = () => {
   };
 
   const handleChangeItemPage = (e) => {
-    refetch()
+    refetch();
     const val = parseInt(e.target.value);
     setItemPerPage(val);
   };
-
-  
 
   return (
     <div className="px-3">
@@ -253,6 +253,7 @@ const Donations = () => {
               })}
 
               <select
+                defaultValue={itemPerPage}
                 onChange={handleChangeItemPage}
                 className="cursor-pointer text-sm font-semibold border rounded"
               >

@@ -18,8 +18,9 @@ const MyDonation = () => {
   const [itemPerPage, setItemPerPage] = useState(5);
   const numberPages = Math.ceil(donations.length / itemPerPage);
   const totalbtn = [...Array(numberPages).keys()];
+
   const { data: donationsData = [], refetch } = useQuery({
-    queryKey: ["donationsData", user?.email, currentPage, itemPerPage,],
+    queryKey: ["donationsData", user?.email, currentPage, itemPerPage],
     queryFn: async () => {
       const res = await axiosPublic.get(
         `/donations?email=${user?.email}&page=${
@@ -226,7 +227,7 @@ const MyDonation = () => {
               </tbody>
             </table>
           </div>
-          {donationsData.length > 0 && (
+          {donationsDonor.length > 0 && (
             <div className="flex gap-2 space-x-1 dark:text-gray-800 mt-3 pb-10 ml-2">
               {totalbtn.map((item, id) => {
                 return (
@@ -245,6 +246,7 @@ const MyDonation = () => {
               })}
 
               <select
+                defaultValue={itemPerPage}
                 onChange={handleChangeItemPage}
                 className="cursor-pointer text-sm font-semibold border rounded"
               >
@@ -257,7 +259,7 @@ const MyDonation = () => {
           )}
         </div>
       ) : (
-        <h1 className="text-center text-[25px] md:text-[40px] font-open-sans font-bold mt-10">
+        <h1 className="text-center text-[25px] md:text-[40px] font-open-sans font-bold mt-10 h-screen">
           No Data
         </h1>
       )}

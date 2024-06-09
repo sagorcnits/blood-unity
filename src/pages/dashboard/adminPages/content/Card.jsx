@@ -68,7 +68,7 @@ const Card = ({ refetch, blog }) => {
       </div>
       <div className="flex justify-between items-center py-4">
         <h1 className="py-3">{title}</h1>
-        {users[0].role == "admin" && (
+        {users?.role == "admin" && (
           <button
             onClick={handleDeleteBlog}
             className="button px-3 text-[20px]"
@@ -87,7 +87,7 @@ const Card = ({ refetch, blog }) => {
         >
           {status}
         </span>
-        {users[0].role == "admin" && (
+        {users?.role == "admin" && (
           <button
             onClick={handleBlogStatus}
             className="bg-[#2e794d] px-4 py-2 rounded-md text-white button"

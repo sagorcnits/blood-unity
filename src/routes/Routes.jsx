@@ -22,12 +22,14 @@ import Login from "../pages/login/Login";
 import NotFound from "../pages/notFound/NotFound";
 import Register from "../pages/register/Register";
 import SearchDonor from "../pages/search-donors/SearchDonor";
+import AdminRoute from "./AdminRoute";
+import PrivateRoute from "./PrivateRoute";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Root></Root>,
-    errorElement:<NotFound></NotFound>,
+    errorElement: <NotFound></NotFound>,
     children: [
       {
         path: "/",
@@ -45,8 +47,9 @@ const router = createBrowserRouter([
       },
 
       {
-        path: "/details",
+        path: "/details/:id",
         element: <Details></Details>,
+        loader:({params}) => fetch(`http://localhost:5000/donations/${params.id}`),
       },
 
       {
@@ -73,82 +76,131 @@ const router = createBrowserRouter([
 
   {
     path: "dashboard",
-    element: <Dashboard></Dashboard>,
+    element: <PrivateRoute><Dashboard></Dashboard></PrivateRoute>,
     children: [
       // admin Dashboard
       {
         path: "/dashboard",
-        element: <AdminHome></AdminHome>,
+        element: (
+          <AdminRoute>
+            <AdminHome></AdminHome>
+          </AdminRoute>
+        ),
       },
 
       {
         path: "/dashboard/adminHome",
-        element: <AdminHome></AdminHome>,
+        element: (
+          <AdminRoute>
+            <AdminHome></AdminHome>
+          </AdminRoute>
+        ),
       },
 
       {
         path: "/dashboard/all-users",
-        element: <Users></Users>,
+        element: (
+          <AdminRoute>
+            <Users></Users>
+          </AdminRoute>
+        ),
       },
 
       {
         path: "/dashboard/all-blood-donation-request",
-        element: <Donations></Donations>,
+        element: (
+          <AdminRoute>
+            <Donations></Donations>
+          </AdminRoute>
+        ),
       },
 
       {
         path: "/dashboard/content-management",
-        element: <Content></Content>,
+        element: (
+          <AdminRoute>
+            <Content></Content>
+          </AdminRoute>
+        ),
       },
 
       {
         path: "/dashboard/content-management/add-blog",
-        element: <AddBlog></AddBlog>,
+        element: (
+          <AdminRoute>
+            <AddBlog></AddBlog>
+          </AdminRoute>
+        ),
       },
 
       // donor dashboard
 
       {
-        path: "/dashboard",
-        element: <HomeDonor></HomeDonor>,
-      },
-
-      {
         path: "/dashboard/home",
-        element: <HomeDonor></HomeDonor>,
+        element: (
+          <PrivateRoute>
+            <HomeDonor></HomeDonor>
+          </PrivateRoute>
+        ),
       },
 
       {
         path: "/dashboard/my-donation-requests",
-        element: <MyDonation></MyDonation>,
+        element: (
+          <PrivateRoute>
+            <MyDonation></MyDonation>
+          </PrivateRoute>
+        ),
       },
 
       {
         path: "/dashboard/create-donation-request",
-        element: <CreateDonation></CreateDonation>,
+        element: (
+          <PrivateRoute>
+            <CreateDonation></CreateDonation>
+          </PrivateRoute>
+        ),
       },
 
       // everyone routes
       {
         path: "/dashboard/profile",
-        element: <Profile></Profile>,
+        element: (
+          <PrivateRoute>
+            <Profile></Profile>
+          </PrivateRoute>
+        ),
       },
 
       {
         path: "/dashboard/contact",
-        element: <Contact></Contact>,
+        element: (
+          <PrivateRoute>
+            <Contact></Contact>
+          </PrivateRoute>
+        ),
       },
 
       {
         path: "/dashboard/donation-edit/:id",
-        element: <DonationEdit></DonationEdit>,
-        loader: ({params} ) => fetch(`http://localhost:5000/donations/${params.id}`)
+        element: (
+          <PrivateRoute>
+            <DonationEdit></DonationEdit>
+          </PrivateRoute>
+        ),
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/donations/${params.id}`),
       },
 
       {
         path: "/dashboard/details-admin/:id",
-        element: <DetailsAdmin></DetailsAdmin>,
-        loader: ({params} ) => fetch(`http://localhost:5000/donations/${params.id}`)
+        element: (
+          <PrivateRoute>
+            <DetailsAdmin></DetailsAdmin>
+          </PrivateRoute>
+        ),
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/donations/${params.id}`),
       },
     ],
   },

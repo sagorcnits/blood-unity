@@ -39,7 +39,7 @@ const Profile = () => {
     const name = form.name.value;
     const email = user?.email;
     const blood = form.blood.value;
-    const image = imageData?.data?.data?.display_url || users[0]?.image;
+    const image = imageData?.data?.data?.display_url || users?.image;
     const district = form.district.value;
     const upazila = form.upazila.value;
     const updateProfile = { name, email, blood, image, district, upazila };
@@ -66,7 +66,7 @@ const Profile = () => {
     <div className="h-screen">
       <div className="rounded-full">
         <div className="w-24 mx-auto  rounded-full overflow-hidden mt-10">
-          <img src={users[0]?.image} />
+          <img src={users?.image} />
         </div>
       </div>
       <p className="text-center font-bold">{user?.displayName}</p>
@@ -111,7 +111,7 @@ const Profile = () => {
                 type="text"
                 placeholder="Blood"
                 className="w-full rounded-md py-3 px-4 focus:outline-none bg-white mt-2"
-                defaultValue={users[0]?.blood}
+                defaultValue={users?.blood}
                 disabled={isEdit}
                 name="blood"
               />
@@ -122,7 +122,7 @@ const Profile = () => {
                 <input
                   type="text"
                   name="image"
-                  defaultValue={users[0]?.image}
+                  defaultValue={users?.image}
                   className="w-full rounded-md py-[9px] px-4 focus:outline-none bg-white mt-2 "
                   disabled={isEdit}
                 />
@@ -143,7 +143,7 @@ const Profile = () => {
                 type="text"
                 placeholder="district"
                 className="w-full rounded-md py-3 px-4 focus:outline-none bg-white mt-2"
-                value={users[0]?.district}
+                defaultValue={users?.district}
                 disabled={isEdit}
                 name="district"
               />
@@ -154,7 +154,7 @@ const Profile = () => {
                 type="text"
                 placeholder="upazila"
                 className="w-full rounded-md py-3 px-4 focus:outline-none bg-white mt-2"
-                value={users[0]?.upazila}
+                defaultValue={users?.upazila}
                 disabled={isEdit}
                 name="upazila"
               />

@@ -3,8 +3,10 @@ import { FaBars } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
 import { Link, NavLink } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
+import useUser from "../../hooks/useUser";
 
 const Navbar = () => {
+  const [users] = useUser();
   const { user, LogOutUser } = useAuth();
   const [isActive, setActive] = useState(true);
   const navRef = useRef();
@@ -82,10 +84,7 @@ const Navbar = () => {
                   className="btn btn-ghost btn-circle avatar"
                 >
                   <div className="w-16 rounded-full">
-                    <img
-                      alt=""
-                      src={user.photoURL}
-                    />
+                    <img alt="" src={user.photoURL} />
                   </div>
                 </div>
                 <ul
@@ -93,7 +92,15 @@ const Navbar = () => {
                   className="menu menu-sm dropdown-content mt-3 z-[1] p-4 shadow bg-base-100 rounded-box w-52 font-open-sans *:bgHover *:py-1 *:text-paragraph *:text-[23px]"
                 >
                   <li>
-                    <Link to="/dashboard">Dashboard</Link>
+                    <Link
+                      to={`${
+                        users?.role == "admin" || user?.role == "volunteer"
+                          ? "/dashboard"
+                          : "/dashboard/home"
+                      }`}
+                    >
+                      Dashboard
+                    </Link>
                   </li>
 
                   <li>

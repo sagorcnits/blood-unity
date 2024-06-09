@@ -8,11 +8,12 @@ import {
   MdPermContactCalendar,
 } from "react-icons/md";
 import { NavLink, Outlet } from "react-router-dom";
+import useUser from "../../hooks/useUser";
 import Navbar from "./shared/Navbar";
 
 const Dashboard = () => {
-  const admin = false;
-  const donor = true;
+  const [users] = useUser();
+  const role = users?.role;
 
   return (
     <div className="flex gap-2  font-open-sans ">
@@ -22,7 +23,7 @@ const Dashboard = () => {
             Blood<span className="text-[#DF1E26]">Unity</span>
           </a>
         </div>
-        {admin ? (
+        {role =="admin"? (
           <>
             <ul className="*:mt-2 border-b pb-6 border-dashed p-3">
               <li>
@@ -105,7 +106,7 @@ const Dashboard = () => {
         ) : (
           <>
             <ul className="*:mt-2 border-b pb-6 border-dashed p-3">
-              {donor ? (
+              {role =="donor" ? (
                 <>
                   {" "}
                   <li>
@@ -172,7 +173,7 @@ const Dashboard = () => {
               ) : (
                 <>
                   {" "}
-                  <ul className="*:mt-2 border-b pb-6 border-dashed p-3">
+                  <ul className="*:mt-2  pb-6  p-3">
                     <li>
                       <NavLink
                         className={({ isActive, isPending }) =>
