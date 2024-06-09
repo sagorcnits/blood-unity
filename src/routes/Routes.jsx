@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import Root from "../layout/Root";
 import Blog from "../pages/blog/Blog";
+import BlogDetails from "../pages/blog/BlogDetails";
 import Dashboard from "../pages/dashboard/Dashboard";
 import AdminHome from "../pages/dashboard/adminPages/adminHome/AdminHome";
 import AddBlog from "../pages/dashboard/adminPages/content/AddBlog";
@@ -48,13 +49,19 @@ const router = createBrowserRouter([
 
       {
         path: "/details/:id",
-        element: <Details></Details>,
+        element: <PrivateRoute><Details></Details></PrivateRoute>,
         loader:({params}) => fetch(`http://localhost:5000/donations/${params.id}`),
       },
 
       {
         path: "/blog",
         element: <Blog></Blog>,
+      },
+
+      {
+        path: "/blog-details/:id",
+        element: <BlogDetails></BlogDetails>,
+        loader:({params}) => fetch(`http://localhost:5000/blogs/${params.id}`),
       },
 
       {

@@ -1,7 +1,11 @@
 import { FaSearch } from "react-icons/fa";
+import useBlogsData from "../../hooks/useBlogsData";
 import Card from "./Card";
 
 const Blog = () => {
+  const [blogs] = useBlogsData();
+  const blogsFilter = blogs.filter((item) => item.status == "published");
+
   return (
     <section className="mt-40">
       <div
@@ -36,9 +40,9 @@ const Blog = () => {
         </div>
       </div>
       <div className="grid  md:grid-cols-2 lg:grid-cols-3 gap-6 mt-20">
-        <Card></Card>
-        <Card></Card>
-        <Card></Card>
+        {blogsFilter?.map((blog, id) => (
+          <Card blog={blog} key={id}></Card>
+        ))}
       </div>
     </section>
   );

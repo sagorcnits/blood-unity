@@ -1,17 +1,34 @@
+import { useState } from "react";
+import DonorCard from "../../components/DonorCard";
 import useSelect from "../../hooks/useSelect";
+import useUsersData from "../../hooks/useUsersData";
 
 const SearchDonor = () => {
-  const [district, upzella] = useSelect();
-
+  const [districtSelect, upazilaSelect] = useSelect();
+  const [userData] = useUsersData();
+  const donorsData = userData.filter((item) => item.role == "donor");
+const [searchData,setSearchData] = useState([])
   const handleSearch = (data) => {
     data.preventDefault();
     const form = data.target;
-    const blood = form.blood.value;
-    const district = form.district.value;
-    const upzella = form.upzella.value;
+    const blood = form.blood.value.toLowerCase();
+    const district = form.district.value.toLowerCase();
+    const upazila = form.upazila.value.toLowerCase();
 
-    const searchInfo = { blood, district, upzella };
+    const searchDonor = donorsData.filter((item) => {
+      if (
+        item.blood.toLowerCase() == blood &&
+        item.district.toLowerCase() == district &&
+        item.upazila.toLowerCase() == upazila
+      ) {
+        return item;
+      }
+    });
+    console.log(searchDonor)
+    setSearchData(searchDonor)
   };
+
+  console.log(searchData)
 
   return (
     <>
@@ -58,7 +75,7 @@ const SearchDonor = () => {
                       name="district"
                       className="w-[150px] focus:outline-none p-3 rounded-lg"
                     >
-                      {district.map((item, id) => {
+                      {districtSelect?.map((item, id) => {
                         return (
                           <option key={id} value={item.name}>
                             {item.name}
@@ -69,10 +86,10 @@ const SearchDonor = () => {
                   </div>
                   <div>
                     <select
-                      name="upzella"
+                      name="upazila"
                       className="w-[150px] focus:outline-none p-3 rounded-lg"
                     >
-                      {upzella.map((item, id) => {
+                      {upazilaSelect?.map((item, id) => {
                         return (
                           <option key={id} value={item.name}>
                             {item.name}
@@ -87,6 +104,9 @@ const SearchDonor = () => {
             </div>
           </div>
         </div>
+      </div>
+      <div className="grid md:grid-cols-2  gap-10  font-open-sans mt-20">
+       {searchData?.map((item,id) => <DonorCard item={item} key={id}></DonorCard>)}
       </div>
     </>
   );

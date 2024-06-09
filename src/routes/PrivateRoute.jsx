@@ -1,9 +1,9 @@
-import { useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 
 const PrivateRoute = ({ children }) => {
   const { user, loading } = useAuth();
-  const navigate = useNavigate();
+  
   if (loading) {
     return (
       <div className="flex items-center justify-center space-x-2">
@@ -18,7 +18,7 @@ const PrivateRoute = ({ children }) => {
     return children;
   }
 
-  return navigate("/login");
+  return <Navigate to="/login"></Navigate>;
 };
 
 export default PrivateRoute;

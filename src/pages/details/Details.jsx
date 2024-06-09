@@ -1,9 +1,54 @@
+import {
+  Dialog,
+  DialogPanel,
+  DialogTitle,
+  Transition,
+  TransitionChild,
+} from "@headlessui/react";
+import { useState } from "react";
 import { MdBloodtype } from "react-icons/md";
 import { useLoaderData } from "react-router-dom";
-
+import Swal from "sweetalert2";
+import useAuth from "../../hooks/useAuth";
+import useAxiosPublice from "../../hooks/useAxiosPublice";
 const Details = () => {
+  const axiosPublic = useAxiosPublice();
   const data = useLoaderData();
-  // console.log(id);
+  const { user } = useAuth();
+  let [isOpen, setIsOpen] = useState(false);
+  const [load, setLoad] = useState(true);
+
+  function open() {
+    setIsOpen(true);
+  }
+
+  function close() {
+    setIsOpen(false);
+  }
+
+  const handleConfirmDonate = (e) => {
+    e.preventDefault();
+    const status = "inprogress";
+    axiosPublic
+      .put(`/donations?status=${status}&id=${data._id}`)
+      .then((res) => {
+        const data = res.data;
+
+        setLoad(!load);
+        Swal.fire({
+          icon: "success",
+          title: "Complate Your Donatation. Thanks for Donation",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+
+        close();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <div className="bg-white md:w-[80%] mx-auto  p-8 mt-32 mb-10 font-open-sans card-shadow">
       <MdBloodtype className="text-darkRed text-[70px] mx-auto"></MdBloodtype>
@@ -66,8 +111,62 @@ const Details = () => {
         </div>
       </div>
       <div className="text-center mt-8">
-        <button className="button">Donate</button>
+        <button onClick={open} className="button">
+          Donate
+        </button>
       </div>
+
+      <Transition appear show={isOpen}>
+        <Dialog
+          as="div"
+          className="relative z-10 focus:outline-none"
+          onClose={close}
+        >
+          <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
+            <div className="flex min-h-full items-center justify-center p-4">
+              <TransitionChild enter="ease-out duration-300">
+                <DialogPanel className="w-full max-w-md rounded-xl  p-6 bg-black">
+                  <DialogTitle
+                    as="h3"
+                    className="text-darkRed font-medium  text-center text-[24px]"
+                  >
+                    <MdBloodtype className="text-darkRed text-[70px] mx-auto"></MdBloodtype>
+                  </DialogTitle>
+                  <form className="p-4">
+                    <div>
+                      <div>
+                        <input
+                          type="text"
+                          placeholder="First name"
+                          className="w-full rounded-md py-3 px-4 focus:outline-none bg-white mt-6"
+                          value={user?.displayName}
+                          disabled
+                          name="name"
+                        />
+                      </div>
+                      <div>
+                        <input
+                          type="email"
+                          placeholder="email"
+                          className="w-full rounded-md py-3 px-4 focus:outline-none bg-white mt-6"
+                          value={user?.email}
+                          disabled
+                          name="email"
+                        />
+                      </div>
+                    </div>
+                    <div className="text-center mt-8">
+                      <button onClick={handleConfirmDonate} className="button">
+                        Confirm Donate
+                      </button>
+                    </div>
+                  </form>
+                </DialogPanel>
+              </TransitionChild>
+            </div>
+          </div>
+        </Dialog>
+      </Transition>
     </div>
   );
 };

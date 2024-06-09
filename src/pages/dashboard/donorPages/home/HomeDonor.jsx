@@ -103,7 +103,7 @@ const HomeDonor = () => {
                         >
                           {status}
                         </p>
-                        {status == "inprogress" ? (
+                        {status == "inprogress" && (
                           <>
                             <button
                               onClick={() =>
@@ -120,17 +120,6 @@ const HomeDonor = () => {
                               ✔
                             </button>
                           </>
-                        ) : status == "pending" ? (
-                          <button
-                            onClick={() =>
-                              handleStatusDonation("inprogress", _id)
-                            }
-                            className="text-green-500 text-[20px]"
-                          >
-                            ✔
-                          </button>
-                        ) : (
-                          ""
                         )}
                       </div>
                     </td>

@@ -170,7 +170,7 @@ const Donations = () => {
                           <td></td>
                         )}
 
-                        {users[0]?.role == "admin" && (
+                        {users?.role == "admin" && (
                           <>
                             <td className="p-3">
                               <Link to={`/dashboard/donation-edit/${_id}`}>

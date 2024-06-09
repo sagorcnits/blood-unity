@@ -1,9 +1,9 @@
-import { useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import useUser from "../hooks/useUser";
 
 const AdminRoute = ({ children }) => {
-  const navigate = useNavigate();
+
   const [users] = useUser();
   const { user, loading } = useAuth();
   if (loading) {
@@ -20,7 +20,7 @@ const AdminRoute = ({ children }) => {
     return children;
   }
 
-  return navigate("/login");
+  return <Navigate to="/login"></Navigate>;
 };
 
 export default AdminRoute;
