@@ -7,12 +7,11 @@ import useAuth from "../../hooks/useAuth";
 import useAxiosPublice from "../../hooks/useAxiosPublice";
 import useSelect from "../../hooks/useSelect";
 
-
 const imageBbApi = `https://api.imgbb.com/1/upload?key=f192ef5d844484b8dafe780a5acb5cbc`;
 
 const Register = () => {
   const [districtSelect, upazilaSelect] = useSelect();
-  const { createUser } = useAuth();
+  const { createUser, setLoaded, loaded } = useAuth();
   const axiosPublic = useAxiosPublice();
   const navigate = useNavigate();
   const {
@@ -52,8 +51,8 @@ const Register = () => {
       image,
       password,
       confirmPassword,
-      status:"active",
-      role:"donor"
+      status: "active",
+      role: "donor",
     };
     // create user
     createUser(email, password)
@@ -65,6 +64,7 @@ const Register = () => {
         })
           .then((res) => {
             console.log(res);
+            setLoaded(!loaded);
           })
           .catch((error) => {
             console.log(error);

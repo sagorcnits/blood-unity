@@ -11,6 +11,29 @@
     transition: all 0.1s;
   }
 
+  .nav-bar {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: 10px 30px;
+    margin-top: 15px;
+  }
+
+  .nav-bar:hover {
+    padding: 10px 30px;
+    border-radius: 5px;
+    background-color: white;
+    color: black;
+    transition: all 0.5s;
+  }
+
+  .nav-active {
+    background-color: white;
+    color: black;
+    border-radius: 5px;
+  }
+
   .dashbord-active {
     background-color: #df1e26;
     color: white;

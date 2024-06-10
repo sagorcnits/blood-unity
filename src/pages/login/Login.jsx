@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 
 const Login = () => {
-  const { LoginUser } = useAuth();
+  const { LoginUser, setLoaded, loaded } = useAuth();
   const navigate = useNavigate();
   const {
     register,
@@ -17,6 +17,7 @@ const Login = () => {
     const password = data.password;
     LoginUser(email, password)
       .then((res) => {
+        setLoaded(!loaded)
         const user = res.user;
         navigate("/");
       })

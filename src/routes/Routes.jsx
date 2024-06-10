@@ -18,6 +18,7 @@ import Profile from "../pages/dashboard/shared/Profile";
 import Details from "../pages/details/Details";
 import DonationRequest from "../pages/donation-requests/DonationRequest";
 import Funding from "../pages/funding/Funding";
+import Payment from "../pages/funding/Payment";
 import Home from "../pages/home/Home";
 import Login from "../pages/login/Login";
 import NotFound from "../pages/notFound/NotFound";
@@ -67,6 +68,11 @@ const router = createBrowserRouter([
       {
         path: "/fundings",
         element: <Funding></Funding>,
+      },
+
+      {
+        path: "/payment",
+        element: <Payment></Payment>,
       },
     ],
   },

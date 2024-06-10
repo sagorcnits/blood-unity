@@ -119,7 +119,7 @@ const Donations = () => {
                     <th className="p-3">Date</th>
                     <th className="p-3">Time</th>
                     <th className="p-3">Donor Information</th>
-                    {users[0]?.role == "admin" && (
+                    {users?.role == "admin" && (
                       <>
                         <th className="p-3">Edit</th>
                         <th className="p-3">Delete</th>

@@ -133,7 +133,7 @@ const Navbar = () => {
       >
         <div className="flex justify-between border-b border-dashed py-6 px-2">
           <a className="text-2xl md:text-3xl  font-bold">
-            Blood<span className="text-orange-500">Unity</span>
+            Blood<span className="text-[#dee3e7]">Unity</span>
           </a>
           <IoClose
             onClick={handleSideBar}
@@ -141,25 +141,65 @@ const Navbar = () => {
           ></IoClose>
         </div>
         <ul className="items-center gap-4 font-inter text-white p-4">
-          <li className="py-4 text-center mt-2 hover:bg-white rounded-lg hover:text-black duration-500">
-            <NavLink onClick={handleSideBar} to="/">
+          <li>
+            <NavLink
+              onClick={handleSideBar}
+              to="/"
+              className={({ isActive, isPending }) =>
+                isPending
+                  ? "pending"
+                  : isActive
+                  ? "nav-active nav-bar"
+                  : "nav-bar"
+              }
+            >
               Home
             </NavLink>
           </li>
 
-          <li className="py-4 text-center mt-2 hover:bg-white rounded-lg hover:text-black duration-500">
-            <NavLink onClick={handleSideBar} to="/donation-requests">
+          <li>
+            <NavLink
+              onClick={handleSideBar}
+              to="/donation-requests"
+              className={({ isActive, isPending }) =>
+                isPending
+                  ? "pending"
+                  : isActive
+                  ? "nav-active nav-bar"
+                  : "nav-bar"
+              }
+            >
               donation requests
             </NavLink>
           </li>
 
-          <li className="py-4 text-center mt-2 hover:bg-white rounded-lg hover:text-black duration-500">
-            <NavLink onClick={handleSideBar} to="/blog">
+          <li>
+            <NavLink
+              onClick={handleSideBar}
+              to="/blog"
+              className={({ isActive, isPending }) =>
+                isPending
+                  ? "pending"
+                  : isActive
+                  ? "nav-active nav-bar"
+                  : "nav-bar"
+              }
+            >
               Blog
             </NavLink>
           </li>
-          <li className="py-4 text-center mt-2 hover:bg-white rounded-lg hover:text-black duration-500">
-            <NavLink onClick={handleSideBar} to="/fundings">
+          <li>
+            <NavLink
+              onClick={handleSideBar}
+              to="/fundings"
+              className={({ isActive, isPending }) =>
+                isPending
+                  ? "pending"
+                  : isActive
+                  ? "nav-active nav-bar"
+                  : "nav-bar"
+              }
+            >
               Funding
             </NavLink>
           </li>

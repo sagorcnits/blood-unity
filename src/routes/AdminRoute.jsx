@@ -3,10 +3,9 @@ import useAuth from "../hooks/useAuth";
 import useUser from "../hooks/useUser";
 
 const AdminRoute = ({ children }) => {
-
-  const [users] = useUser();
-  const { user, loading } = useAuth();
-  if (loading) {
+  const [users, refetch, isLoading] = useUser();
+  const { user } = useAuth();
+  if (isLoading) {
     return (
       <div className="flex items-center justify-center space-x-2 h-screen">
         <div className="w-4 h-4 rounded-full animate-pulse dark:bg-violet-600"></div>
@@ -15,8 +14,11 @@ const AdminRoute = ({ children }) => {
       </div>
     );
   }
-
-  if ((user && users?.role == "admin") || users?.role == "volunteer") {
+  // console.log(users?.role);
+  if (
+    (user && users?.role == "admin") ||
+    (user && users?.role == "volunteer")
+  ) {
     return children;
   }
 

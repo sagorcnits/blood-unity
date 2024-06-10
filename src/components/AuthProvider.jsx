@@ -6,13 +6,14 @@ import {
 } from "firebase/auth";
 import { createContext, useEffect, useState } from "react";
 import { auth } from "../../firebase_config";
+import useAxiosPublice from "../hooks/useAxiosPublice";
 
 export const AuthContext = createContext(null);
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState([]);
   const [loaded, setLoaded] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [dataLoad, setDataLoad] = useState(true);
+  const axiosPublic = useAxiosPublice();
   // create user
   const createUser = (email, password) => {
     return createUserWithEmailAndPassword(auth, email, password);
@@ -34,11 +35,25 @@ const AuthProvider = ({ children }) => {
       });
   };
 
+  
   // curren user information
   useEffect(() => {
     const changeAuthState = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
-      setLoading(false);
+      if (currentUser) {
+        const email = { email: user.email };
+        axiosPublic.post("/jwt", email).then((res) => {
+
+          if (res.data.token) {
+            localStorage.setItem("access-token", res.data.token);
+          }
+          setUser(currentUser);
+          setLoading(false);
+        });
+      } else {
+        localStorage.removeItem("access-token");
+        setLoading(false);
+      }
+
       console.log(currentUser);
     });
     return () => {
@@ -53,7 +68,6 @@ const AuthProvider = ({ children }) => {
     user,
     setLoaded,
     loaded,
-    dataLoad,
     setLoading,
     loading,
   };

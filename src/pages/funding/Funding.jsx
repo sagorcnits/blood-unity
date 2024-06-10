@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import SectionHeader from "../../components/SectionHeader";
 
+
 const Funding = () => {
   return (
     <section className="mt-32">
@@ -14,7 +15,7 @@ const Funding = () => {
         ></SectionHeader>
       </div>
       <div className="mt-10 text-center md:text-end">
-        <button className="button">Pay</button>
+      <Link to="/payment"><button className="button">Pay</button></Link>
       </div>
       <div className="overflow-auto mt-20 font-open-sans">
         <table className="table w-[800px] md:w-full">
