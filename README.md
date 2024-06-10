@@ -1,4 +1,4 @@
-- web site name : BloodUnity
+- website name : BloodUnity
 - Live Link : https://blood-unity-bf5e3.web.app/
 
 - Admin Email : sagor.cnits@gmail.com

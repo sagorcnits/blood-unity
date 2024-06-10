@@ -81,7 +81,7 @@ const CheckOut = () => {
             name: user?.displayName,
             transictionId: paymentIntent.id,
             date: moment().format("lll"),
-            price: price,
+            price: parseInt(price),
             status: paymentIntent.status,
           };
 

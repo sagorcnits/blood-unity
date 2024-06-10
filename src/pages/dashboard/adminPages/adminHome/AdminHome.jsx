@@ -13,7 +13,7 @@ const totalFund = payments.reduce((prev,payment) => prev + payment.price, 0)
 const [userDonations] = useUserDonations();
 const filterDonors = usersData.filter(donor => donor.role == "donor")
 
-
+console.log(totalFund)
   return (
     <section className="px-10 mt-10 h-screen">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 font-open-sans">
