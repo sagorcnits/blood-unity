@@ -14,7 +14,7 @@ const Card = ({ blog }) => {
         </div>
         <h2 className="mb-1 text-xl font-semibold py-4">{title}</h2>
         <p className="text-sm dark:text-gray-600">
-          {content.slice(0, 100)} .....
+          {content?.slice(0, 100)} .....
         </p>
       </div>
       <div className="flex flex-wrap justify-between">
