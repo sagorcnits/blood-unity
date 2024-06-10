@@ -1,15 +1,15 @@
 import { MdDeleteForever } from "react-icons/md";
 import Swal from "sweetalert2";
-import useAxiosPublice from "../../../../hooks/useAxiosPublice";
+import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import useUser from "../../../../hooks/useUser";
 
 const Card = ({ refetch, blog }) => {
   const [users] = useUser();
   const { _id, title, thumbnail, status } = blog;
-  const axiosPublic = useAxiosPublice();
+  const axiosSecure = useAxiosSecure()
 
   const handleBlogStatus = () => {
-    axiosPublic
+    axiosSecure
       .put(`/blogs`, blog)
       .then((res) => {
         const data = res.data;
@@ -43,7 +43,7 @@ const Card = ({ refetch, blog }) => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        axiosPublic
+        axiosSecure
           .delete(`/blogs/${_id}`)
           .then((res) => {
             const data = res.data;

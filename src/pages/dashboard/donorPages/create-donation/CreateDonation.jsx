@@ -72,7 +72,7 @@ const CreateDonation = () => {
     // console.log(createRequest);
   };
   return (
-    <div className={"mt-10 px-2 md:px-20 font-open-sans text-paragraph "}>
+    <div className={"mt-10 px-2 md:px-20 font-open-sans text-paragraph h-screen"}>
       {users?.status == "active" ? <form onSubmit={handleSubmit(submit)}>
         <div className="flex gap-4 items-center mt-6">
           <div className="flex-1">
