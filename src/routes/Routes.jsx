@@ -51,7 +51,7 @@ const router = createBrowserRouter([
       {
         path: "/details/:id",
         element: <PrivateRoute><Details></Details></PrivateRoute>,
-        loader:({params}) => fetch(`http://localhost:5000/donations/${params.id}`),
+        loader:({params}) => fetch(`https://blood-unity-server.vercel.app/donations/${params.id}`),
       },
 
       {
@@ -62,7 +62,7 @@ const router = createBrowserRouter([
       {
         path: "/blog-details/:id",
         element: <BlogDetails></BlogDetails>,
-        loader:({params}) => fetch(`http://localhost:5000/blogs/${params.id}`),
+        loader:({params}) => fetch(`https://blood-unity-server.vercel.app/blogs/${params.id}`),
       },
 
       {
@@ -202,7 +202,7 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/donations/${params.id}`),
+          fetch(`https://blood-unity-server.vercel.app/donations/${params.id}`),
       },
 
       {
@@ -213,7 +213,7 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/donations/${params.id}`),
+          fetch(`https://blood-unity-server.vercel.app/donations/${params.id}`),
       },
     ],
   },
