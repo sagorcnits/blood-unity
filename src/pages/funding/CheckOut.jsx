@@ -1,24 +1,29 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import moment from "moment";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import useAuth from "../../hooks/useAuth";
 import useAxiosPublice from "../../hooks/useAxiosPublice";
 
 const CheckOut = () => {
   const [clientSecret, setClientSecret] = useState("");
+  const [price, setPrice] = useState(0);
   const elements = useElements();
   const stripe = useStripe();
   const axiosPublic = useAxiosPublice();
-  const [load,setLoad] = useState(false)
+  const [load, setLoad] = useState(false);
   const { user } = useAuth();
-//   const price = Math.floor(Math.random() * 100)
+  const navigate = useNavigate();
+  //   const price = Math.floor(Math.random() * 100)
 
   useEffect(() => {
-    axiosPublic
-      .post("/create-payment-intent", { price: 100 })
-      .then((res) => setClientSecret(res.data.clientSecret));
-  }, [axiosPublic]);
+    if (price > 0) {
+      axiosPublic
+        .post("/create-payment-intent", { price: price })
+        .then((res) => setClientSecret(res.data.clientSecret));
+    }
+  }, [axiosPublic, price]);
 
   console.log(clientSecret);
 
@@ -69,15 +74,15 @@ const CheckOut = () => {
     } else {
       console.log("paymentIntent", paymentIntent);
       if (paymentIntent.status == "succeeded") {
-        setLoad(!load)
+        setLoad(!load);
         if (paymentIntent.id) {
           const paymentInfo = {
             email: user?.email,
             name: user?.displayName,
             transictionId: paymentIntent.id,
-            date:moment().format('lll'),
-            price: 100,
-            status:paymentIntent.status,
+            date: moment().format("lll"),
+            price: price,
+            status: paymentIntent.status,
           };
 
           axiosPublic
@@ -91,6 +96,7 @@ const CheckOut = () => {
                   showConfirmButton: false,
                   timer: 1500,
                 });
+                navigate("/fundings");
               }
             })
             .catch((error) => {
@@ -111,8 +117,17 @@ const CheckOut = () => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="mt-32 md:w-[400px] py-10 mx-auto card-shadow p-4 rounded-md"
+      className="mt-32 md:w-[400px] py-8 mx-auto card-shadow p-4 rounded-md space-y-8"
     >
+      <div>
+        <input
+          type="number"
+          placeholder="amount"
+          className="px-2 py-3 focus:outline-darkRed rounded-md w-full mt-2 card-shadow"
+          onChange={(e) => setPrice(e.target.value)}
+        />
+      </div>
+
       <CardElement
         options={{
           style: {
@@ -131,9 +146,9 @@ const CheckOut = () => {
       />
       <div className="text-center">
         <button
-          className="button mt-14"
+          className="button "
           type="submit"
-          disabled={!stripe || !clientSecret }
+          disabled={!stripe || !clientSecret}
         >
           Pay
         </button>
