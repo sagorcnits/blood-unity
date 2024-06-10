@@ -48,7 +48,7 @@ const CreateDonation = () => {
       time,
       address,
       whyNeed,
-      status:"Pending"
+      status:"pending"
     };
 
     axiosSecure.post("/donations", createRequest)

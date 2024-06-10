@@ -35,9 +35,9 @@ const Funding = () => {
       <div>
         <SectionHeader
           info={{
-            heading: "All Funding",
+            heading: "Everyone's  Funding",
             descrip:
-              " Lorem ipsum dolor sit amet consectetur adipisicing elit.",
+              "Find various ways to donate, from one-time gifts to recurring donation.",
           }}
         ></SectionHeader>
       </div>

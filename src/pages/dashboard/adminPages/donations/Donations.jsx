@@ -73,7 +73,7 @@ const Donations = () => {
   };
 
   const handleFilter = (value) => {
-    const filter = userDonationsData.filter((item) => item.status == value);
+    const filter = userDonationsData.filter((item) => item.status.toLowerCase() == value);
     setDonationsData(filter);
   };
 

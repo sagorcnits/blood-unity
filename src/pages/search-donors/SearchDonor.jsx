@@ -28,7 +28,7 @@ const [searchData,setSearchData] = useState([])
     setSearchData(searchDonor)
   };
 
-  console.log(searchData)
+  // console.log(searchData)
 
   return (
     <>
@@ -46,11 +46,7 @@ const [searchData,setSearchData] = useState([])
               Find Your Donor
             </h1>
             <p className="mb-5 text-white">
-              Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda{" "}
-              <br />
-              excepturi exercitationem quasi. In deleniti eaque aut repudiandae{" "}
-              <br />
-              et a id nisi.
+            Blood donation is one of the most selfless and impactful acts one can perform. <br /> By donating blood, you have the potential to save multiple lives. <br /> Blood is a critical component of our healthcare system,
             </p>
             <div className="flex justify-center gap-4 mx-auto mt-10 font-open-sans">
               <form onSubmit={handleSearch}>

@@ -43,12 +43,9 @@ const Home = () => {
   return (
     <div className="mt-32">
       <Banner></Banner>
-      <section className="mt-20 font-open-sans">
-        <h1 className="text-[40px]  font-bold text-center ">Our Featured</h1>
-        <p className="text-paragraph text-center py-2">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas
-          dolores nemo impedit velit repellat{" "}
-        </p>
+      <section className="mt-20 font-open-sans border-b border-dashed pb-10">
+        <h1 className="text-[40px]  font-bold text-center ">Our <span className="text-darkRed">Featured</span></h1>
+        
         <div className="mt-10 md:w-[80%] lg:w-[65%] mx-auto grid grid-cols-1 md:grid-cols-3 gap-10">
           {featured.map((item, id) => (
             <FeaturedCard item={item} key={id}></FeaturedCard>
@@ -57,12 +54,8 @@ const Home = () => {
       </section>
       <section className="mt-20">
         <h1 className="text-center text-[40px] font-open-sans font-bold ">
-          Contact Us
+        <span className="text-darkRed">Contact</span> Us
         </h1>
-        <p className="text-paragraph text-center py-2">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas
-          dolores nemo impedit velit repellat{" "}
-        </p>
         <div className="nt-10">
           <Contact></Contact>
         </div>

@@ -20,9 +20,9 @@ const DonationRequest = () => {
           <div>
             <SectionHeader
               info={{
-                heading: "Donation Request",
+                heading: "Everyone's donation request",
                 descrip:
-                  " Lorem ipsum dolor sit amet consectetur adipisicing elit.",
+                  "Blood is always in high demand, and shortages can happen anytime. By donating, you ensure that hospitals and emergency services have the necessary supply to treat patients effectively.",
               }}
             ></SectionHeader>
           </div>

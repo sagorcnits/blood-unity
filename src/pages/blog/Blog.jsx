@@ -19,18 +19,17 @@ const Blog = () => {
         <div className="hero-content text-center text-white font-open-sans">
           <div>
             <h1 className="mb-5 text-3xl md:text-4xl font-bold">
-              Recent Blogs
+              Our Blogs
             </h1>
-            <p>
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Beatae
-              incidunt voluptate delectus debitis{" "}
+            <p className="text-balance">
+            Gain knowledge from healthcare professionals about the importance of blood donation, <br /> health tips for donors, and the science behind transfusions.
             </p>
 
             <div className="join mt-10 ">
               <input
                 type="text"
                 placeholder="Search Your Blog"
-                className="input input-bordered join-item text-black w-[400px]"
+                className="input input-bordered join-item text-black w-[400px] focus:outline-none"
               />
               <button className="button px-4 join-item">
                 <FaSearch></FaSearch>

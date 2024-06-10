@@ -33,7 +33,7 @@ const axiosSecure = useAxiosSecure()
   });
 
   const handleFilter = (value) => {
-    const filter = donationsData.filter((item) => item.status == value);
+    const filter = donationsData.filter((item) => item.status.toLowerCase() == value);
     setDonationsDonor(filter);
   };
 
@@ -83,6 +83,8 @@ const axiosSecure = useAxiosSecure()
     });
     // console.log(status, id);
   };
+
+  // console.log(donationsDonor)
 
   return (
     <div className="px-3">

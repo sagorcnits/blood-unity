@@ -14,9 +14,7 @@ const Banner = () => {
         <div className="md:w-1/2">
           <h1 className="mb-5 text-3xl md:text-5xl font-bold">Donate Blood & Save a Life</h1>
           <p className="mb-5">
-            Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
-            excepturi exercitationem quasi. In deleniti eaque aut repudiandae et
-            a id nisi.
+          Blood donation is one of the most selfless and impactful acts one can perform. By donating blood, you have the potential to save multiple lives. Blood is a critical component of our healthcare system,
           </p>
           <div className="flex justify-center gap-4 mx-auto mt-10 font-open-sans">
           <Link to="/register"><button className="button">Join as a donor</button></Link>
