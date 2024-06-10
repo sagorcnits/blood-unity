@@ -2,7 +2,7 @@ import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
   signInWithEmailAndPassword,
-  signOut,
+  signOut
 } from "firebase/auth";
 import { createContext, useEffect, useState } from "react";
 import { auth } from "../../firebase_config";
@@ -10,10 +10,11 @@ import useAxiosPublice from "../hooks/useAxiosPublice";
 
 export const AuthContext = createContext(null);
 const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState([]);
+  const [user, setUser] = useState(null);
   const [loaded, setLoaded] = useState(false);
   const [loading, setLoading] = useState(true);
   const axiosPublic = useAxiosPublice();
+
   // create user
   const createUser = (email, password) => {
     return createUserWithEmailAndPassword(auth, email, password);
@@ -29,13 +30,17 @@ const AuthProvider = ({ children }) => {
   const LogOutUser = () => {
     setLoading(true);
     signOut(auth)
-      .then()
+      .then((res) => {
+        console.log(res);
+        setUser(null)
+        // <Navigate to="/login"></Navigate>;
+      })
       .catch((error) => {
         console.log(error.message);
       });
+      console.log("ok logout")
   };
 
-  
   // curren user information
   useEffect(() => {
     const changeAuthState = onAuthStateChanged(auth, (currentUser) => {

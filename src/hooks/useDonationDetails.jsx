@@ -3,7 +3,7 @@ import useAxiosPublice from "./useAxiosPublice";
 
 const useDonationDetails = (id) => {
   const axiosPublic = useAxiosPublice();
-  const { data: donationEdit = [] ,refetch} = useQuery({
+  const { data: donationEdit = [] ,refetch, isPending} = useQuery({
     queryKey: ["donationEdit"],
     queryFn: async () => {
       const res = await axiosPublic.get(`/donations/${id}`);
@@ -11,7 +11,7 @@ const useDonationDetails = (id) => {
     },
   });
 
-  return [donationEdit,refetch];
+  return [donationEdit,refetch, isPending];
 };
 
 export default useDonationDetails;

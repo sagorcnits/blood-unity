@@ -5,9 +5,13 @@ import DonationCard from "./DonationCard";
 const DonationRequest = () => {
   const [userDonations] = useUserDonations();
 
-  const donationsFilterData = userDonations.filter(
-    (item) => item.status == "pending"
+  const donationsFilterData = userDonations?.filter(
+    (item) => item.status.toLowerCase() == "pending"
   );
+
+
+
+  // console.log(donationsFilterData);
 
   return (
     <section className="mt-32">

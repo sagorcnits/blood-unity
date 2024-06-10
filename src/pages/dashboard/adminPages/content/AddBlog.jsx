@@ -5,8 +5,10 @@ import { FaArrowLeft } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import useAxiosPublice from "../../../../hooks/useAxiosPublice";
+import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 const imageBbApi = `https://api.imgbb.com/1/upload?key=f192ef5d844484b8dafe780a5acb5cbc`;
 const AddBlog = () => {
+  const axiosSecure = useAxiosSecure();
   const axiosPublic = useAxiosPublice();
   const {
     register,
@@ -34,7 +36,7 @@ const AddBlog = () => {
     const blogContent = content;
     const blog = { title, thumbnail, blogContent, status: "draft" };
 
-    axiosPublic
+    axiosSecure
       .post("/blogs", blog)
       .then((res) => {
         const blog = res.data;
@@ -59,9 +61,12 @@ const AddBlog = () => {
     <div className="h-screen">
       <div className="w-[80%] mx-auto mt-10">
         <p className="text-green-500 ">
-          <Link to="/dashboard/content-management" className="flex gap-2 items-center">
+          <Link
+            to="/dashboard/content-management"
+            className="flex gap-2 items-center"
+          >
             <FaArrowLeft></FaArrowLeft>
-         <span className="text-black "> back</span>
+            <span className="text-black "> back</span>
           </Link>
         </p>
 

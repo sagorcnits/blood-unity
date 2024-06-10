@@ -4,7 +4,7 @@ import useAxiosPublice from "./useAxiosPublice";
 const useBlogsData = () => {
   const axiosPublic = useAxiosPublice();
 
-  const { data: blogs = [], refetch } = useQuery({
+  const { data: blogs = [], refetch, isPending } = useQuery({
     queryKey: ["blogs"],
     queryFn: async () => {
       const res = await axiosPublic.get("/blogs");
@@ -12,7 +12,7 @@ const useBlogsData = () => {
     },
   });
 
-  return [blogs, refetch];
+  return [blogs, refetch, isPending];
 };
 
 export default useBlogsData;

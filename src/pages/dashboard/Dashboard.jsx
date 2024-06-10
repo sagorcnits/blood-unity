@@ -4,8 +4,7 @@ import { FaHome, FaUser } from "react-icons/fa";
 import {
   MdBloodtype,
   MdContentPasteGo,
-  MdCreate,
-  MdPermContactCalendar,
+  MdCreate
 } from "react-icons/md";
 import { NavLink, Outlet } from "react-router-dom";
 import useUser from "../../hooks/useUser";
@@ -256,21 +255,7 @@ const Dashboard = () => {
               <span>Home</span>
             </NavLink>
           </li>
-          <li>
-            <NavLink
-              className={({ isActive, isPending }) =>
-                isPending
-                  ? "pending"
-                  : isActive
-                  ? "dashbord-active sideBar-nav"
-                  : "sideBar-nav"
-              }
-              to="/dashboard/contact"
-            >
-              <MdPermContactCalendar className="text-[24px] "></MdPermContactCalendar>
-              <span>Contact</span>
-            </NavLink>
-          </li>
+          
         </ul>
         <div className="absolute bottom-0 text-center right-0 left-0 p-4">
           <p>

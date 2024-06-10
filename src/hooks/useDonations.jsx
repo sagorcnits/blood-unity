@@ -5,14 +5,14 @@ import useAxiosPublice from "./useAxiosPublice";
 const useDonations = () => {
   const axiosPublic = useAxiosPublice();
   const { user } = useAuth();
-  const { data: donations = [], refetch } = useQuery({
+  const { data: donations = [], refetch, isPending } = useQuery({
     queryKey: ["users", user?.email],
     queryFn: async () => {
       const res = await axiosPublic.get(`/donations?email=${user?.email}`);
       return res.data;
     },
   });
-  return [donations, refetch];
+  return [donations, refetch, isPending];
 };
 
 export default useDonations;

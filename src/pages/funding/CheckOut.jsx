@@ -60,7 +60,12 @@ const CheckOut = () => {
       });
 
     if (errorConfirm) {
-      console.log("errorConfirm");
+      Swal.fire({
+        icon: "error",
+        title: "Somthing Wrong!",
+        showConfirmButton: false,
+        timer: 1500,
+      });
     } else {
       console.log("paymentIntent", paymentIntent);
       if (paymentIntent.status == "succeeded") {

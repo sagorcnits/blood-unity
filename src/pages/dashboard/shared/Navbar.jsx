@@ -37,7 +37,7 @@ const Navbar = () => {
 
         <div className="flex-1 justify-end gap-16 *:flex  *:items-center *:gap-10">
           <div>
-            {user ? (
+            {user ?  (
               <div className="dropdown dropdown-end">
                 <div className="flex gap-4 items-center font-open-sans text-paragraph">
                   <div className="hidden md:block">{user?.displayName}</div>
@@ -63,7 +63,7 @@ const Navbar = () => {
                     <Link>Setting</Link>
                   </li>
 
-                  <li onClick={LogOutUser}>
+                  <li  onClick={() => LogOutUser()}>
                     <Link>Logout</Link>
                   </li>
                 </ul>

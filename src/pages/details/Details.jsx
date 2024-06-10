@@ -10,9 +10,11 @@ import { MdBloodtype } from "react-icons/md";
 import { useLoaderData } from "react-router-dom";
 import Swal from "sweetalert2";
 import useAuth from "../../hooks/useAuth";
-import useAxiosPublice from "../../hooks/useAxiosPublice";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import useUserDonations from "../../hooks/useUserDonations";
 const Details = () => {
-  const axiosPublic = useAxiosPublice();
+  const axiosSecure = useAxiosSecure();
+  const [,refetch] = useUserDonations();
   const data = useLoaderData();
   const { user } = useAuth();
   let [isOpen, setIsOpen] = useState(false);
@@ -29,12 +31,13 @@ const Details = () => {
   const handleConfirmDonate = (e) => {
     e.preventDefault();
     const status = "inprogress";
-    axiosPublic
+    axiosSecure
       .put(`/donations?status=${status}&id=${data._id}`)
       .then((res) => {
         const data = res.data;
 
         setLoad(!load);
+        refetch()
         Swal.fire({
           icon: "success",
           title: "Complate Your Donatation. Thanks for Donation",
@@ -97,16 +100,12 @@ const Details = () => {
           <p>
             <span className="font-bold">Address: </span>
             <br />
-            {data.address}"Recipient" বা "প্রাপক" বলতে সেই ব্যক্তিকে বোঝানো হয়
-            যিনি কোন কিছু গ্রহণ করেন। রক্তদান অনুরোধের ক্ষেত্রে, "recipient" হল
-            সেই ব্যক্তি যিনি রক্ত গ্রহণ করবেন। তিনি রক্তের প্রাপক হিসেবে পরিচিত।
+            {data.address}
           </p>
           <p>
             <span className="font-bold">Why need: </span>
             <br />
-            {data.whyNeed}"Recipient" বা "প্রাপক" বলতে সেই ব্যক্তিকে বোঝানো হয়
-            যিনি কোন কিছু গ্রহণ করেন। রক্তদান অনুরোধের ক্ষেত্রে, "recipient" হল
-            সেই ব্যক্তি যিনি রক্ত গ্রহণ করবেন। তিনি রক্তের প্রাপক হিসেবে পরিচিত।
+            {data.whyNeed}
           </p>
         </div>
       </div>

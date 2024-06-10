@@ -3,14 +3,14 @@ import useAxiosPublice from "./useAxiosPublice";
 
 const useUserDonations = () => {
     const axiosPublic = useAxiosPublice();
-    const { data: userDonations = [], refetch } = useQuery({
+    const { data: userDonations = [], refetch ,isLoading} = useQuery({
       queryKey: ["userDonations",],
       queryFn: async () => {
         const res = await axiosPublic.get(`/donations`);
         return res.data;
       },
     });
-    return [userDonations, refetch];
+    return [userDonations, refetch, isLoading];
 };
 
 export default useUserDonations;

@@ -1,10 +1,10 @@
 import Swal from "sweetalert2";
-import useAxiosPublice from "./useAxiosPublice";
+import useAxiosSecure from "./useAxiosSecure";
 import useDonations from "./useDonations";
 
 const useDonorDelete = () => {
   const [, refetch] = useDonations();
-  const axiosPublic = useAxiosPublice();
+  const axiosSecure = useAxiosSecure();
 
   const handleDonorDelete = (id) => {
     Swal.fire({
@@ -17,7 +17,7 @@ const useDonorDelete = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        axiosPublic
+        axiosSecure
           .delete(`/donations/${id}`)
           .then((res) => {
             Swal.fire({

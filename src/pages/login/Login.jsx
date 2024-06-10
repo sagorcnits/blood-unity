@@ -1,5 +1,6 @@
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 import useAuth from "../../hooks/useAuth";
 
 const Login = () => {
@@ -19,10 +20,21 @@ const Login = () => {
       .then((res) => {
         setLoaded(!loaded)
         const user = res.user;
+        Swal.fire({
+          icon: "success",
+          title: "success your login",
+          showConfirmButton: false,
+          timer: 1500
+        });
         navigate("/");
       })
       .catch((error) => {
-        console.log(error);
+        Swal.fire({
+          icon: "error",
+          title: "Invalid Your password or email",
+          showConfirmButton: false,
+          timer: 1500
+        });
       });
   };
 

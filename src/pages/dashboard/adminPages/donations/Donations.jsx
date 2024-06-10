@@ -4,7 +4,7 @@ import { IoMdArrowDropdown } from "react-icons/io";
 import { MdClose, MdDeleteForever, MdEdit } from "react-icons/md";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
-import useAxiosPublice from "../../../../hooks/useAxiosPublice";
+import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import useUser from "../../../../hooks/useUser";
 import useUserDonations from "../../../../hooks/useUserDonations";
 
@@ -12,7 +12,7 @@ const Donations = () => {
   const [userDonations] = useUserDonations();
   const [users] = useUser();
   const [donationsData, setDonationsData] = useState([]);
-  const axiosPublic = useAxiosPublice();
+  const axiosSecure = useAxiosSecure();
   const [isFilter, setFilter] = useState(false);
   // pagination
   const [currentPage, setCurrentPage] = useState(1);
@@ -23,7 +23,7 @@ const Donations = () => {
   const { data: userDonationsData = [], refetch } = useQuery({
     queryKey: ["userDonationsData", itemPerPage, currentPage],
     queryFn: async () => {
-      const res = await axiosPublic.get(
+      const res = await axiosSecure.get(
         `/donations?page=${currentPage - 1}&size=${itemPerPage}`
       );
       setDonationsData(res.data);
@@ -42,7 +42,7 @@ const Donations = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        axiosPublic
+        axiosSecure
           .delete(`/donations/${id}`)
           .then((res) => {
             Swal.fire({
@@ -61,7 +61,7 @@ const Donations = () => {
   };
 
   const handleStatusDonation = (status, id) => {
-    axiosPublic
+    axiosSecure
       .put(`/donations?status=${status}&id=${id}`)
       .then((res) => {
         console.log(res);

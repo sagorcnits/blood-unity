@@ -1,14 +1,13 @@
 import { useForm } from "react-hook-form";
 import { useLoaderData, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
-import useAxiosPublice from "../../../hooks/useAxiosPublice";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const DonationEdit = () => {
   const { id } = useParams();
-  const axiosPublic = useAxiosPublice();
-  //   const [donationEdit,refetch] = useDonationDetails(id);
+  const axiosSecure = useAxiosSecure();
   const donationEdit = useLoaderData();
-//   console.log(donationEdit);
+ 
 
   const {
     register,
@@ -37,17 +36,17 @@ const DonationEdit = () => {
     };
 
     // console.log(updateDonations);
-    axiosPublic
+    axiosSecure
       .put(`/donations/${id}`, updateDonations)
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         Swal.fire({
-            position: "center",
-            icon: "success",
-            title: "Your work has been saved",
-            showConfirmButton: false,
-            timer: 1500
-          });
+          position: "center",
+          icon: "success",
+          title: "Your work has been saved",
+          showConfirmButton: false,
+          timer: 1500,
+        });
       })
       .catch((error) => {
         console.log(error);

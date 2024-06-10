@@ -53,16 +53,12 @@ const DetailsAdmin = () => {
           <p>
             <span className="font-bold">Address: </span>
             <br />
-            {data.address}"Recipient" বা "প্রাপক" বলতে সেই ব্যক্তিকে বোঝানো হয়
-            যিনি কোন কিছু গ্রহণ করেন। রক্তদান অনুরোধের ক্ষেত্রে, "recipient" হল
-            সেই ব্যক্তি যিনি রক্ত গ্রহণ করবেন। তিনি রক্তের প্রাপক হিসেবে পরিচিত।
+            {data.address}"Recipient"
           </p>
           <p>
             <span className="font-bold">Why need: </span>
             <br />
-            {data.whyNeed}"Recipient" বা "প্রাপক" বলতে সেই ব্যক্তিকে বোঝানো হয়
-            যিনি কোন কিছু গ্রহণ করেন। রক্তদান অনুরোধের ক্ষেত্রে, "recipient" হল
-            সেই ব্যক্তি যিনি রক্ত গ্রহণ করবেন। তিনি রক্তের প্রাপক হিসেবে পরিচিত।
+            {data.whyNeed}
           </p>
         </div>
         <div>

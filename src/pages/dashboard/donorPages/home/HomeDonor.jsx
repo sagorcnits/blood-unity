@@ -4,7 +4,7 @@ import useDonations from "../../../../hooks/useDonations";
 import useDonorDelete from "../../../../hooks/useDonorDelete";
 import useDonorStatus from "../../../../hooks/useDonorStatus";
 const HomeDonor = () => {
-  const [donations] = useDonations();
+  const [donations,isPending] = useDonations();
   const handleStatusDonation = useDonorStatus();
   const handleDonorDelete = useDonorDelete();
   return (

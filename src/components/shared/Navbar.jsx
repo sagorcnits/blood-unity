@@ -6,7 +6,7 @@ import useAuth from "../../hooks/useAuth";
 import useUser from "../../hooks/useUser";
 
 const Navbar = () => {
-  const [users] = useUser();
+  const [users,isLoading] = useUser();
   const { user, LogOutUser } = useAuth();
   const [isActive, setActive] = useState(true);
   const navRef = useRef();
@@ -18,6 +18,12 @@ const Navbar = () => {
       navRef.current.style.left = "-300px";
     }
   };
+
+  console.log( user)
+
+  // if(isLoading){
+  //   return <p>Loaiding....</p>
+  // }
 
   return (
     <>
@@ -76,7 +82,7 @@ const Navbar = () => {
               </li>
             </ul>
 
-            {user ? (
+            {user  ? (
               <div className="dropdown dropdown-end">
                 <div
                   tabIndex={0}
@@ -84,7 +90,7 @@ const Navbar = () => {
                   className="btn btn-ghost btn-circle avatar"
                 >
                   <div className="w-16 rounded-full">
-                    <img alt="" src={user.photoURL} />
+                    <img alt="" src={users?.image} />
                   </div>
                 </div>
                 <ul
@@ -94,7 +100,7 @@ const Navbar = () => {
                   <li>
                     <Link
                       to={`${
-                        users?.role == "admin" || user?.role == "volunteer"
+                        users?.role == "admin" || users?.role == "volunteer"
                           ? "/dashboard"
                           : "/dashboard/home"
                       }`}

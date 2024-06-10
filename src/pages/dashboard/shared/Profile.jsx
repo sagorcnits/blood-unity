@@ -1,13 +1,12 @@
 import { useState } from "react";
 import Swal from "sweetalert2";
 import useAuth from "../../../hooks/useAuth";
-import useAxiosPublice from "../../../hooks/useAxiosPublice";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import useUser from "../../../hooks/useUser";
 const imageBbApi = `https://api.imgbb.com/1/upload?key=f192ef5d844484b8dafe780a5acb5cbc`;
 const Profile = () => {
-
   const [users, refetch] = useUser();
-  const axiosPublic = useAxiosPublice();
+  const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
   const [isEdit, setIsEdit] = useState(true);
 
@@ -32,9 +31,6 @@ const Profile = () => {
       imageData = res;
     }
 
-    
-
-
     const form = e.target;
     const name = form.name.value;
     const email = user?.email;
@@ -44,7 +40,7 @@ const Profile = () => {
     const upazila = form.upazila.value;
     const updateProfile = { name, email, blood, image, district, upazila };
 
-    axiosPublic
+    axiosSecure
       .put(`/users/${user?.email}`, updateProfile)
       .then((res) => {
         Swal.fire({

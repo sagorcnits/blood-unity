@@ -63,16 +63,17 @@ const Register = () => {
           photoURL: image,
         })
           .then((res) => {
-            console.log(res);
+            // console.log(res);
             setLoaded(!loaded);
           })
           .catch((error) => {
             console.log(error);
           });
-console.log(user)
+
         axiosPublic
           .post("/users", userInfo)
           .then((res) => {
+            console.log(res.data, "data");
             if (res.data.insertedId) {
               Swal.fire({
                 icon: "success",
@@ -87,11 +88,21 @@ console.log(user)
             }
           })
           .catch((error) => {
-            console.log(error);
+            Swal.fire({
+              icon: "error",
+              title: "You have an Already User",
+              showConfirmButton: false,
+              timer: 1500,
+            });
           });
       })
       .catch((error) => {
-        console.log(error);
+        Swal.fire({
+          icon: "error",
+          title: "You have an Already User",
+          showConfirmButton: false,
+          timer: 1500,
+        });
       });
   };
 
