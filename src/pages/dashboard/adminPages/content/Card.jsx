@@ -67,7 +67,7 @@ const Card = ({ refetch, blog }) => {
         <img src={thumbnail} alt="thumbnil" />
       </div>
       <div className="flex justify-between items-center py-4">
-        <h1 className="py-3">{title}</h1>
+        <h1 className="py-3">{title?.slice(0,20)}</h1>
         {users?.role == "admin" && (
           <button
             onClick={handleDeleteBlog}

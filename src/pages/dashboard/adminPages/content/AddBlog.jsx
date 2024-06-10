@@ -1,3 +1,4 @@
+import JoditEditor from "jodit-react";
 import React, { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaArrowLeft } from "react-icons/fa";
@@ -32,7 +33,7 @@ const AddBlog = () => {
 
     const title = data.title;
     const thumbnail = res.data.data.display_url;
-    const blogContent = data.content;
+    const blogContent = content;
     const blog = { title, thumbnail, blogContent, status: "draft" };
 
     axiosSecure
@@ -99,22 +100,22 @@ const AddBlog = () => {
           </div>
           <div>
             <label className="font-bold">Content: </label>
-            {/* <JoditEditor
+            <JoditEditor
               ref={editor}
               value={content}
               tabIndex={1}
               config={config}
               onBlur={(newContent) => setContent(newContent)} // preferred to use only this option to update the
               onChange={(newContent) => {}}
-            /> */}
+            />
 
-            <textarea
+            {/* <textarea
             {...register("content")}
             type="text"
             placeholder="content"
             className="px-2 py-3 focus:outline-darkRed rounded-md w-full mt-2 h-[224px] resize-none overflow-auto"
             name="content"
-          />
+          /> */}
           </div>
 
           <div className="text-center">

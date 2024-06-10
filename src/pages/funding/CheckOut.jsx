@@ -67,7 +67,7 @@ const CheckOut = () => {
     if (errorConfirm) {
       Swal.fire({
         icon: "error",
-        title: "Somthing Wrong!",
+        title: "Please Login!",
         showConfirmButton: false,
         timer: 1500,
       });

@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
 const Card = ({ blog }) => {
-  const { _id, title, thumbnail, content, status } = blog;
+  const { _id, title, thumbnail } = blog;
   return (
     <div className="flex flex-col  p-6 space-y-6 overflow-hidden rounded-lg shadow-md border font-open-sans">
       <div>
@@ -13,9 +13,9 @@ const Card = ({ blog }) => {
           />
         </div>
         <h2 className="mb-1 text-xl font-semibold py-4">{title}</h2>
-        <p className="text-sm dark:text-gray-600">
-          {content?.slice(0, 100)} .....
-        </p>
+        {/* <p className="text-sm dark:text-gray-600">
+          {blogContent?.slice(0, 100)} .....
+        </p> */}
       </div>
       <div className="flex flex-wrap justify-between">
         <Link to={`/blog-details/${_id}`} className="text-[20px] text-darkRed font-bold">Read More...</Link>
