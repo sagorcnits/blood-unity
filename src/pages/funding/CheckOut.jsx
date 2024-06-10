@@ -1,4 +1,5 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
+import moment from "moment";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import useAuth from "../../hooks/useAuth";
@@ -9,15 +10,11 @@ const CheckOut = () => {
   const elements = useElements();
   const stripe = useStripe();
   const axiosPublic = useAxiosPublice();
+  const [load,setLoad] = useState(false)
   const { user } = useAuth();
+//   const price = Math.floor(Math.random() * 100)
 
   useEffect(() => {
-    // Create PaymentIntent as soon as the page loads
-    // fetch("", {
-    //   method: "POST",
-    //   headers: { "Content-Type": "application/json" },
-    //   body: JSON.stringify({ items: [{ id: "xl-tshirt" }] }),
-    // })
     axiosPublic
       .post("/create-payment-intent", { price: 100 })
       .then((res) => setClientSecret(res.data.clientSecret));
@@ -44,9 +41,9 @@ const CheckOut = () => {
     });
 
     if (error) {
-      console.log("[error]", error);
+      console.log(error);
     } else {
-      console.log("[PaymentMethod]", paymentMethod);
+      console.log(paymentMethod);
     }
 
     // coonfirm payment
@@ -67,13 +64,15 @@ const CheckOut = () => {
     } else {
       console.log("paymentIntent", paymentIntent);
       if (paymentIntent.status == "succeeded") {
+        setLoad(!load)
         if (paymentIntent.id) {
           const paymentInfo = {
             email: user?.email,
             name: user?.displayName,
             transictionId: paymentIntent.id,
-            date: new Date(),
+            date:moment().format('lll'),
             price: 100,
+            status:paymentIntent.status,
           };
 
           axiosPublic
@@ -107,7 +106,7 @@ const CheckOut = () => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="mt-32 w-[400px] mx-auto card-shadow p-4 rounded-md"
+      className="mt-32 md:w-[400px] py-10 mx-auto card-shadow p-4 rounded-md"
     >
       <CardElement
         options={{
@@ -127,9 +126,9 @@ const CheckOut = () => {
       />
       <div className="text-center">
         <button
-          className="button mt-10"
+          className="button mt-14"
           type="submit"
-          disabled={!stripe || !clientSecret}
+          disabled={!stripe || !clientSecret }
         >
           Pay
         </button>

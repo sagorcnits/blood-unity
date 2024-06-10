@@ -69,7 +69,7 @@ const Register = () => {
           .catch((error) => {
             console.log(error);
           });
-
+console.log(user)
         axiosPublic
           .post("/users", userInfo)
           .then((res) => {

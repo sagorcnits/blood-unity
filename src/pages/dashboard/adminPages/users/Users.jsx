@@ -2,11 +2,11 @@ import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { FaUsers } from "react-icons/fa";
 import { IoMdArrowDropdown } from "react-icons/io";
-import useAxiosPublice from "../../../../hooks/useAxiosPublice";
+import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import useUsersData from "../../../../hooks/useUsersData";
 
 const Users = () => {
-  const axiosPublic = useAxiosPublice();
+  const axiosSecure = useAxiosSecure()
   const [isFilter, setFilter] = useState(false);
   const [users, setUsers] = useState([]);
   const [usersData] = useUsersData();
@@ -19,7 +19,7 @@ const Users = () => {
   const { data: userData = [], refetch } = useQuery({
     queryKey: ["userData",currentPage,itemPerPage],
     queryFn: async () => {
-      const res = await axiosPublic.get(`/users?page=${currentPage-1}&size=${itemPerPage}`);
+      const res = await axiosSecure.get(`/users?page=${currentPage-1}&size=${itemPerPage}`);
       setUsers(res.data);
       return res.data;
     },
@@ -27,7 +27,7 @@ const Users = () => {
 
   const handleUser = (data, _id) => {
     // console.log(data, _id);
-    axiosPublic
+    axiosSecure
       .put(`/users?role=${data}&id=${_id}`)
       .then((res) => {
         // console.log(res.data);

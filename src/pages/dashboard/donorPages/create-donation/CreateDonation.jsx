@@ -2,7 +2,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import useAuth from "../../../../hooks/useAuth";
-import useAxiosPublice from "../../../../hooks/useAxiosPublice";
+import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import useSelect from "../../../../hooks/useSelect";
 import useUser from "../../../../hooks/useUser";
 
@@ -10,7 +10,7 @@ const CreateDonation = () => {
   const [users] = useUser()
   const { user } = useAuth();
   const [districtSelect, upazilaSelect] = useSelect();
-  const axiosPublic = useAxiosPublice()
+  const axiosSecure = useAxiosSecure()
   const {
     register,
     handleSubmit,
@@ -23,7 +23,7 @@ const CreateDonation = () => {
     },
   });
 
-console.log(users)
+// console.log(users)
 
   const submit = (data) => {
     const name = user?.displayName;
@@ -51,7 +51,7 @@ console.log(users)
       status:"Pending"
     };
 
-    axiosPublic.post("/donations", createRequest)
+    axiosSecure.post("/donations", createRequest)
     .then(res => {
       const data = res.data;
       // console.log(data)

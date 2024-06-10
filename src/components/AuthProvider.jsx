@@ -40,9 +40,8 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const changeAuthState = onAuthStateChanged(auth, (currentUser) => {
       if (currentUser) {
-        const email = { email: user.email };
+        const email = { email: currentUser?.email };
         axiosPublic.post("/jwt", email).then((res) => {
-
           if (res.data.token) {
             localStorage.setItem("access-token", res.data.token);
           }
