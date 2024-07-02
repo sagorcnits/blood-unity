@@ -1,10 +1,13 @@
 - website name : BloodUnity
 - Live Link : https://blood-unity-bf5e3.web.app/
-
 - Admin Email : sagor.cnits@gmail.com
 - Admin Password :Sagor12
 
-- Ten Bullet Point Of This Website
+### Project Overview
+
+- A blood management web application facilitates the efficient tracking and management of blood donations, inventory, and distribution. It allows users to register, schedule donations, manage donor information, and monitor blood stock levels, ensuring timely availability and distribution of blood to hospitals and patients in need
+
+### Ten Bullet Point Of This Website
 
         - Dashboard page
         - Admin Dashboard manage
