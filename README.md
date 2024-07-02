@@ -26,5 +26,6 @@
 - step 2 : git clone https://github.com/sagorcnits/blood-unity-server.git == server side clone
 - step 3 : Navigate to the Project Directory
 - step 4 : Install Dependencies (both client and server)
-- step 5 : Set Up Environment Variables (both client and server)
-- step 6 : Run Client and Server
+- step 5 : Create a .env file inside (both client and server)
+- step 6 : Set Up Environment Variables (both client and server)
+- step 7 : Run Client and Server
