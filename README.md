@@ -1,7 +1,5 @@
 - website name : BloodUnity
 - Live Link : https://blood-unity-bf5e3.web.app/
-- Admin Email : sagor.cnits@gmail.com
-- Admin Password :Sagor12
 
 ### Project Overview
 
@@ -25,4 +23,8 @@
 ### What to follow if you want to clone This Project
 
 - step 1 : git clone https://github.com/sagorcnits/blood-unity.git
-- step 2 : your firebase key add in the firebase_config.js file
+- step 2 : git clone https://github.com/sagorcnits/blood-unity-server.git == server side clone
+- step 3 : Navigate to the Project Directory
+- step 4 : Install Dependencies (both client and server)
+- step 5 : Set Up Environment Variables (both client and server)
+- step 6 : Run Client and Server
