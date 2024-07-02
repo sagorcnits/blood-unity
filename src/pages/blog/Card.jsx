@@ -18,7 +18,7 @@ const Card = ({ blog }) => {
         </p> */}
       </div>
       <div className="flex flex-wrap justify-between">
-        <Link to={`/blog-details/${_id}`} className="text-[20px] text-darkRed font-bold">Read More...</Link>
+        <Link to={`/blog-details/${_id}`} className="text-[20px] text-darkRed font-bold" >Read More...</Link>
       </div>
     </div>
   );

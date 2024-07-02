@@ -54,8 +54,9 @@ const Register = () => {
       status: "active",
       role: "donor",
     };
-    // create user
-    createUser(email, password)
+
+    if (password == confirmPassword) {
+      createUser(email, password)
       .then((res) => {
         const user = res.user;
         updateProfile(auth.currentUser, {
@@ -104,6 +105,17 @@ const Register = () => {
           timer: 1500,
         });
       });
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Password not match",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
+
+    // create user
+   
   };
 
   return (
